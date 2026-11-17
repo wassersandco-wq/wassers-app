@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WASSERS & CO. Admin Backend</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: #071324; color: #F8FAFC; padding: 20px; max-width: 850px; margin: 0 auto; }
+    h1 { color: #D4AF37; font-size: 22px; margin-bottom: 18px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width:650px){ .grid { grid-template-columns: 1fr; } }
+    .card { background: #0D1E36; border: 1px solid rgba(212,175,55,0.25); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+    input { width: 100%; padding: 11px; border-radius: 10px; background: #071324; border: 1px solid rgba(255,255,255,0.15); color: #fff; margin-bottom: 10px; font-size: 13px; }
+    button { padding: 11px 16px; border-radius: 10px; border: none; background: #D4AF37; color: #071324; font-weight: 700; cursor: pointer; font-size: 13px; }
+    .del-btn { background: #EF4444; color: #fff; padding: 5px 10px; font-size: 11px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    th { color: #D4AF37; }
+  </style>
+</head>
+<body>
+  <h1>👑 WASSERS & CO. — Office Backend</h1>
+
+  <!-- ADMIN LOGIN -->
+  <div class="card" id="adminLogin">
+    <h3 style="margin-bottom:10px;">Admin Login</h3>
+    <input type="email" id="admEmail" placeholder="admin@wassersand.co" />
+    <input type="password" id="admPass" placeholder="Password" />
+    <button onclick="loginAdmin()">Access Backend</button>
+  </div>
+
+  <!-- ADMIN CONTROL PANEL -->
+  <div id="adminPanel" style="display:none;">
+    <div class="grid">
+      <!-- ADD PRODUCT / SERVICE -->
+      <div class="card">
+        <h3 style="color:#D4AF37;margin-bottom:10px;">+ Upload Product / Service</h3>
+        <input type="text" id="pName" placeholder="Name (e.g. 20L Bulk Jar or Dispenser Service)" />
+        <input type="text" id="pSub" placeholder="Subtitle (e.g. Sealed Capsule / Monthly Plan)" />
+        <input type="number" id="pPrice" placeholder="Price in ₹ (e.g. 80)" />
+        <input type="text" id="pMedia" placeholder="Product Image or GIF URL (optional)" />
+        <button onclick="addProduct()">Publish to App</button>
+        <div id="catalogList" style="margin-top:14px;"></div>
+      </div>
+
+      <!-- UPLOAD HOME VIDEO / GIF -->
+      <div class="card">
+        <h3 style="color:#D4AF37;margin-bottom:10px;">🎬 Home Page Video / GIF Banner</h3>
+        <p style="font-size:12px;color:#94A3B8;margin-bottom:10px;">Paste a direct .MP4 video link or .GIF link to display at the top of the customer app.</p>
+        <input type="text" id="heroVideoUrl" placeholder="https://.../wassers-promo.mp4 or .gif" />
+        <button onclick="saveHeroMedia()">Update App Banner</button>
+      </div>
+    </div>
+
+    <!-- LIVE ORDERS FEED (CUSTOMER + RIDER SHOP ORDERS) -->
+    <div class="card">
+      <h3 style="color:#D4AF37;">📊 Live Incoming Orders (App + Delivery Riders)</h3>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Customer / Shop</th>
+              <th>Area</th>
+              <th>Item & Qty</th>
+              <th>Total</th>
+              <th>Payment</th>
+              <th>Source / Status</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { firebaseConfig } from "./config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.loginAdmin = async () => {
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById('admEmail').value, document.getElementById('admPass').value);
+      } catch (e) { alert("Admin login failed: " + e.message); }
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('adminLogin').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        listenOrders();
+        listenCatalog();
+      }
+    });
+
+    window.addProduct = async () => {
+      const name = document.getElementById('pName').value.trim();
+      const sub = document.getElementById('pSub').value.trim();
+      const price = parseInt(document.getElementById('pPrice').value);
+      const mediaUrl = document.getElementById('pMedia').value.trim();
+      if (!name || !price) { alert("Enter product name and price."); return; }
+
+      await addDoc(collection(db, "catalog"), { name, sub, price, mediaUrl, icon: "💧" });
+      document.getElementById('pName').value = "";
+      document.getElementById('pSub').value = "";
+      document.getElementById('pPrice').value = "";
+      document.getElementById('pMedia').value = "";
+    };
+
+    window.saveHeroMedia = async () => {
+      const url = document.getElementById('heroVideoUrl').value.trim();
+      await setDoc(doc(db, "settings", "home"), { mediaUrl: url });
+      alert("Home banner updated!");
+    };
+
+    function listenCatalog() {
+      onSnapshot(collection(db, "catalog"), (snap) => {
+        const list = document.getElementById('catalogList');
+        list.innerHTML = "";
+        snap.forEach(d => {
+          const item = d.data();
+          list.innerHTML += `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid rgba
