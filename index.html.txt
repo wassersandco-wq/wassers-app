@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wassers & Co. | Surat Water Delivery</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0A192F" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background: #0A192F; color: #F8FAFC; margin: 0; padding: 16px; }
+    .container { max-width: 440px; margin: auto; background: #112240; padding: 22px; border-radius: 16px; border: 1px solid #C5A059; }
+    .header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .header img { width: 46px; height: 46px; border-radius: 10px; object-fit: cover; border: 1px solid #C5A059; }
+    h1 { color: #C5A059; font-size: 20px; margin: 0; letter-spacing: 1px; }
+    p.sub { color: #94A3B8; font-size: 12px; margin: 2px 0 0; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 18px; }
+    .tab { flex: 1; padding: 10px; text-align: center; background: #0A192F; color: #94A3B8; border: 1px solid #233554; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; }
+    .tab.active { background: #C5A059; color: #0A192F; border-color: #C5A059; }
+    label { display: block; font-size: 13px; margin: 12px 0 5px; color: #CBD5E1; }
+    input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #233554; background: #0A192F; color: #fff; font-size: 15px; box-sizing: border-box; }
+    .total-box { background: #0A192F; padding: 14px; border-radius: 8px; margin-top: 16px; display: flex; justify-content: space-between; font-weight: bold; color: #C5A059; font-size: 17px; }
+    button.primary { width: 100%; margin-top: 16px; padding: 14px; background: #C5A059; color: #0A192F; font-weight: 700; font-size: 16px; border: none; border-radius: 10px; cursor: pointer; }
+    .order-item { background: #0A192F; border: 1px solid #233554; padding: 12px; border-radius: 10px; margin-top: 12px; font-size: 13px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; background: #1E3A8A; color: #93C5FD; float: right; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="icon-512.png" alt="Wassers & Co." onerror="this.style.display='none'" />
+      <div>
+        <h1>WASSERS & CO.</h1>
+        <p class="sub">Commercial & Bulk Drinking Water • Surat</p>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" id="tabOrder" onclick="switchTab('order')">New Order</div>
+      <div class="tab" id="tabHistory" onclick="switchTab('history')">My Orders</div>
+    </div>
+
+    <!-- NEW ORDER TAB -->
+    <div id="viewOrder">
+      <label>Business / Customer Name</label>
+      <input type="text" id="name" placeholder="e.g. Silver Trade Center Office 402" />
+
+      <label>10-Digit Mobile Number</label>
+      <input type="tel" id="phone" placeholder="e.g. 9876543210" maxlength="10" />
+
+      <label>Delivery Zone</label>
+      <select id="area">
+        <option value="APMC / Krushi Bazaar">APMC / Krushi Bazaar</option>
+        <option value="Begampura">Begampura</option>
+        <option value="Varachha / Silver Trade Center">Varachha / Silver Trade Center</option>
+        <option value="Other Surat Area">Other Surat Area</option>
+      </select>
+
+      <label>Select Pack / Jar</label>
+      <select id="product" onchange="calcTotal()">
+        <option value="20L Bulk Jar (Capsule)" data-price="60">20L Bulk Jar (Capsule) — ₹60</option>
+        <option value="10L Bulk Jar" data-price="40">10L Bulk Jar — ₹40</option>
+        <option value="5L Jar" data-price="30">5L Jar — ₹30</option>
+        <option value="1L PET Box (12 Bottles)" data-price="140">1L PET Box (12 Bottles) — ₹140</option>
+        <option value="500ml PET Box (24 Bottles)" data-price="160">500ml PET Box (24 Bottles) — ₹160</option>
+        <option value="200ml PET Box (48 Bottles)" data-price="180">200ml PET Box (48 Bottles) — ₹180</option>
+      </select>
+
+      <label>Quantity</label>
+      <input type="number" id="qty" value="2" min="1" oninput="calcTotal()" />
+
+      <div class="total-box">
+        <span>Estimated Total</span>
+        <span id="totalDisplay">₹120</span>
+      </div>
+
+      <button class="primary" onclick="placeOrder()">Place Order via WhatsApp</button>
+    </div>
+
+    <!-- ORDER HISTORY TAB -->
+    <div id="viewHistory" class="hidden">
+      <label>Enter Registered Mobile Number</label>
+      <input type="tel" id="lookupPhone" placeholder="10-digit mobile number" maxlength="10" />
+      <button class="primary" onclick="fetchHistory()">Check Order History</button>
+      <div id="historyResults"></div>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTqm8O4LOuXBv_8Hn3RP3uVdjmHlyZ9K5cf0GCMGzYA4YhzMgxP9X_RfpRpKotrt5pVA/exec';
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+
+    // Auto-fill saved customer details on repeat visits
+    window.onload = () => {
+      if (localStorage.getItem('wassers_name')) document.getElementById('name').value = localStorage.getItem('wassers_name');
+      if (localStorage.getItem('wassers_phone')) {
+        document.getElementById('phone').value = localStorage.getItem('wassers_phone');
+        document.getElementById('lookupPhone').value = localStorage.getItem('wassers_phone');
+      }
+      if (localStorage.getItem('wassers_area')) document.getElementById('area').value = localStorage.getItem('wassers_area');
+    };
+
+    function switchTab(tab) {
+      document.getElementById('tabOrder').classList.toggle('active', tab === 'order');
+      document.getElementById('tabHistory').classList.toggle('active', tab === 'history');
+      document.getElementById('viewOrder').classList.toggle('hidden', tab !== 'order');
+      document.getElementById('viewHistory').classList.toggle('hidden', tab !== 'history');
+      if (tab === 'history' && document.getElementById('lookupPhone').value.length === 10) fetchHistory();
+    }
+
+    function calcTotal() {
+      const sel = document.getElementById('product');
+      const price = Number(sel.options[sel.selectedIndex].dataset.price);
+      const qty = Number(document.getElementById('qty').value) || 1;
+      document.getElementById('totalDisplay').innerText = '₹' + (price * qty);
+      return price * qty;
+    }
+
+    function placeOrder() {
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.replace(/\D/g, '').slice(-10);
+      const area = document.getElementById('area').value;
+      const product = document.getElementById('product').value;
+      const qty = document.getElementById('qty').value;
+      const total = calcTotal();
+
+      if (!name || phone.length !== 10) {
+        alert('Please enter your Business/Customer Name and a valid 10-digit Mobile Number.');
+        return;
+      }
+
+      // Save customer details on their phone for 1-tap future reorders
+      localStorage.setItem('wassers_name', name);
+      localStorage.setItem('wassers_phone', phone);
+      localStorage.setItem('wassers_area', area);
+      document.getElementById('lookupPhone').value = phone;
+
+      // Save to Google Sheets
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ name, phone, area, product, qty, total })
+      });
+
+      // Open WhatsApp to 8469277377
+      const msg = `*NEW WASSERS & CO. ORDER*%0A` +
+                  `• *Client:* ${name}%0A` +
+                  `• *Phone:* ${phone}%0A` +
+                  `• *Zone:* ${area}%0A` +
+                  `• *Item:* ${product}%0A` +
+                  `• *Qty:* ${qty}%0A` +
+                  `• *Total:* ₹${total}`;
+
+      window.open(`https://wa.me/918469277377?text=${msg}`, '_blank');
+    }
+
+    async function fetchHistory() {
+      const phone = document.getElementById('lookupPhone').value.replace(/\D/g, '').slice(-10);
+      const box = document.getElementById('historyResults');
+      if (phone.length !== 10) {
+        alert('Enter a valid 10-digit mobile number.');
+        return;
+      }
+      box.innerHTML = '<p style="color:#94A3B8;font-size:13px;">Loading your orders...</p>';
+      try {
+        const res = await fetch(`${SCRIPT_URL}?phone=${phone}`);
+        const orders = await res.json();
+        if (!orders.length) {
+          box.innerHTML = '<p style="color:#94A3B8;font-size:13px;">No orders found for this number yet.</p>';
+          return;
+        }
+        box.innerHTML = orders.map(o => `
+          <div class="order-item">
+            <span class="badge">${o.status}</span>
+            <strong style="color:#C5A059;">${o.product} × ${o.qty}</strong><br/>
+            <span style="color:#CBD5E1;">Total: ₹${o.total} • ${o.area}</span><br/>
+            <span style="color:#64748B;font-size:11px;">${o.date}</span>
+          </div>
+        `).join('');
+      } catch (err) {
+        box.innerHTML = '<p style="color:#F87171;font-size:13px;">Could not load history. Please try again.</p>';
+      }
+    }
+  </script>
+</body>
+</html>

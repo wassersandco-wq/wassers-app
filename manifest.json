@@ -1,0 +1,15 @@
+{
+  "name": "Wassers & Co. Water Delivery",
+  "short_name": "Wassers & Co.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0A192F",
+  "theme_color": "#0A192F",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
