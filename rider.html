@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WASSERS Rider Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: #071324; color: #F8FAFC; padding: 18px; max-width: 500px; margin: 0 auto; }
+    h1 { color: #D4AF37; font-size: 20px; margin-bottom: 16px; }
+    .card { background: #0D1E36; border: 1px solid rgba(212,175,55,0.25); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+    input, select { width: 100%; padding: 12px; border-radius: 10px; background: #071324; border: 1px solid rgba(255,255,255,0.15); color: #fff; margin-bottom: 10px; font-size: 14px; }
+    button { width: 100%; padding: 13px; border-radius: 10px; border: none; background: #D4AF37; color: #071324; font-weight: 700; font-size: 14px; cursor: pointer; }
+    .btn-gps { background: #38BDF8; color: #071324; margin-top: 8px; }
+    .btn-done { background: #22C55E; color: #071324; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <h1>🚚 WASSERS & CO. — Delivery Staff</h1>
 
+  <!-- LOGIN BOX -->
+  <div class="card" id="loginBox">
+    <h3 style="margin-bottom:12px;">Rider Login</h3>
+    <input type="email" id="email" placeholder="Rider Email (e.g. rider1@wassersand.co)" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="loginRider()">Sign In</button>
+  </div>
+
+  <!-- RIDER DASHBOARD -->
+  <div id="riderDash" style="display:none;">
+    <div class="card">
+      <h3 style="color:#D4AF37;margin-bottom:10px;">+ Shop-to-Shop New Order</h3>
+      <input type="text" id="shopName" placeholder="Shop / Office Name" />
+      <input type="tel" id="shopPhone" maxlength="10" placeholder="Shop Mobile Number" />
+      <input type="text" id="shopArea" placeholder="Area (e.g. APMC, Begampura, Varachha)" />
+      <select id="packSelect">
+        <option value="20L Bulk Jar (Capsule)|80">20L Bulk Jar — ₹80</option>
+        <option value="1L PET Bottle|20">1L PET Bottle — ₹20</option>
+        <option value="500ml PET Bottle|10">500ml PET Bottle — ₹10</option>
+        <option value="200ml PET Bottle|5">200ml PET Bottle — ₹5</option>
+      </select>
+      <input type="number" id="shopQty" value="5" min="1" placeholder="Quantity" />
+      <select id="payStatus">
+        <option value="Paid Cash to Rider">Paid Cash to Rider</option>
+        <option value="Paid UPI to Wassers">Paid UPI to Wassers</option>
+        <option value="Credit / Monthly Account">Credit / Monthly Account</option>
+      </select>
+      <button onclick="createShopOrder()">Submit Shop Order to Office ✅</button>
+    </div>
+
+    <h3 style="color:#D4AF37;margin:16px 0 10px;">Active Customer Deliveries</h3>
+    <div id="activeDeliveries"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, collection, addDoc, doc, updateDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { firebaseConfig } from "./config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    let gpsWatchId = null;
+
+    window.loginRider = async () => {
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
+      } catch (e) { alert("Login failed: " + e.message); }
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('riderDash').style.display = 'block';
+        loadDeliveries();
+      }
+    });
+
+    window.createShopOrder = async () => {
+      const shop = document.getElementById('shopName').value.trim();
+      const phone = document.getElementById('shopPhone').value.trim();
+      const area = document.getElementById('shopArea').value.trim();
+      const [prod, priceStr] = document.getElementById('packSelect').value.split('|');
+      const qty = parseInt(document.getElementById('shopQty').value);
+      const pay = document.getElementById('payStatus').value;
+
+      if (!shop || !area) { alert("Enter Shop Name and Area."); return; }
+
+      await addDoc(collection(db, "orders"), {
+        customerName: shop,
+        phone
