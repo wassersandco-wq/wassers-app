@@ -1,4 +1,3 @@
-// WASSERS & CO. CENTRAL CONFIGURATION
 export const firebaseConfig = {
   apiKey: "AIzaSyBDFqeVALHqS7HgkyQLHf0ormgEEuQXttE",
   authDomain: "wassers-app.firebaseapp.com",
