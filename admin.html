@@ -18,6 +18,7 @@
     table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
     th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
     th { color: #D4AF37; }
+    #loginStatus { font-size: 12px; color: #F87171; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -26,35 +27,33 @@
   <!-- ADMIN LOGIN -->
   <div class="card" id="adminLogin">
     <h3 style="margin-bottom:10px;">Admin Login</h3>
-    <input type="email" id="admEmail" placeholder="admin@wassersand.co" />
+    <input type="email" id="admEmail" value="admin@wassersand.co" placeholder="admin@wassersand.co" />
     <input type="password" id="admPass" placeholder="Password" />
-    <button onclick="loginAdmin()">Access Backend</button>
+    <button id="loginBtn" type="button">Access Backend</button>
+    <p id="loginStatus"></p>
   </div>
 
   <!-- ADMIN CONTROL PANEL -->
   <div id="adminPanel" style="display:none;">
     <div class="grid">
-      <!-- ADD PRODUCT / SERVICE -->
       <div class="card">
         <h3 style="color:#D4AF37;margin-bottom:10px;">+ Upload Product / Service</h3>
         <input type="text" id="pName" placeholder="Name (e.g. 20L Bulk Jar or Dispenser Service)" />
         <input type="text" id="pSub" placeholder="Subtitle (e.g. Sealed Capsule / Monthly Plan)" />
         <input type="number" id="pPrice" placeholder="Price in ₹ (e.g. 80)" />
         <input type="text" id="pMedia" placeholder="Product Image or GIF URL (optional)" />
-        <button onclick="addProduct()">Publish to App</button>
+        <button id="addProdBtn" type="button">Publish to App</button>
         <div id="catalogList" style="margin-top:14px;"></div>
       </div>
 
-      <!-- UPLOAD HOME VIDEO / GIF -->
       <div class="card">
         <h3 style="color:#D4AF37;margin-bottom:10px;">🎬 Home Page Video / GIF Banner</h3>
         <p style="font-size:12px;color:#94A3B8;margin-bottom:10px;">Paste a direct .MP4 video link or .GIF link to display at the top of the customer app.</p>
         <input type="text" id="heroVideoUrl" placeholder="https://.../wassers-promo.mp4 or .gif" />
-        <button onclick="saveHeroMedia()">Update App Banner</button>
+        <button id="saveMediaBtn" type="button">Update App Banner</button>
       </div>
     </div>
 
-    <!-- LIVE ORDERS FEED (CUSTOMER + RIDER SHOP ORDERS) -->
     <div class="card">
       <h3 style="color:#D4AF37;">📊 Live Incoming Orders (App + Delivery Riders)</h3>
       <div style="overflow-x:auto;">
@@ -79,17 +78,35 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import { firebaseConfig } from "./config.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDFqeVALHqS7HgkyQLHf0ormgEEuQXttE",
+      authDomain: "wassers-app.firebaseapp.com",
+      projectId: "wassers-app",
+      storageBucket: "wassers-app.firebasestorage.app",
+      messagingSenderId: "75361094126",
+      appId: "1:75361094126:web:f151de8abb748e07aba6ff"
+    };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    window.loginAdmin = async () => {
+    const statusEl = document.getElementById('loginStatus');
+
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('admEmail').value.trim();
+      const pass = document.getElementById('admPass').value;
+      statusEl.style.color = "#38BDF8";
+      statusEl.innerText = "Signing in...";
       try {
-        await signInWithEmailAndPassword(auth, document.getElementById('admEmail').value, document.getElementById('admPass').value);
-      } catch (e) { alert("Admin login failed: " + e.message); }
-    };
+        await signInWithEmailAndPassword(auth, email, pass);
+        statusEl.innerText = "";
+      } catch (e) {
+        statusEl.style.color = "#F87171";
+        statusEl.innerText = "Login error: " + e.message;
+      }
+    });
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -100,7 +117,7 @@
       }
     });
 
-    window.addProduct = async () => {
+    document.getElementById('addProdBtn').addEventListener('click', async () => {
       const name = document.getElementById('pName').value.trim();
       const sub = document.getElementById('pSub').value.trim();
       const price = parseInt(document.getElementById('pPrice').value);
@@ -112,13 +129,13 @@
       document.getElementById('pSub').value = "";
       document.getElementById('pPrice').value = "";
       document.getElementById('pMedia').value = "";
-    };
+    });
 
-    window.saveHeroMedia = async () => {
+    document.getElementById('saveMediaBtn').addEventListener('click', async () => {
       const url = document.getElementById('heroVideoUrl').value.trim();
       await setDoc(doc(db, "settings", "home"), { mediaUrl: url });
       alert("Home banner updated!");
-    };
+    });
 
     function listenCatalog() {
       onSnapshot(collection(db, "catalog"), (snap) => {
@@ -126,4 +143,37 @@
         list.innerHTML = "";
         snap.forEach(d => {
           const item = d.data();
-          list.innerHTML += `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid rgba
+          const row = document.createElement('div');
+          row.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid rgba(255,255,255,0.1);font-size:12px;";
+          row.innerHTML = `<span>${item.name} — ₹${item.price}</span>`;
+          const btn = document.createElement('button');
+          btn.className = "del-btn";
+          btn.innerText = "Remove";
+          btn.onclick = () => deleteDoc(doc(db, "catalog", d.id));
+          row.appendChild(btn);
+          list.appendChild(row);
+        });
+      });
+    }
+
+    function listenOrders() {
+      const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+      onSnapshot(q, (snap) => {
+        const tbody = document.getElementById('ordersTable');
+        tbody.innerHTML = "";
+        snap.forEach(d => {
+          const o = d.data();
+          tbody.innerHTML += `<tr>
+            <td><strong>${o.customerName}</strong><br><span style="color:#94A3B8;">${o.phone}</span></td>
+            <td>${o.area}</td>
+            <td>${o.product} × ${o.quantity}</td>
+            <td style="color:#D4AF37;font-weight:700;">₹${o.totalAmount}</td>
+            <td>${o.paymentMode}</td>
+            <td>${o.source}<br><strong>${o.status}</strong></td>
+          </tr>`;
+        });
+      });
+    }
+  </script>
+</body>
+</html>
