@@ -80,14 +80,14 @@
     import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyBDFqeVALHqS7HgkyQLHf0ormgEEuQXttE",
-      authDomain: "wassers-app.firebaseapp.com",
-      projectId: "wassers-app",
-      storageBucket: "wassers-app.firebasestorage.app",
-      messagingSenderId: "75361094126",
-      appId: "1:75361094126:web:f151de8abb748e07aba6ff"
-    };
-
+  apiKey: "AIzaSyBDFqeVALHqS7HgkyQLHf0OrmgEEuQXttE",
+  authDomain: "wassers-app.firebaseapp.com",
+  projectId: "wassers-app",
+  storageBucket: "wassers-app.firebasestorage.app",
+  messagingSenderId: "75361094126",
+  appId: "1:75361094126:web:f151de8abb748e07aba6ff",
+  measurementId: "G-2TV4EGYW19"
+};
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
