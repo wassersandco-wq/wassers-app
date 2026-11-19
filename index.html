@@ -15,7 +15,7 @@
     .prod-img { width: 100%; height: 150px; object-fit: contain; background: #0A192F; border-radius: 10px; padding: 8px; }
     .specs { font-size: 0.78rem; color: var(--cyan); background: rgba(0,180,216,0.12); padding: 4px 8px; border-radius: 6px; display: inline-block; margin: 6px 0; }
     .btn { background: var(--cyan); color: #0A192F; border: none; padding: 10px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 8px; }
-    .btn-outline { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 0.85rem; display: inline-block; }
+    .btn-outline { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 0.85rem; display: inline-block; cursor: pointer; }
     .btn-gold { background: var(--gold); color: #0A192F; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: inline-block; }
     input, select { width: 100%; padding: 10px; margin: 6px 0 12px; border-radius: 8px; border: 1px solid #233554; background: #0A192F; color: white; }
     .hub { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
@@ -29,7 +29,6 @@
     </div>
   </header>
 
-  <!-- LOGIN BOX (Routes Owner -> admin.html, Rider -> rider.html, Client -> stays here) -->
   <div id="loginModal" class="card" style="display:none;">
     <h3 style="margin-top:0; color:var(--cyan);">Account Sign In</h3>
     <input type="email" id="loginEmail" placeholder="Email (Owner, Rider, or Client)" />
@@ -38,11 +37,9 @@
     <p id="loginMsg" style="color:#ef4444; font-size:0.85rem;"></p>
   </div>
 
-  <!-- LIVE PRODUCT CATALOG -->
   <h2 style="margin-top:20px;">Premium Drinking Water Range</h2>
   <div id="catalogGrid" class="grid">Loading Wassers & Co. catalog...</div>
 
-  <!-- INSTANT ORDER & SURAT DELIVERY FORM -->
   <div class="card" id="checkoutSection" style="display:none;">
     <h3 style="margin-top:0; color:var(--cyan);">Complete Your Order: <span id="selectedProdName"></span></h3>
     <input type="text" id="custName" placeholder="Your Full Name / Business Name" />
@@ -58,7 +55,6 @@
     <button class="btn" id="placeOrderBtn">Confirm Order & Pay via UPI / Cash</button>
   </div>
 
-  <!-- GOOGLE REVIEWS, WEBSITE & CONCIERGE HUB -->
   <div class="card hub">
     <div>
       <strong>Wassers & Co. Surat</strong><br>
@@ -72,26 +68,12 @@
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { auth, db } from "./firebase-config.js";
+    import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { doc, getDoc, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-      const firebaseConfig = {
-    apiKey: "AIzaSyBDFqeVALHqS7HgkyQLHf0OrmgEEuQXttE",
-    authDomain: "wassers-app.firebaseapp.com",
-    projectId: "wassers-app",
-    storageBucket: "wassers-app.firebasestorage.app",
-    messagingSenderId: "75361094126",
-    appId: "1:75361094126:web:f151de8abb748e07aba6ff",
-    measurementId: "G-2TV4EGYW19"
-  };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
     let selectedProduct = null;
 
-    // 1. SMART ROLE ROUTING ON LOGIN
     onAuthStateChanged(auth, async (user) => {
       if (!user) return;
       const snap = await getDoc(doc(db, "users", user.uid));
@@ -115,7 +97,6 @@
       }
     };
 
-    // 2. LOAD LIVE PRODUCTS FROM ADMIN PANEL
     onSnapshot(collection(db, "products"), (snap) => {
       const grid = document.getElementById("catalogGrid");
       grid.innerHTML = snap.empty ? "<p>Catalog updating soon...</p>" : "";
@@ -139,10 +120,9 @@
       document.getElementById("checkoutSection").scrollIntoView({ behavior: "smooth" });
     };
 
-    // 3. SAVE ORDER TO FIRESTORE & OPEN WHATSAPP CONFIRMATION
     document.getElementById("placeOrderBtn").onclick = async () => {
       if (!selectedProduct) return;
-      const orderData = {
+      await addDoc(collection(db, "orders"), {
         customerName: document.getElementById("custName").value,
         customerPhone: document.getElementById("custPhone").value,
         zone: document.getElementById("custZone").value,
@@ -152,13 +132,11 @@
         paymentStatus: "Pending UPI/COD",
         deliveryStatus: "Pending",
         createdAt: serverTimestamp()
-      };
-      await addDoc(collection(db, "orders"), orderData);
+      });
       alert("Order placed! Our Surat dispatch team has received it.");
       document.getElementById("checkoutSection").style.display = "none";
     };
 
-    // 4. SYNC GOOGLE REVIEW & WEBSITE LINKS
     onSnapshot(doc(db, "settings", "company_info"), (snap) => {
       if (snap.exists()) {
         if (snap.data().googleReviewUrl) document.getElementById("googleReviewBtn").href = snap.data().googleReviewUrl;
