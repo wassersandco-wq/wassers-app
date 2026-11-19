@@ -3,190 +3,169 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wassers & Co. | Surat Water Delivery</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#0A192F" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <link rel="apple-touch-icon" href="icon-512.png" />
+  <title>Wassers & Co. | Pure Hydration Delivery Surat</title>
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; background: #0A192F; color: #F8FAFC; margin: 0; padding: 16px; }
-    .container { max-width: 440px; margin: auto; background: #112240; padding: 22px; border-radius: 16px; border: 1px solid #C5A059; }
-    .header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-    .header img { width: 46px; height: 46px; border-radius: 10px; object-fit: cover; border: 1px solid #C5A059; }
-    h1 { color: #C5A059; font-size: 20px; margin: 0; letter-spacing: 1px; }
-    p.sub { color: #94A3B8; font-size: 12px; margin: 2px 0 0; }
-    .tabs { display: flex; gap: 8px; margin-bottom: 18px; }
-    .tab { flex: 1; padding: 10px; text-align: center; background: #0A192F; color: #94A3B8; border: 1px solid #233554; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; }
-    .tab.active { background: #C5A059; color: #0A192F; border-color: #C5A059; }
-    label { display: block; font-size: 13px; margin: 12px 0 5px; color: #CBD5E1; }
-    input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #233554; background: #0A192F; color: #fff; font-size: 15px; box-sizing: border-box; }
-    .total-box { background: #0A192F; padding: 14px; border-radius: 8px; margin-top: 16px; display: flex; justify-content: space-between; font-weight: bold; color: #C5A059; font-size: 17px; }
-    button.primary { width: 100%; margin-top: 16px; padding: 14px; background: #C5A059; color: #0A192F; font-weight: 700; font-size: 16px; border: none; border-radius: 10px; cursor: pointer; }
-    .order-item { background: #0A192F; border: 1px solid #233554; padding: 12px; border-radius: 10px; margin-top: 12px; font-size: 13px; }
-    .badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; background: #1E3A8A; color: #93C5FD; float: right; }
-    .hidden { display: none; }
+    :root { --navy: #0A192F; --card: #112240; --cyan: #00B4D8; --gold: #F59E0B; --text: #E6F1FF; --muted: #8892B0; }
+    * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { margin: 0; background: var(--navy); color: var(--text); padding: 16px; max-width: 960px; margin: auto; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #233554; }
+    .brand { font-size: 1.4rem; font-weight: 800; color: var(--cyan); letter-spacing: 1px; }
+    .card { background: var(--card); padding: 18px; border-radius: 14px; border: 1px solid #233554; margin-top: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; }
+    .prod-img { width: 100%; height: 150px; object-fit: contain; background: #0A192F; border-radius: 10px; padding: 8px; }
+    .specs { font-size: 0.78rem; color: var(--cyan); background: rgba(0,180,216,0.12); padding: 4px 8px; border-radius: 6px; display: inline-block; margin: 6px 0; }
+    .btn { background: var(--cyan); color: #0A192F; border: none; padding: 10px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 8px; }
+    .btn-outline { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 0.85rem; display: inline-block; }
+    .btn-gold { background: var(--gold); color: #0A192F; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: inline-block; }
+    input, select { width: 100%; padding: 10px; margin: 6px 0 12px; border-radius: 8px; border: 1px solid #233554; background: #0A192F; color: white; }
+    .hub { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <img src="icon-512.png" alt="Wassers & Co." onerror="this.style.display='none'" />
-      <div>
-        <h1>WASSERS & CO.</h1>
-        <p class="sub">Commercial & Bulk Drinking Water • Surat</p>
-      </div>
+  <header>
+    <div class="brand">WASSERS & CO.</div>
+    <div id="authHeader">
+      <button class="btn-outline" onclick="document.getElementById('loginModal').style.display='block'">Staff / Client Login</button>
     </div>
+  </header>
 
-    <div class="tabs">
-      <div class="tab active" id="tabOrder" onclick="switchTab('order')">New Order</div>
-      <div class="tab" id="tabHistory" onclick="switchTab('history')">My Orders</div>
+  <!-- LOGIN BOX (Routes Owner -> admin.html, Rider -> rider.html, Client -> stays here) -->
+  <div id="loginModal" class="card" style="display:none;">
+    <h3 style="margin-top:0; color:var(--cyan);">Account Sign In</h3>
+    <input type="email" id="loginEmail" placeholder="Email (Owner, Rider, or Client)" />
+    <input type="password" id="loginPass" placeholder="Password" />
+    <button class="btn" id="loginBtn">Sign In</button>
+    <p id="loginMsg" style="color:#ef4444; font-size:0.85rem;"></p>
+  </div>
+
+  <!-- LIVE PRODUCT CATALOG -->
+  <h2 style="margin-top:20px;">Premium Drinking Water Range</h2>
+  <div id="catalogGrid" class="grid">Loading Wassers & Co. catalog...</div>
+
+  <!-- INSTANT ORDER & SURAT DELIVERY FORM -->
+  <div class="card" id="checkoutSection" style="display:none;">
+    <h3 style="margin-top:0; color:var(--cyan);">Complete Your Order: <span id="selectedProdName"></span></h3>
+    <input type="text" id="custName" placeholder="Your Full Name / Business Name" />
+    <input type="tel" id="custPhone" placeholder="Mobile Number (WhatsApp)" />
+    <select id="custZone">
+      <option value="Begampura">Begampura, Surat</option>
+      <option value="Vesu">Vesu, Surat</option>
+      <option value="Adajan">Adajan, Surat</option>
+      <option value="Piplod">Piplod, Surat</option>
+      <option value="Ring Road">Ring Road / Textile Market, Surat</option>
+    </select>
+    <input type="text" id="custAddress" placeholder="Full Street / Shop / Apartment Address" />
+    <button class="btn" id="placeOrderBtn">Confirm Order & Pay via UPI / Cash</button>
+  </div>
+
+  <!-- GOOGLE REVIEWS, WEBSITE & CONCIERGE HUB -->
+  <div class="card hub">
+    <div>
+      <strong>Wassers & Co. Surat</strong><br>
+      <small style="color:var(--muted);">24/7 Bulk & Commercial Hydration Supply</small>
     </div>
-
-    <!-- NEW ORDER TAB -->
-    <div id="viewOrder">
-      <label>Business / Customer Name</label>
-      <input type="text" id="name" placeholder="e.g. Silver Trade Center Office 402" />
-
-      <label>10-Digit Mobile Number</label>
-      <input type="tel" id="phone" placeholder="e.g. 9876543210" maxlength="10" />
-
-      <label>Delivery Zone</label>
-      <select id="area">
-        <option value="APMC / Krushi Bazaar">APMC / Krushi Bazaar</option>
-        <option value="Begampura">Begampura</option>
-        <option value="Varachha / Silver Trade Center">Varachha / Silver Trade Center</option>
-        <option value="Other Surat Area">Other Surat Area</option>
-      </select>
-
-      <label>Select Pack / Jar</label>
-      <select id="product" onchange="calcTotal()">
-        <option value="20L Bulk Jar (Capsule)" data-price="80">20L Bulk Jar (Capsule) — ₹80</option>
-        <option value="10L Bulk Jar" data-price="40">10L Bulk Jar — ₹40</option>
-        <option value="5L Jar" data-price="30">5L Jar — ₹30</option>
-        <option value="1L PET Box (12 Bottles)" data-price="140">1L PET Box — ₹20</option>
-        <option value="500ml PET Box (24 Bottles)" data-price="160">500ml PET Box — ₹10</option>
-        <option value="200ml PET Box (48 Bottles)" data-price="180">200ml PET Box — ₹5</option>
-      </select>
-
-      <label>Quantity</label>
-      <input type="number" id="qty" value="2" min="1" oninput="calcTotal()" />
-
-      <div class="total-box">
-        <span>Estimated Total</span>
-        <span id="totalDisplay">₹120</span>
-      </div>
-
-      <button class="primary" onclick="placeOrder()">Place Order via WhatsApp</button>
-    </div>
-
-    <!-- ORDER HISTORY TAB -->
-    <div id="viewHistory" class="hidden">
-      <label>Enter Registered Mobile Number</label>
-      <input type="tel" id="lookupPhone" placeholder="10-digit mobile number" maxlength="10" />
-      <button class="primary" onclick="fetchHistory()">Check Order History</button>
-      <div id="historyResults"></div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <a id="googleReviewBtn" href="https://g.page/r/" target="_blank" class="btn-gold">★ Rate Us on Google</a>
+      <a id="websiteBtn" href="https://wassersand.co" target="_blank" class="btn-outline">Visit wassersand.co</a>
+      <a href="https://wa.me/918469277377?text=Hello%20Wassers%20%26%20Co.%2C%20I%20need%20water%20delivery%20in%20Surat." target="_blank" class="btn-outline">WhatsApp 846-WASSERS</a>
     </div>
   </div>
 
-  <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTqm8O4LOuXBv_8Hn3RP3uVdjmHlyZ9K5cf0GCMGzYA4YhzMgxP9X_RfpRpKotrt5pVA/exec';
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
-    }
+    const firebaseConfig = {
+      const firebaseConfig = {
+    apiKey: "AIzaSyBDFqeVALHqS7HgkyQLHf0OrmgEEuQXttE",
+    authDomain: "wassers-app.firebaseapp.com",
+    projectId: "wassers-app",
+    storageBucket: "wassers-app.firebasestorage.app",
+    messagingSenderId: "75361094126",
+    appId: "1:75361094126:web:f151de8abb748e07aba6ff",
+    measurementId: "G-2TV4EGYW19"
+  };
 
-    // Auto-fill saved customer details on repeat visits
-    window.onload = () => {
-      if (localStorage.getItem('wassers_name')) document.getElementById('name').value = localStorage.getItem('wassers_name');
-      if (localStorage.getItem('wassers_phone')) {
-        document.getElementById('phone').value = localStorage.getItem('wassers_phone');
-        document.getElementById('lookupPhone').value = localStorage.getItem('wassers_phone');
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    let selectedProduct = null;
+
+    // 1. SMART ROLE ROUTING ON LOGIN
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const role = snap.exists() ? snap.data().role : "customer";
+      if (role === "owner" || role === "admin") {
+        window.location.href = "/admin.html";
+      } else if (role === "rider") {
+        window.location.href = "/rider.html";
+      } else {
+        document.getElementById("loginModal").style.display = "none";
+        document.getElementById("authHeader").innerHTML = `<button class="btn-outline" id="signOutBtn">Sign Out</button>`;
+        document.getElementById("signOutBtn").onclick = () => signOut(auth);
       }
-      if (localStorage.getItem('wassers_area')) document.getElementById('area').value = localStorage.getItem('wassers_area');
+    });
+
+    document.getElementById("loginBtn").onclick = async () => {
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById("loginEmail").value, document.getElementById("loginPass").value);
+      } catch (e) {
+        document.getElementById("loginMsg").innerText = "Invalid credentials: " + e.message;
+      }
     };
 
-    function switchTab(tab) {
-      document.getElementById('tabOrder').classList.toggle('active', tab === 'order');
-      document.getElementById('tabHistory').classList.toggle('active', tab === 'history');
-      document.getElementById('viewOrder').classList.toggle('hidden', tab !== 'order');
-      document.getElementById('viewHistory').classList.toggle('hidden', tab !== 'history');
-      if (tab === 'history' && document.getElementById('lookupPhone').value.length === 10) fetchHistory();
-    }
-
-    function calcTotal() {
-      const sel = document.getElementById('product');
-      const price = Number(sel.options[sel.selectedIndex].dataset.price);
-      const qty = Number(document.getElementById('qty').value) || 1;
-      document.getElementById('totalDisplay').innerText = '₹' + (price * qty);
-      return price * qty;
-    }
-
-    function placeOrder() {
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.replace(/\D/g, '').slice(-10);
-      const area = document.getElementById('area').value;
-      const product = document.getElementById('product').value;
-      const qty = document.getElementById('qty').value;
-      const total = calcTotal();
-
-      if (!name || phone.length !== 10) {
-        alert('Please enter your Business/Customer Name and a valid 10-digit Mobile Number.');
-        return;
-      }
-
-      // Save customer details on their phone for 1-tap future reorders
-      localStorage.setItem('wassers_name', name);
-      localStorage.setItem('wassers_phone', phone);
-      localStorage.setItem('wassers_area', area);
-      document.getElementById('lookupPhone').value = phone;
-
-      // Save to Google Sheets
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify({ name, phone, area, product, qty, total })
+    // 2. LOAD LIVE PRODUCTS FROM ADMIN PANEL
+    onSnapshot(collection(db, "products"), (snap) => {
+      const grid = document.getElementById("catalogGrid");
+      grid.innerHTML = snap.empty ? "<p>Catalog updating soon...</p>" : "";
+      snap.forEach((d) => {
+        const p = d.data();
+        grid.innerHTML += `
+          <div class="card" style="margin-top:0;">
+            <img src="${p.mediaUrl || './logo.png'}" class="prod-img" alt="${p.name}" />
+            <h3 style="margin:10px 0 4px;">${p.name}</h3>
+            <div class="specs">TDS: ${p.tds || '65 PPM'} • pH: ${p.ph || '7.4'}</div>
+            <div style="font-size:1.2rem; font-weight:bold; color:var(--cyan);">₹${p.price} <small style="font-size:0.8rem; color:var(--muted);">/ ${p.volume || 'unit'}</small></div>
+            <button class="btn" onclick='window.selectItem(${JSON.stringify({id: d.id, name: p.name, price: p.price})})'>Order Now</button>
+          </div>`;
       });
+    });
 
-      // Open WhatsApp to 8469277377
-      const msg = `*NEW WASSERS & CO. ORDER*%0A` +
-                  `• *Client:* ${name}%0A` +
-                  `• *Phone:* ${phone}%0A` +
-                  `• *Zone:* ${area}%0A` +
-                  `• *Item:* ${product}%0A` +
-                  `• *Qty:* ${qty}%0A` +
-                  `• *Total:* ₹${total}`;
+    window.selectItem = (prod) => {
+      selectedProduct = prod;
+      document.getElementById("selectedProdName").innerText = `${prod.name} (₹${prod.price})`;
+      document.getElementById("checkoutSection").style.display = "block";
+      document.getElementById("checkoutSection").scrollIntoView({ behavior: "smooth" });
+    };
 
-      window.open(`https://wa.me/918469277377?text=${msg}`, '_blank');
-    }
+    // 3. SAVE ORDER TO FIRESTORE & OPEN WHATSAPP CONFIRMATION
+    document.getElementById("placeOrderBtn").onclick = async () => {
+      if (!selectedProduct) return;
+      const orderData = {
+        customerName: document.getElementById("custName").value,
+        customerPhone: document.getElementById("custPhone").value,
+        zone: document.getElementById("custZone").value,
+        address: document.getElementById("custAddress").value,
+        items: [selectedProduct],
+        totalAmount: selectedProduct.price,
+        paymentStatus: "Pending UPI/COD",
+        deliveryStatus: "Pending",
+        createdAt: serverTimestamp()
+      };
+      await addDoc(collection(db, "orders"), orderData);
+      alert("Order placed! Our Surat dispatch team has received it.");
+      document.getElementById("checkoutSection").style.display = "none";
+    };
 
-    async function fetchHistory() {
-      const phone = document.getElementById('lookupPhone').value.replace(/\D/g, '').slice(-10);
-      const box = document.getElementById('historyResults');
-      if (phone.length !== 10) {
-        alert('Enter a valid 10-digit mobile number.');
-        return;
+    // 4. SYNC GOOGLE REVIEW & WEBSITE LINKS
+    onSnapshot(doc(db, "settings", "company_info"), (snap) => {
+      if (snap.exists()) {
+        if (snap.data().googleReviewUrl) document.getElementById("googleReviewBtn").href = snap.data().googleReviewUrl;
+        if (snap.data().websiteUrl) document.getElementById("websiteBtn").href = snap.data().websiteUrl;
       }
-      box.innerHTML = '<p style="color:#94A3B8;font-size:13px;">Loading your orders...</p>';
-      try {
-        const res = await fetch(`${SCRIPT_URL}?phone=${phone}`);
-        const orders = await res.json();
-        if (!orders.length) {
-          box.innerHTML = '<p style="color:#94A3B8;font-size:13px;">No orders found for this number yet.</p>';
-          return;
-        }
-        box.innerHTML = orders.map(o => `
-          <div class="order-item">
-            <span class="badge">${o.status}</span>
-            <strong style="color:#C5A059;">${o.product} × ${o.qty}</strong><br/>
-            <span style="color:#CBD5E1;">Total: ₹${o.total} • ${o.area}</span><br/>
-            <span style="color:#64748B;font-size:11px;">${o.date}</span>
-          </div>
-        `).join('');
-      } catch (err) {
-        box.innerHTML = '<p style="color:#F87171;font-size:13px;">Could not load history. Please try again.</p>';
-      }
-    }
+    });
   </script>
 </body>
 </html>
