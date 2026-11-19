@@ -3,177 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WASSERS & CO. Admin Backend</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Wassers & Co. | Owner Command Center</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background: #071324; color: #F8FAFC; padding: 20px; max-width: 850px; margin: 0 auto; }
-    h1 { color: #D4AF37; font-size: 22px; margin-bottom: 18px; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media(max-width:650px){ .grid { grid-template-columns: 1fr; } }
-    .card { background: #0D1E36; border: 1px solid rgba(212,175,55,0.25); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
-    input { width: 100%; padding: 11px; border-radius: 10px; background: #071324; border: 1px solid rgba(255,255,255,0.15); color: #fff; margin-bottom: 10px; font-size: 13px; }
-    button { padding: 11px 16px; border-radius: 10px; border: none; background: #D4AF37; color: #071324; font-weight: 700; cursor: pointer; font-size: 13px; }
-    .del-btn { background: #EF4444; color: #fff; padding: 5px 10px; font-size: 11px; }
-    table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
-    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-    th { color: #D4AF37; }
-    #loginStatus { font-size: 12px; color: #F87171; margin-top: 8px; }
+    :root { --navy: #0A192F; --card: #112240; --cyan: #00B4D8; --text: #E6F1FF; --muted: #8892B0; }
+    * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { margin: 0; background: var(--navy); color: var(--text); padding: 16px; }
+    header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid #233554; }
+    h1 { font-size: 1.3rem; margin: 0; color: var(--cyan); }
+    .btn { background: var(--cyan); color: #0A192F; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .btn-danger { background: #ef4444; color: white; padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 20px; }
+    .card { background: var(--card); padding: 20px; border-radius: 14px; border: 1px solid #233554; }
+    h2 { margin-top: 0; font-size: 1.1rem; color: var(--cyan); }
+    input { width: 100%; padding: 10px; margin: 6px 0 14px; border-radius: 8px; border: 1px solid #233554; background: #0A192F; color: white; }
+    .item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #233554; }
+    .badge { background: rgba(0,180,216,0.15); color: var(--cyan); padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; }
   </style>
 </head>
 <body>
-  <h1>👑 WASSERS & CO. — Office Backend</h1>
+  <header>
+    <h1>WASSERS & CO. — Owner Control</h1>
+    <button class="btn-danger" id="logoutBtn">Logout</button>
+  </header>
 
-  <!-- ADMIN LOGIN -->
-  <div class="card" id="adminLogin">
-    <h3 style="margin-bottom:10px;">Admin Login</h3>
-    <input type="email" id="admEmail" value="admin@wassersand.co" placeholder="admin@wassersand.co" />
-    <input type="password" id="admPass" placeholder="Password" />
-    <button id="loginBtn" type="button">Access Backend</button>
-    <p id="loginStatus"></p>
-  </div>
-
-  <!-- ADMIN CONTROL PANEL -->
-  <div id="adminPanel" style="display:none;">
-    <div class="grid">
-      <div class="card">
-        <h3 style="color:#D4AF37;margin-bottom:10px;">+ Upload Product / Service</h3>
-        <input type="text" id="pName" placeholder="Name (e.g. 20L Bulk Jar or Dispenser Service)" />
-        <input type="text" id="pSub" placeholder="Subtitle (e.g. Sealed Capsule / Monthly Plan)" />
-        <input type="number" id="pPrice" placeholder="Price in ₹ (e.g. 80)" />
-        <input type="text" id="pMedia" placeholder="Product Image or GIF URL (optional)" />
-        <button id="addProdBtn" type="button">Publish to App</button>
-        <div id="catalogList" style="margin-top:14px;"></div>
-      </div>
-
-      <div class="card">
-        <h3 style="color:#D4AF37;margin-bottom:10px;">🎬 Home Page Video / GIF Banner</h3>
-        <p style="font-size:12px;color:#94A3B8;margin-bottom:10px;">Paste a direct .MP4 video link or .GIF link to display at the top of the customer app.</p>
-        <input type="text" id="heroVideoUrl" placeholder="https://.../wassers-promo.mp4 or .gif" />
-        <button id="saveMediaBtn" type="button">Update App Banner</button>
-      </div>
+  <div class="grid">
+    <!-- 1. ADD PRODUCT & QUALITY SPECS -->
+    <div class="card">
+      <h2>Add / Update Water SKU</h2>
+      <input type="text" id="pName" placeholder="Product Name (e.g., Wassers 20L Capsule)" />
+      <input type="number" id="pPrice" placeholder="Price in ₹ (e.g., 80)" />
+      <input type="text" id="pVolume" placeholder="Volume (e.g., 20L / 1L / 500ml / 200ml)" />
+      <input type="text" id="pTds" placeholder="TDS Level (e.g., 65 PPM Balanced)" />
+      <input type="text" id="pPh" placeholder="pH Level (e.g., 7.4 Alkaline)" />
+      <input type="text" id="pMediaUrl" placeholder="Image/GIF Path (e.g., ./20l-capsule.png)" />
+      <button class="btn" id="saveProductBtn" style="width:100%;">Publish to Live App</button>
+      <p id="uploadStatus" style="color:var(--cyan); font-size:0.85rem;"></p>
     </div>
 
+    <!-- 2. LIVE PRODUCT CATALOG -->
     <div class="card">
-      <h3 style="color:#D4AF37;">📊 Live Incoming Orders (App + Delivery Riders)</h3>
-      <div style="overflow-x:auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Customer / Shop</th>
-              <th>Area</th>
-              <th>Item & Qty</th>
-              <th>Total</th>
-              <th>Payment</th>
-              <th>Source / Status</th>
-            </tr>
-          </thead>
-          <tbody id="ordersTable"></tbody>
-        </table>
-      </div>
+      <h2>Active Catalog & Stock</h2>
+      <div id="productList">Loading catalog...</div>
+    </div>
+
+    <!-- 3. RIDER PERMISSIONS & TEAM -->
+    <div class="card">
+      <h2>Rider Permissions Control</h2>
+      <div id="riderList">Loading riders...</div>
+    </div>
+
+    <!-- 4. SURAT ZONES & BRAND LINKS -->
+    <div class="card">
+      <h2>Google Reviews & Website Links</h2>
+      <input type="url" id="reviewUrl" placeholder="Google Review Link (https://g.page/r/...)" />
+      <input type="url" id="webUrl" value="https://wassersand.co" />
+      <button class="btn" id="saveSettingsBtn" style="width:100%;">Update App Links</button>
     </div>
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, collection, addDoc, onSnapshot, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
-  apiKey: "AIzaSyBDFqeVALHqS7HgkyQLHf0OrmgEEuQXttE",
-  authDomain: "wassers-app.firebaseapp.com",
-  projectId: "wassers-app",
-  storageBucket: "wassers-app.firebasestorage.app",
-  messagingSenderId: "75361094126",
-  appId: "1:75361094126:web:f151de8abb748e07aba6ff",
-  measurementId: "G-2TV4EGYW19"
-};
+      // PASTE YOUR WASSERS & CO. FIREBASE CONFIG HERE
+    };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const statusEl = document.getElementById('loginStatus');
-
-    document.getElementById('loginBtn').addEventListener('click', async () => {
-      const email = document.getElementById('admEmail').value.trim();
-      const pass = document.getElementById('admPass').value;
-      statusEl.style.color = "#38BDF8";
-      statusEl.innerText = "Signing in...";
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-        statusEl.innerText = "";
-      } catch (e) {
-        statusEl.style.color = "#F87171";
-        statusEl.innerText = "Login error: " + e.message;
-      }
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return (window.location.href = "/index.html");
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const role = snap.exists() ? snap.data().role : "customer";
+      if (role !== "owner" && role !== "admin") window.location.href = "/index.html";
     });
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        document.getElementById('adminLogin').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-        listenOrders();
-        listenCatalog();
-      }
-    });
+    document.getElementById("logoutBtn").onclick = () => signOut(auth);
 
-    document.getElementById('addProdBtn').addEventListener('click', async () => {
-      const name = document.getElementById('pName').value.trim();
-      const sub = document.getElementById('pSub').value.trim();
-      const price = parseInt(document.getElementById('pPrice').value);
-      const mediaUrl = document.getElementById('pMedia').value.trim();
-      if (!name || !price) { alert("Enter product name and price."); return; }
-
-      await addDoc(collection(db, "catalog"), { name, sub, price, mediaUrl, icon: "💧" });
-      document.getElementById('pName').value = "";
-      document.getElementById('pSub').value = "";
-      document.getElementById('pPrice').value = "";
-      document.getElementById('pMedia').value = "";
-    });
-
-    document.getElementById('saveMediaBtn').addEventListener('click', async () => {
-      const url = document.getElementById('heroVideoUrl').value.trim();
-      await setDoc(doc(db, "settings", "home"), { mediaUrl: url });
-      alert("Home banner updated!");
-    });
-
-    function listenCatalog() {
-      onSnapshot(collection(db, "catalog"), (snap) => {
-        const list = document.getElementById('catalogList');
-        list.innerHTML = "";
-        snap.forEach(d => {
-          const item = d.data();
-          const row = document.createElement('div');
-          row.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid rgba(255,255,255,0.1);font-size:12px;";
-          row.innerHTML = `<span>${item.name} — ₹${item.price}</span>`;
-          const btn = document.createElement('button');
-          btn.className = "del-btn";
-          btn.innerText = "Remove";
-          btn.onclick = () => deleteDoc(doc(db, "catalog", d.id));
-          row.appendChild(btn);
-          list.appendChild(row);
-        });
+    document.getElementById("saveProductBtn").onclick = async () => {
+      const status = document.getElementById("uploadStatus");
+      status.innerText = "Publishing SKU...";
+      await addDoc(collection(db, "products"), {
+        name: document.getElementById("pName").value,
+        price: Number(document.getElementById("pPrice").value),
+        volume: document.getElementById("pVolume").value,
+        tds: document.getElementById("pTds").value,
+        ph: document.getElementById("pPh").value,
+        mediaUrl: document.getElementById("pMediaUrl").value || "./logo.png",
+        inStock: true,
+        updatedAt: serverTimestamp()
       });
-    }
+      status.innerText = "Published to live store!";
+    };
 
-    function listenOrders() {
-      const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
-      onSnapshot(q, (snap) => {
-        const tbody = document.getElementById('ordersTable');
-        tbody.innerHTML = "";
-        snap.forEach(d => {
-          const o = d.data();
-          tbody.innerHTML += `<tr>
-            <td><strong>${o.customerName}</strong><br><span style="color:#94A3B8;">${o.phone}</span></td>
-            <td>${o.area}</td>
-            <td>${o.product} × ${o.quantity}</td>
-            <td style="color:#D4AF37;font-weight:700;">₹${o.totalAmount}</td>
-            <td>${o.paymentMode}</td>
-            <td>${o.source}<br><strong>${o.status}</strong></td>
-          </tr>`;
-        });
+    onSnapshot(collection(db, "products"), (snap) => {
+      const list = document.getElementById("productList");
+      list.innerHTML = "";
+      snap.forEach((d) => {
+        const p = d.data();
+        list.innerHTML += `
+          <div class="item-row">
+            <div><strong>${p.name}</strong><br><span class="badge">₹${p.price} • TDS: ${p.tds}</span></div>
+            <button class="btn-danger" onclick="window.deleteProd('${d.id}')">Delete</button>
+          </div>`;
       });
-    }
+    });
+    window.deleteProd = (id) => deleteDoc(doc(db, "products", id));
+
+    onSnapshot(collection(db, "users"), (snap) => {
+      const list = document.getElementById("riderList");
+      list.innerHTML = "";
+      snap.forEach((d) => {
+        const u = d.data();
+        if (u.role === "rider") {
+          list.innerHTML += `
+            <div class="item-row">
+              <div><strong>${u.name || "Rider"}</strong><br><small>Cash Collection: ${u.canCollectCash ? "Allowed" : "Blocked"}</small></div>
+              <button class="btn" onclick="window.toggleCash('${d.id}', ${!u.canCollectCash})">Toggle Cash</button>
+            </div>`;
+        }
+      });
+    });
+    window.toggleCash = (uid, val) => updateDoc(doc(db, "users", uid), { canCollectCash: val });
+
+    document.getElementById("saveSettingsBtn").onclick = async () => {
+      await setDoc(doc(db, "settings", "company_info"), {
+        googleReviewUrl: document.getElementById("reviewUrl").value,
+        websiteUrl: document.getElementById("webUrl").value,
+        whatsappNumber: "918469277377"
+      }, { merge: true });
+      alert("Company links updated!");
+    };
   </script>
 </body>
 </html>
