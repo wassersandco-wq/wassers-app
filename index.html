@@ -3,249 +3,411 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wassers & Co. | Clean Water, Clear Promise</title>
+  <title>Wassers &amp; Co. | Clean Water, Clear Promise</title>
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#FFFFFF" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <style>
     :root {
-      --bg-page: #F8FAFC;
       --white: #FFFFFF;
       --navy: #0B192C;
       --gold: #C59B27;
-      --gold-dark: #A67C1E;
-      --champagne: #F5EFE6;
-      --aqua: #0096C7;
-      --text-main: #0B192C;
+      --gold-bright: #D4AF37;
+      --gold-dark: #9A7418;
+      --champagne: #F8F3EA;
+      --champagne-deep: #EFE3CE;
+      --aqua-light: #E0F7FA;
+      --text-dark: #0B192C;
       --text-muted: #5A6A85;
-      --border: #E2E8F0;
+      --border: #E5E7EB;
     }
     * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-    body { margin: 0; background: var(--bg-page); color: var(--text-main); }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--white); color: var(--text-dark); overflow-x: hidden; }
 
-    /* Top Mai Dubai-Style Crisp Header */
-    .top-bar {
+    /* 1. Mai Dubai-Style Two-Tier Crisp White Header */
+    .site-header {
       background: var(--white);
-      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 12px rgba(11, 25, 44, 0.05);
+      z-index: 1000;
+      box-shadow: 0 2px 16px rgba(11, 25, 44, 0.06);
     }
-    .nav-container {
-      max-width: 1180px;
+    .header-inner {
+      max-width: 1280px;
       margin: auto;
-      padding: 12px 20px;
+      padding: 10px 28px 14px;
+    }
+    .header-top-utility {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 22px;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+    }
+    .utility-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .utility-link:hover { color: var(--gold); }
+    .call-widget {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--navy);
+    }
+    .call-widget-text { text-align: right; line-height: 1.1; }
+    .call-widget-label { font-size: 0.72rem; color: var(--text-muted); display: block; }
+    .call-widget-number { font-size: 1.35rem; font-weight: 800; color: var(--navy); letter-spacing: 0.5px; }
+
+    .header-main-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
+      gap: 20px;
     }
-    .brand-wrap { display: flex; flex-direction: column; }
-    .brand-title {
-      font-size: 1.55rem;
+    .brand-logo-block { text-decoration: none; display: flex; flex-direction: column; }
+    .brand-wordmark {
+      font-size: 1.9rem;
       font-weight: 900;
       color: var(--gold);
-      letter-spacing: 1.5px;
-      line-height: 1.1;
+      letter-spacing: 2px;
+      line-height: 1;
     }
-    .brand-tagline {
+    .brand-subtag {
       font-size: 0.78rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--navy);
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      margin-top: 3px;
       font-style: normal;
-      margin-top: 2px;
     }
-    .nav-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-    .nav-links a {
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .main-nav a {
       text-decoration: none;
       color: var(--navy);
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.96rem;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--gold); }
-    .hotline-box { text-align: right; line-height: 1.15; }
-    .hotline-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; display: block; }
-    .hotline-num { font-size: 1.15rem; font-weight: 800; color: var(--navy); text-decoration: none; }
-    .pill-btn {
+    .main-nav a:hover { color: var(--gold); }
+    .nav-pill-cta {
       border: 1.5px solid var(--navy);
       background: var(--white);
       color: var(--navy);
-      padding: 8px 18px;
+      padding: 9px 22px;
       border-radius: 999px;
       font-weight: 700;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.2s;
     }
-    .pill-btn:hover { background: var(--navy); color: var(--white); }
+    .nav-pill-cta:hover { background: var(--navy); color: var(--white); }
 
-    /* Full-Width Commercial Hero Banner (Mai Dubai Layout + Luxury Champagne/Gold Palette) */
-    .hero {
-      background: linear-gradient(125deg, #FFFDF9 0%, #F5EFE6 48%, #EADBC8 100%);
-      border-bottom: 1px solid #E5D5BE;
-      padding: 44px 20px;
+    /* 2. Full-Bleed Mai Dubai-Style Hero Banner */
+    .hero-banner {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      background:
+        radial-gradient(circle at 22% 55%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 48%),
+        radial-gradient(circle at 78% 25%, rgba(212, 175, 55, 0.22) 0%, transparent 45%),
+        linear-gradient(115deg, #FFFDF9 0%, #F7EFE2 45%, #E8D7BC 100%);
+      border-bottom: 1px solid #E5D4B7;
+      display: flex;
+      align-items: center;
       overflow: hidden;
     }
-    .hero-inner {
-      max-width: 1180px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      align-items: center;
-      gap: 32px;
+    /* Decorative Water Ripples & Splash Rings */
+    .hero-banner::before {
+      content: "";
+      position: absolute;
+      width: 540px;
+      height: 540px;
+      border-radius: 50%;
+      border: 28px solid rgba(255, 255, 255, 0.45);
+      top: -120px;
+      left: 34%;
+      pointer-events: none;
     }
-    .hero-showcase {
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      border: 18px solid rgba(197, 155, 39, 0.14);
+      bottom: -90px;
+      left: 12%;
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      max-width: 1280px;
+      width: 100%;
+      margin: auto;
+      padding: 36px 28px 44px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* Left: Dynamic Angled Bottle Cluster (Like Mai Dubai Cans) */
+    .hero-bottles-stage {
+      position: relative;
+      height: 410px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      gap: 14px;
-      background: radial-gradient(circle at center, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.2) 75%);
-      padding: 24px 16px;
-      border-radius: 24px;
     }
-    .hero-showcase img {
-      max-height: 230px;
-      width: auto;
-      max-width: 24%;
+    .bottle-hero {
       object-fit: contain;
-      filter: drop-shadow(0 12px 18px rgba(11, 25, 44, 0.16));
-      transition: transform 0.25s;
+      filter: drop-shadow(0 20px 28px rgba(11, 25, 44, 0.22));
+      transition: transform 0.35s ease;
     }
-    .hero-showcase img:hover { transform: translateY(-6px) scale(1.03); }
-    .hero-copy { text-align: left; }
-    .hero-badge {
-      display: inline-block;
+    .bottle-hero:hover { transform: translateY(-10px) scale(1.04) !important; z-index: 10; }
+    .b-left {
+      height: 295px;
+      transform: rotate(-11deg) translateX(22px);
+      z-index: 2;
+    }
+    .b-center {
+      height: 375px;
+      transform: rotate(-2deg);
+      z-index: 4;
+    }
+    .b-right {
+      height: 270px;
+      transform: rotate(12deg) translateX(-22px);
+      z-index: 3;
+    }
+
+    /* Right: Oversized Bold Impact Typography + Mini Lineup Strip */
+    .hero-right-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .hero-crest {
       background: var(--navy);
-      color: var(--gold);
-      font-weight: 800;
-      font-size: 0.78rem;
-      letter-spacing: 1.2px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-    }
-    .hero-headline {
-      font-size: clamp(2.1rem, 4vw, 3.3rem);
+      color: var(--gold-bright);
+      padding: 8px 20px;
+      border-radius: 0 0 22px 22px;
       font-weight: 900;
-      line-height: 1.05;
-      color: var(--navy);
-      margin: 0 0 14px;
+      font-size: 0.95rem;
+      letter-spacing: 1.5px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 20px rgba(11, 25, 44, 0.18);
+    }
+    .hero-mega-title {
+      margin: 0;
+      font-weight: 900;
       text-transform: uppercase;
+      line-height: 0.96;
+      letter-spacing: -0.5px;
+      transform: rotate(-2deg);
     }
-    .hero-headline span { color: var(--gold); display: block; }
-    .hero-sub {
-      font-size: 1rem;
+    .hero-mega-title .small-lead {
+      display: block;
+      font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+      color: var(--navy);
+    }
+    .hero-mega-title .big-impact {
+      display: block;
+      font-size: clamp(2.8rem, 5.2vw, 4.5rem);
+      color: var(--gold);
+      text-shadow: 2px 3px 0px rgba(11, 25, 44, 0.08);
+    }
+    .hero-desc {
+      font-size: 1.02rem;
       color: #334155;
-      margin: 0 0 22px;
+      margin: 18px 0 22px;
+      max-width: 470px;
       line-height: 1.5;
-      max-width: 460px;
+      font-weight: 500;
     }
-    .hero-cta-group { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn-primary {
+    .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 26px; }
+    .btn-gold-pill {
       background: var(--gold);
       color: var(--white);
-      border: none;
-      padding: 13px 26px;
+      padding: 13px 28px;
       border-radius: 999px;
       font-weight: 800;
       font-size: 0.95rem;
-      cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 6px 18px rgba(197, 155, 39, 0.32);
+      box-shadow: 0 8px 20px rgba(197, 155, 39, 0.35);
+      transition: background 0.2s;
     }
-    .btn-primary:hover { background: var(--gold-dark); }
-    .btn-navy {
+    .btn-gold-pill:hover { background: var(--gold-dark); }
+    .btn-navy-pill {
       background: var(--navy);
       color: var(--white);
-      border: none;
-      padding: 13px 24px;
+      padding: 13px 26px;
       border-radius: 999px;
       font-weight: 700;
       font-size: 0.95rem;
-      cursor: pointer;
       text-decoration: none;
     }
 
-    /* Main Content & Product Grid */
-    .main-wrap { max-width: 1180px; margin: auto; padding: 36px 20px; }
-    .section-header {
+    /* Mini Lineup Strip (Bottom-Right Corner like Mai Dubai) */
+    .mini-lineup {
       display: flex;
-      justify-content: space-between;
       align-items: flex-end;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(6px);
+      padding: 10px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(197, 155, 39, 0.3);
     }
-    .section-header h2 { margin: 0; font-size: 1.7rem; font-weight: 800; color: var(--navy); }
-    .section-header p { margin: 4px 0 0; color: var(--text-muted); font-size: 0.92rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 20px; }
-    .prod-card {
+    .mini-lineup img { height: 64px; width: auto; object-fit: contain; }
+    .mini-lineup-caption {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.25;
+      padding-left: 6px;
+    }
+
+    /* 3. Interactive Product Section */
+    .catalog-section {
+      max-width: 1280px;
+      margin: auto;
+      padding: 56px 28px;
+    }
+    .section-title-center { text-align: center; margin-bottom: 32px; }
+    .section-eyebrow {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .section-title-center h2 {
+      margin: 6px 0 10px;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .section-title-center p {
+      margin: 0 auto;
+      max-width: 580px;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .product-card {
       background: var(--white);
-      border-radius: 18px;
+      border-radius: 22px;
       border: 1px solid var(--border);
-      padding: 20px;
+      padding: 24px 20px;
       text-align: center;
-      box-shadow: 0 4px 16px rgba(11, 25, 44, 0.04);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(11, 25, 44, 0.05);
+      transition: all 0.25s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
     }
-    .prod-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(11, 25, 44, 0.09); }
-    .prod-img {
-      width: 100%;
-      height: 175px;
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      box-shadow: 0 16px 34px rgba(11, 25, 44, 0.1);
+    }
+    .prod-stage {
+      background: radial-gradient(circle, var(--champagne) 0%, #FFFFFF 75%);
+      border-radius: 16px;
+      padding: 16px;
+      height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .prod-stage img {
+      max-height: 180px;
+      max-width: 100%;
       object-fit: contain;
-      background: #F8FAFC;
-      border-radius: 12px;
-      padding: 12px;
+      filter: drop-shadow(0 8px 14px rgba(11, 25, 44, 0.14));
     }
-    .specs {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--navy);
-      background: var(--champagne);
-      padding: 4px 10px;
-      border-radius: 999px;
+    .spec-pill {
       display: inline-block;
-      margin: 10px auto 6px;
+      background: var(--champagne);
+      color: var(--navy);
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin: 14px auto 8px;
     }
-    .prod-title { margin: 6px 0; font-size: 1.12rem; font-weight: 800; color: var(--navy); }
-    .prod-price { font-size: 1.35rem; font-weight: 900; color: var(--gold); margin: 6px 0 14px; }
-    .prod-price small { font-size: 0.82rem; color: var(--text-muted); font-weight: 600; }
-    .order-btn {
+    .prod-name { margin: 4px 0; font-size: 1.22rem; font-weight: 800; color: var(--navy); }
+    .prod-price { font-size: 1.5rem; font-weight: 900; color: var(--gold); margin: 6px 0 16px; }
+    .prod-price span { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+    .btn-order-card {
       background: var(--navy);
       color: var(--white);
       border: none;
-      padding: 11px 16px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.92rem;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.94rem;
       cursor: pointer;
       width: 100%;
       transition: background 0.2s;
     }
-    .order-btn:hover { background: var(--gold); }
+    .btn-order-card:hover { background: var(--gold); }
 
-    /* Cards for Login & Checkout */
-    .panel-card {
+    /* 4. Why Wassers & Co. Commercial Feature Strip */
+    .features-band {
+      background: var(--champagne);
+      border-top: 1px solid #EADBC8;
+      border-bottom: 1px solid #EADBC8;
+      padding: 48px 28px;
+    }
+    .features-grid {
+      max-width: 1280px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      text-align: center;
+    }
+    .feature-box {
       background: var(--white);
-      padding: 24px;
+      padding: 24px 20px;
       border-radius: 18px;
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 24px rgba(11, 25, 44, 0.06);
-      margin: 24px auto;
-      max-width: 620px;
+      border: 1px solid #EADBC8;
+    }
+    .feature-box h4 { margin: 0 0 8px; color: var(--navy); font-size: 1.08rem; font-weight: 800; }
+    .feature-box p { margin: 0; color: var(--text-muted); font-size: 0.9rem; line-height: 1.45; }
+
+    /* Checkout & Login Cards */
+    .modal-card {
+      background: var(--white);
+      padding: 28px;
+      border-radius: 20px;
+      border: 2px solid var(--gold);
+      box-shadow: 0 14px 36px rgba(11, 25, 44, 0.12);
+      margin: 28px auto;
+      max-width: 600px;
     }
     input, select {
       width: 100%;
-      padding: 11px 14px;
+      padding: 12px 14px;
       margin: 6px 0 14px;
       border-radius: 10px;
       border: 1px solid #CBD5E1;
@@ -254,135 +416,153 @@
       font-size: 0.95rem;
     }
 
-    /* Bottom Trust & Action Footer */
-    .hub-footer {
+    /* 5. Footer */
+    .site-footer {
       background: var(--navy);
       color: var(--white);
-      padding: 28px 20px;
-      margin-top: 40px;
+      padding: 36px 28px;
     }
-    .hub-inner {
-      max-width: 1180px;
+    .footer-inner {
+      max-width: 1280px;
       margin: auto;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      gap: 20px;
     }
-    .btn-gold-footer {
+    .footer-btn-gold {
       background: var(--gold);
       color: var(--white);
-      padding: 10px 18px;
+      padding: 11px 22px;
       border-radius: 999px;
       text-decoration: none;
       font-weight: 800;
-      font-size: 0.88rem;
-      display: inline-block;
+      font-size: 0.9rem;
     }
-    .btn-outline-footer {
+    .footer-btn-outline {
       border: 1.5px solid rgba(255,255,255,0.35);
       color: var(--white);
-      padding: 9px 16px;
+      padding: 10px 20px;
       border-radius: 999px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.88rem;
-      display: inline-block;
+      font-size: 0.9rem;
     }
-    .btn-outline-footer:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-    @media (max-width: 820px) {
-      .hero-inner { grid-template-columns: 1fr; text-align: center; }
-      .hero-copy { text-align: center; }
-      .hero-sub { margin: 0 auto 22px; }
-      .hero-cta-group { justify-content: center; }
-      .hotline-box { display: none; }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-bottles-stage { height: 290px; }
+      .b-left { height: 210px; }
+      .b-center { height: 265px; }
+      .b-right { height: 195px; }
+      .hero-right-col { align-items: center; }
+      .hero-mega-title { transform: none; }
+      .main-nav { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Crisp Top Navigation Bar -->
-  <div class="top-bar">
-    <div class="nav-container">
-      <div class="brand-wrap">
-        <span class="brand-title">WASSERS &amp; CO.</span>
-        <span class="brand-tagline">Clean Water, Clear Promise</span>
+  <!-- 1. Crisp Mai Dubai-Style Two-Tier Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-top-utility">
+        <a href="https://www.wassersand.co" target="_blank" class="utility-link">Official Website</a>
+        <a href="https://g.page/r/CVKdXtcKOnF3EAE/review" target="_blank" class="utility-link">★ 4.9 Google Rated</a>
+        <a href="tel:+918469277377" class="call-widget">
+          <div class="call-widget-text">
+            <span class="call-widget-label">Call us Wassers &amp; Co.</span>
+            <span class="call-widget-number">846-WASSERS <small style="font-size:0.85rem; color:var(--gold);">(846-9277377)</small></span>
+          </div>
+        </a>
       </div>
 
-      <div class="nav-links">
-        <a href="#catalogSection">Products</a>
-        <a href="https://www.wassersand.co" target="_blank">About Us</a>
-        <a href="https://g.page/r/CVKdXtcKOnF3EAE/review" target="_blank">Reviews</a>
-        <div class="hotline-box">
-          <span class="hotline-label">Call / WhatsApp Order</span>
-          <a href="tel:+918469277377" class="hotline-num">846-WASSERS</a>
-        </div>
-        <div id="authHeader">
-          <button class="pill-btn" onclick="document.getElementById('loginModal').style.display='block'; document.getElementById('loginModal').scrollIntoView({behavior:'smooth'});">Staff / Client Login</button>
+      <div class="header-main-row">
+        <a href="#" class="brand-logo-block">
+          <span class="brand-wordmark">WASSERS &amp; CO.</span>
+          <span class="brand-subtag">Clean Water, Clear Promise</span>
+        </a>
+
+        <nav class="main-nav">
+          <a href="#whyWassers">Why Wassers &amp; Co.?</a>
+          <a href="#catalogSection">Products</a>
+          <a href="https://www.wassersand.co" target="_blank">About Us</a>
+          <a href="https://wa.me/918469277377" target="_blank">Bulk &amp; Corporate</a>
+        </nav>
+
+        <div id="authHeader" style="display:flex; gap:10px; align-items:center;">
+          <a href="#catalogSection" class="nav-pill-cta">Shop Now</a>
+          <button class="nav-pill-cta" style="border-color:var(--gold); color:var(--gold-dark);" onclick="document.getElementById('loginModal').style.display='block'; document.getElementById('loginModal').scrollIntoView({behavior:'smooth'});">Login</button>
         </div>
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- Full-Width Visual Hero Banner -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-showcase">
-        <img src="./WOM20L.png" alt="20L Water Capsule" />
-        <img src="./WASSERS%20%26%20CO.%20-%20EasyFlow%201L%20-%20Pure%20Hydration%2C%20Anytime.png" alt="EasyFlow 1L" onerror="this.style.display='none'" />
-        <img src="./WASSER%20HydroEase%20500%20ML%20-%20Refreshment%20Redefined.png" alt="HydroEase 500ml" onerror="this.style.display='none'" />
-        <img src="./WASSER%20MiniSip%20200%20ML%20-%20Refreshment%20in%20Every%20Drop.png" alt="MiniSip 200ml" onerror="this.style.display='none'" />
+  <!-- 2. Full-Bleed Hero Banner -->
+  <section class="hero-banner">
+    <div class="hero-grid">
+      <!-- Angled Bottle Showcase -->
+      <div class="hero-bottles-stage">
+        <img src="./WASSER%20HydroEase%20500%20ML%20-%20Refreshment%20Redefined.png" class="bottle-hero b-left" alt="HydroEase 500ml" />
+        <img src="./WOM20L.png" class="bottle-hero b-center" alt="Wassers & Co. 20L Water Capsule" />
+        <img src="./WASSERS%20%26%20CO.%20-%20EasyFlow%201L%20-%20Pure%20Hydration%2C%20Anytime.png" class="bottle-hero b-right" alt="EasyFlow 1L" />
       </div>
 
-      <div class="hero-copy">
-        <span class="hero-badge">Surat's Trusted Hydration Partner</span>
-        <h1 class="hero-headline">
-          PURE HYDRATION
-          <span>DELIVERED DAILY</span>
+      <!-- Bold Commercial Headline & Mini Range Strip -->
+      <div class="hero-right-col">
+        <div class="hero-crest">WASSERS &amp; CO. • SURAT</div>
+        <h1 class="hero-mega-title">
+          <span class="small-lead">EXPERIENCE</span>
+          <span class="big-impact">PURE HYDRATION</span>
         </h1>
-        <p class="hero-sub">
-          FSSAI-certified balanced mineral drinking water for homes, offices, gyms, and events across Surat. Same-day doorstep dispatch.
+        <p class="hero-desc">
+          Balanced mineral drinking water with 65 PPM TDS &amp; 7.4 pH. Delivered fresh to homes, offices, gyms, and events across Surat.
         </p>
-        <div class="hero-cta-group">
-          <a href="#catalogSection" class="btn-primary">Shop Water Range</a>
-          <a href="https://wa.me/918469277377?text=Hello%20Wassers%20%26%20Co.%2C%20I%20would%20like%20to%20place%20an%20order." target="_blank" class="btn-navy">WhatsApp 846-9277377</a>
+        <div class="hero-buttons">
+          <a href="#catalogSection" class="btn-gold-pill">Order Water Now</a>
+          <a href="https://wa.me/918469277377?text=Hello%20Wassers%20%26%20Co.%2C%20I%20want%20to%20order%20drinking%20water%20in%20Surat." target="_blank" class="btn-navy-pill">WhatsApp Dispatch</a>
+        </div>
+
+        <div class="mini-lineup">
+          <img src="./WOM20L.png" alt="20L" />
+          <img src="./WASSERS%20%26%20CO.%20-%20EasyFlow%201L%20-%20Pure%20Hydration%2C%20Anytime.png" alt="1L" />
+          <img src="./WASSER%20HydroEase%20500%20ML%20-%20Refreshment%20Redefined.png" alt="500ml" />
+          <img src="./WASSER%20MiniSip%20200%20ML%20-%20Refreshment%20in%20Every%20Drop.png" alt="200ml" />
+          <div class="mini-lineup-caption">4 PACK SIZES<br><span style="color:var(--gold);">20L • 1L • 500ML • 200ML</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Main Content -->
-  <div class="main-wrap">
+  <!-- Login Panel (Hidden until clicked) -->
+  <div id="loginModal" class="modal-card" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0; color:var(--navy);">Owner, Rider &amp; Client Sign In</h3>
+      <button onclick="document.getElementById('loginModal').style.display='none'" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
+    </div>
+    <input type="email" id="loginEmail" placeholder="Email Address" />
+    <input type="password" id="loginPass" placeholder="Password" />
+    <button class="btn-order-card" id="loginBtn" style="background:var(--gold);">Sign In to Dashboard</button>
+    <p id="loginMsg" style="color:#DC2626; font-size:0.85rem; margin-bottom:0;"></p>
+  </div>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="panel-card" style="display:none;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="margin:0; color:var(--navy);">Account Sign In</h3>
-        <button onclick="document.getElementById('loginModal').style.display='none'" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
-      </div>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">Sign in as Owner, Delivery Rider, or Registered Client</p>
-      <input type="email" id="loginEmail" placeholder="Email Address" />
-      <input type="password" id="loginPass" placeholder="Password" />
-      <button class="order-btn" id="loginBtn" style="background:var(--gold);">Sign In</button>
-      <p id="loginMsg" style="color:#DC2626; font-size:0.85rem; margin-bottom:0;"></p>
+  <!-- 3. Product Range Section -->
+  <section id="catalogSection" class="catalog-section">
+    <div class="section-title-center">
+      <span class="section-eyebrow">Our Hydration Range</span>
+      <h2>Choose Your Pack Size</h2>
+      <p>Click "Order Now" on any pack below for fast doorstep delivery across Surat.</p>
     </div>
 
-    <!-- Product Range Grid -->
-    <div id="catalogSection" class="section-header">
-      <div>
-        <h2>Premium Drinking Water Range</h2>
-        <p>Select your pack size below for instant doorstep delivery in Surat</p>
-      </div>
-    </div>
-    <div id="catalogGrid" class="grid"></div>
+    <div id="catalogGrid" class="product-grid"></div>
 
-    <!-- Order Checkout Section -->
-    <div class="panel-card" id="checkoutSection" style="display:none;">
+    <!-- Order Checkout Panel -->
+    <div class="modal-card" id="checkoutSection" style="display:none;">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="margin:0; color:var(--navy);">Complete Order: <span id="selectedProdName" style="color:var(--gold);"></span></h3>
-        <button onclick="document.getElementById('checkoutSection').style.display='none'" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
+        <h3 style="margin:0; color:var(--navy);">Order: <span id="selectedProdName" style="color:var(--gold);"></span></h3>
+        <button onclick="document.getElementById('checkoutSection').style.display='none'" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
       </div>
       <input type="text" id="custName" placeholder="Your Full Name / Business Name" />
       <input type="tel" id="custPhone" placeholder="Mobile Number (WhatsApp)" />
@@ -394,22 +574,43 @@
         <option value="Ring Road">Ring Road / Textile Market, Surat</option>
       </select>
       <input type="text" id="custAddress" placeholder="Full Street / Shop / Apartment Address" />
-      <button class="order-btn" id="placeOrderBtn" style="background:var(--gold);">Confirm Order &amp; Pay via UPI / Cash</button>
+      <button class="btn-order-card" id="placeOrderBtn" style="background:var(--gold);">Confirm Order &amp; Pay via UPI / Cash</button>
     </div>
+  </section>
 
-  </div>
+  <!-- 4. Brand Promise Band -->
+  <section id="whyWassers" class="features-band">
+    <div class="features-grid">
+      <div class="feature-box">
+        <h4>FSSAI Certified Purity</h4>
+        <p>Multi-stage purification with balanced 65 PPM TDS and refreshing 7.4 pH for crisp taste.</p>
+      </div>
+      <div class="feature-box">
+        <h4>Sanitized 20L Capsules</h4>
+        <p>Every returnable 20-liter water capsule undergoes thorough automated washing and tamper-evident sealing.</p>
+      </div>
+      <div class="feature-box">
+        <h4>Same-Day Surat Dispatch</h4>
+        <p>Dedicated local route delivery covering Begampura, Ring Road, Vesu, Adajan, and Piplod.</p>
+      </div>
+      <div class="feature-box">
+        <h4>Custom Event &amp; Corporate Supply</h4>
+        <p>Bulk subscriptions and custom-labelled bottles for weddings, clinics, gyms, and corporate offices.</p>
+      </div>
+    </div>
+  </section>
 
-  <!-- Bottom Brand Hub Footer -->
-  <footer class="hub-footer">
-    <div class="hub-inner">
+  <!-- 5. Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
       <div>
-        <strong style="color:var(--gold); font-size:1.1rem; letter-spacing:1px;">WASSERS &amp; CO. SURAT</strong><br>
+        <strong style="color:var(--gold); font-size:1.2rem; letter-spacing:1.5px;">WASSERS &amp; CO. SURAT</strong><br>
         <small style="color:#CBD5E1;">Clean Water, Clear Promise • 24/7 Bulk &amp; Commercial Hydration Supply</small>
       </div>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a id="googleReviewBtn" href="https://g.page/r/CVKdXtcKOnF3EAE/review" target="_blank" class="btn-gold-footer">★ Rate Us on Google</a>
-        <a id="websiteBtn" href="https://www.wassersand.co" target="_blank" class="btn-outline-footer">Visit www.wassersand.co</a>
-        <a href="https://wa.me/918469277377?text=Hello%20Wassers%20%26%20Co.%2C%20I%20need%20water%20delivery%20in%20Surat." target="_blank" class="btn-outline-footer">WhatsApp 846-WASSERS</a>
+        <a id="googleReviewBtn" href="https://g.page/r/CVKdXtcKOnF3EAE/review" target="_blank" class="footer-btn-gold">★ Rate Us on Google</a>
+        <a id="websiteBtn" href="https://www.wassersand.co" target="_blank" class="footer-btn-outline">Visit www.wassersand.co</a>
+        <a href="https://wa.me/918469277377?text=Hello%20Wassers%20%26%20Co.%2C%20I%20need%20water%20delivery%20in%20Surat." target="_blank" class="footer-btn-outline">WhatsApp 846-WASSERS</a>
       </div>
     </div>
   </footer>
@@ -421,7 +622,6 @@
 
     let selectedProduct = null;
 
-    // Instant Default Catalog (renders immediately so page is never blank)
     const defaultProducts = [
       { id: "20l-capsule", name: "20L Water Capsule", price: 80, volume: "20 Liter Jar", tds: "65 PPM", ph: "7.4", mediaUrl: "./WOM20L.png" },
       { id: "1l-easyflow", name: "EasyFlow 1L Bottle", price: 20, volume: "1 Liter", tds: "65 PPM", ph: "7.4", mediaUrl: "./WASSERS%20%26%20CO.%20-%20EasyFlow%201L%20-%20Pure%20Hydration%2C%20Anytime.png" },
@@ -435,32 +635,30 @@
       items.forEach((p) => {
         const prodPayload = JSON.stringify({ id: p.id, name: p.name, price: p.price }).replace(/'/g, "&#39;");
         grid.innerHTML += `
-          <div class="prod-card">
+          <div class="product-card">
             <div>
-              <img src="${p.mediaUrl || './WOM20L.png'}" class="prod-img" alt="${p.name}" onerror="this.src='./WOM20L.png'" />
-              <div class="specs">TDS: ${p.tds || '65 PPM'} • pH: ${p.ph || '7.4'}</div>
-              <h3 class="prod-title">${p.name}</h3>
+              <div class="prod-stage">
+                <img src="${p.mediaUrl || './WOM20L.png'}" alt="${p.name}" onerror="this.src='./WOM20L.png'" />
+              </div>
+              <div class="spec-pill">TDS: ${p.tds || '65 PPM'} • pH: ${p.ph || '7.4'}</div>
+              <h3 class="prod-name">${p.name}</h3>
             </div>
             <div>
-              <div class="prod-price">₹${p.price} <small>/ ${p.volume || 'unit'}</small></div>
-              <button class="order-btn" onclick='window.selectItem(${prodPayload})'>Order Now</button>
+              <div class="prod-price">₹${p.price} <span>/ ${p.volume || 'unit'}</span></div>
+              <button class="btn-order-card" onclick='window.selectItem(${prodPayload})'>Order Now</button>
             </div>
           </div>`;
       });
     }
 
-    // Render immediately on load
     renderCatalog(defaultProducts);
 
-    // Sync live updates from Firestore if products exist there
     onSnapshot(collection(db, "products"), (snap) => {
       if (!snap.empty) {
         const liveItems = [];
         snap.forEach((d) => liveItems.push({ id: d.id, ...d.data() }));
         renderCatalog(liveItems);
       }
-    }, (err) => {
-      console.warn("Using default catalog:", err.message);
     });
 
     onAuthStateChanged(auth, async (user) => {
@@ -473,7 +671,7 @@
         window.location.href = "/rider.html";
       } else {
         document.getElementById("loginModal").style.display = "none";
-        document.getElementById("authHeader").innerHTML = `<button class="pill-btn" id="signOutBtn">Sign Out</button>`;
+        document.getElementById("authHeader").innerHTML = `<button class="nav-pill-cta" id="signOutBtn">Sign Out</button>`;
         document.getElementById("signOutBtn").onclick = () => signOut(auth);
       }
     });
