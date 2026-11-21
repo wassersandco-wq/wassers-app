@@ -1,726 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wassers &amp; Co. | Clean Water, Clear Promise</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#FFFFFF" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wassers & Co. | Premium Hydration</title>
+  <link rel="manifest" href="manifest.json">
+  <!-- Tailwind CSS for Luxury Styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome for Thin Line Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <!-- Razorpay SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: { colors: { wassersGold: '#D4AF37', luxuryDark: '#111827' } }
+      }
+    }
+  </script>
   <style>
-    :root {
-      --white: #FFFFFF;
-      --navy: #0B192C;
-      --gold: #C59B27;
-      --gold-bright: #D4AF37;
-      --gold-dark: #9A7418;
-      --champagne: #F8F3EA;
-      --champagne-deep: #EFE3CE;
-      --aqua-light: #E0F7FA;
-      --text-dark: #0B192C;
-      --text-muted: #5A6A85;
-      --border: #E5E7EB;
-    }
-    * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; background: var(--white); color: var(--text-dark); overflow-x: hidden; }
-
-    /* 1. Mai Dubai-Style Two-Tier Crisp White Header */
-    .site-header {
-      background: var(--white);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 16px rgba(11, 25, 44, 0.06);
-    }
-    .header-inner {
-      max-width: 1280px;
-      margin: auto;
-      padding: 10px 28px 14px;
-    }
-    .header-top-utility {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 22px;
-      margin-bottom: 6px;
-      font-size: 0.85rem;
-    }
-    .utility-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .utility-link:hover { color: var(--gold); }
-    .call-widget {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      color: var(--navy);
-    }
-    .call-widget-text { text-align: right; line-height: 1.1; }
-    .call-widget-label { font-size: 0.72rem; color: var(--text-muted); display: block; }
-    .call-widget-number { font-size: 1.35rem; font-weight: 800; color: var(--navy); letter-spacing: 0.5px; }
-
-    .header-main-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-    .brand-logo-block { text-decoration: none; display: flex; flex-direction: column; }
-    .brand-wordmark {
-      font-size: 1.9rem;
-      font-weight: 900;
-      color: var(--gold);
-      letter-spacing: 2px;
-      line-height: 1;
-    }
-    .brand-subtag {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--navy);
-      letter-spacing: 1px;
-      margin-top: 3px;
-      font-style: normal;
-    }
-    .main-nav {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-    .main-nav a {
-      text-decoration: none;
-      color: var(--navy);
-      font-weight: 600;
-      font-size: 0.96rem;
-      transition: color 0.2s;
-    }
-    .main-nav a:hover { color: var(--gold); }
-    .nav-pill-cta {
-      border: 1.5px solid var(--navy);
-      background: var(--white);
-      color: var(--navy);
-      padding: 9px 22px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.92rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .nav-pill-cta:hover { background: var(--navy); color: var(--white); }
-
-    /* 2. Full-Bleed Mai Dubai-Style Hero Banner */
-    .hero-banner {
-      position: relative;
-      width: 100%;
-      min-height: 520px;
-      background:
-        radial-gradient(circle at 22% 55%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 48%),
-        radial-gradient(circle at 78% 25%, rgba(212, 175, 55, 0.22) 0%, transparent 45%),
-        linear-gradient(115deg, #FFFDF9 0%, #F7EFE2 45%, #E8D7BC 100%);
-      border-bottom: 1px solid #E5D4B7;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-    }
-    /* Decorative Water Ripples & Splash Rings */
-    .hero-banner::before {
-      content: "";
-      position: absolute;
-      width: 540px;
-      height: 540px;
-      border-radius: 50%;
-      border: 28px solid rgba(255, 255, 255, 0.45);
-      top: -120px;
-      left: 34%;
-      pointer-events: none;
-    }
-    .hero-banner::after {
-      content: "";
-      position: absolute;
-      width: 340px;
-      height: 340px;
-      border-radius: 50%;
-      border: 18px solid rgba(197, 155, 39, 0.14);
-      bottom: -90px;
-      left: 12%;
-      pointer-events: none;
-    }
-    .hero-grid {
-      position: relative;
-      z-index: 2;
-      max-width: 1280px;
-      width: 100%;
-      margin: auto;
-      padding: 36px 28px 44px;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      align-items: center;
-      gap: 24px;
-    }
-
-    /* Left: Dynamic Angled Bottle Cluster (Like Mai Dubai Cans) */
-    .hero-bottles-stage {
-      position: relative;
-      height: 410px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .bottle-hero {
-      object-fit: contain;
-      filter: drop-shadow(0 20px 28px rgba(11, 25, 44, 0.22));
-      transition: transform 0.35s ease;
-    }
-    .bottle-hero:hover { transform: translateY(-10px) scale(1.04) !important; z-index: 10; }
-    .b-left {
-      height: 295px;
-      transform: rotate(-11deg) translateX(22px);
-      z-index: 2;
-    }
-    .b-center {
-      height: 375px;
-      transform: rotate(-2deg);
-      z-index: 4;
-    }
-    .b-right {
-      height: 270px;
-      transform: rotate(12deg) translateX(-22px);
-      z-index: 3;
-    }
-
-    /* Right: Oversized Bold Impact Typography + Mini Lineup Strip */
-    .hero-right-col {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .hero-crest {
-      background: var(--navy);
-      color: var(--gold-bright);
-      padding: 8px 20px;
-      border-radius: 0 0 22px 22px;
-      font-weight: 900;
-      font-size: 0.95rem;
-      letter-spacing: 1.5px;
-      margin-bottom: 18px;
-      box-shadow: 0 8px 20px rgba(11, 25, 44, 0.18);
-    }
-    .hero-mega-title {
-      margin: 0;
-      font-weight: 900;
-      text-transform: uppercase;
-      line-height: 0.96;
-      letter-spacing: -0.5px;
-      transform: rotate(-2deg);
-    }
-    .hero-mega-title .small-lead {
-      display: block;
-      font-size: clamp(1.5rem, 2.6vw, 2.2rem);
-      color: var(--navy);
-    }
-    .hero-mega-title .big-impact {
-      display: block;
-      font-size: clamp(2.8rem, 5.2vw, 4.5rem);
-      color: var(--gold);
-      text-shadow: 2px 3px 0px rgba(11, 25, 44, 0.08);
-    }
-    .hero-desc {
-      font-size: 1.02rem;
-      color: #334155;
-      margin: 18px 0 22px;
-      max-width: 470px;
-      line-height: 1.5;
-      font-weight: 500;
-    }
-    .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 26px; }
-    .btn-gold-pill {
-      background: var(--gold);
-      color: var(--white);
-      padding: 13px 28px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 0.95rem;
-      text-decoration: none;
-      box-shadow: 0 8px 20px rgba(197, 155, 39, 0.35);
-      transition: background 0.2s;
-    }
-    .btn-gold-pill:hover { background: var(--gold-dark); }
-    .btn-navy-pill {
-      background: var(--navy);
-      color: var(--white);
-      padding: 13px 26px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-decoration: none;
-    }
-
-    /* Mini Lineup Strip (Bottom-Right Corner like Mai Dubai) */
-    .mini-lineup {
-      display: flex;
-      align-items: flex-end;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(6px);
-      padding: 10px 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(197, 155, 39, 0.3);
-    }
-    .mini-lineup img { height: 64px; width: auto; object-fit: contain; }
-    .mini-lineup-caption {
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: var(--navy);
-      line-height: 1.25;
-      padding-left: 6px;
-    }
-
-    /* 3. Interactive Product Section */
-    .catalog-section {
-      max-width: 1280px;
-      margin: auto;
-      padding: 56px 28px;
-    }
-    .section-title-center { text-align: center; margin-bottom: 32px; }
-    .section-eyebrow {
-      color: var(--gold);
-      font-weight: 800;
-      font-size: 0.82rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .section-title-center h2 {
-      margin: 6px 0 10px;
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: var(--navy);
-    }
-    .section-title-center p {
-      margin: 0 auto;
-      max-width: 580px;
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-    .product-card {
-      background: var(--white);
-      border-radius: 22px;
-      border: 1px solid var(--border);
-      padding: 24px 20px;
-      text-align: center;
-      box-shadow: 0 6px 24px rgba(11, 25, 44, 0.05);
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-    }
-    .product-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--gold);
-      box-shadow: 0 16px 34px rgba(11, 25, 44, 0.1);
-    }
-    .prod-stage {
-      background: radial-gradient(circle, var(--champagne) 0%, #FFFFFF 75%);
-      border-radius: 16px;
-      padding: 16px;
-      height: 210px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .prod-stage img {
-      max-height: 180px;
-      max-width: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 8px 14px rgba(11, 25, 44, 0.14));
-    }
-    .spec-pill {
-      display: inline-block;
-      background: var(--champagne);
-      color: var(--navy);
-      font-size: 0.76rem;
-      font-weight: 800;
-      padding: 5px 12px;
-      border-radius: 999px;
-      margin: 14px auto 8px;
-    }
-    .prod-name { margin: 4px 0; font-size: 1.22rem; font-weight: 800; color: var(--navy); }
-    .prod-price { font-size: 1.5rem; font-weight: 900; color: var(--gold); margin: 6px 0 16px; }
-    .prod-price span { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
-    .btn-order-card {
-      background: var(--navy);
-      color: var(--white);
-      border: none;
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 0.94rem;
-      cursor: pointer;
-      width: 100%;
-      transition: background 0.2s;
-    }
-    .btn-order-card:hover { background: var(--gold); }
-
-    /* 4. Why Wassers & Co. Commercial Feature Strip */
-    .features-band {
-      background: var(--champagne);
-      border-top: 1px solid #EADBC8;
-      border-bottom: 1px solid #EADBC8;
-      padding: 48px 28px;
-    }
-    .features-grid {
-      max-width: 1280px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      text-align: center;
-    }
-    .feature-box {
-      background: var(--white);
-      padding: 24px 20px;
-      border-radius: 18px;
-      border: 1px solid #EADBC8;
-    }
-    .feature-box h4 { margin: 0 0 8px; color: var(--navy); font-size: 1.08rem; font-weight: 800; }
-    .feature-box p { margin: 0; color: var(--text-muted); font-size: 0.9rem; line-height: 1.45; }
-
-    /* Checkout & Login Cards */
-    .modal-card {
-      background: var(--white);
-      padding: 28px;
-      border-radius: 20px;
-      border: 2px solid var(--gold);
-      box-shadow: 0 14px 36px rgba(11, 25, 44, 0.12);
-      margin: 28px auto;
-      max-width: 600px;
-    }
-    input, select {
-      width: 100%;
-      padding: 12px 14px;
-      margin: 6px 0 14px;
-      border-radius: 10px;
-      border: 1px solid #CBD5E1;
-      background: #F8FAFC;
-      color: var(--navy);
-      font-size: 0.95rem;
-    }
-
-    /* 5. Footer */
-    .site-footer {
-      background: var(--navy);
-      color: var(--white);
-      padding: 36px 28px;
-    }
-    .footer-inner {
-      max-width: 1280px;
-      margin: auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-    .footer-btn-gold {
-      background: var(--gold);
-      color: var(--white);
-      padding: 11px 22px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 0.9rem;
-    }
-    .footer-btn-outline {
-      border: 1.5px solid rgba(255,255,255,0.35);
-      color: var(--white);
-      padding: 10px 20px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-    .footer-btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-    @media (max-width: 900px) {
-      .hero-grid { grid-template-columns: 1fr; text-align: center; }
-      .hero-bottles-stage { height: 290px; }
-      .b-left { height: 210px; }
-      .b-center { height: 265px; }
-      .b-right { height: 195px; }
-      .hero-right-col { align-items: center; }
-      .hero-mega-title { transform: none; }
-      .main-nav { display: none; }
-    }
+    /* Hide scrollbar for a native app feel */
+    body::-webkit-scrollbar { display: none; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
-<body>
+<body class="bg-luxuryDark text-white font-sans pb-20 selection:bg-wassersGold">
 
-  <!-- 1. Crisp Mai Dubai-Style Two-Tier Header -->
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="header-top-utility">
-        <a href="https://www.wassersand.co" target="_blank" class="utility-link">Official Website</a>
-        <a href="https://g.page/r/CVKdXtcKOnF3EAE/review" target="_blank" class="utility-link">★ 4.9 Google Rated</a>
-        <a href="tel:+918469277377" class="call-widget">
-          <div class="call-widget-text">
-            <span class="call-widget-label">Call us Wassers &amp; Co.</span>
-            <span class="call-widget-number">846-WASSERS <small style="font-size:0.85rem; color:var(--gold);">(846-9277377)</small></span>
-          </div>
-        </a>
-      </div>
-
-      <div class="header-main-row">
-        <a href="#" class="brand-logo-block">
-          <span class="brand-wordmark">WASSERS &amp; CO.</span>
-          <span class="brand-subtag">Clean Water, Clear Promise</span>
-        </a>
-
-        <nav class="main-nav">
-          <a href="#whyWassers">Why Wassers &amp; Co.?</a>
-          <a href="#catalogSection">Products</a>
-          <a href="https://www.wassersand.co" target="_blank">About Us</a>
-          <a href="https://wa.me/918469277377" target="_blank">Bulk &amp; Corporate</a>
-        </nav>
-
-        <div id="authHeader" style="display:flex; gap:10px; align-items:center;">
-          <a href="#catalogSection" class="nav-pill-cta">Shop Now</a>
-          <button class="nav-pill-cta" style="border-color:var(--gold); color:var(--gold-dark);" onclick="document.getElementById('loginModal').style.display='block'; document.getElementById('loginModal').scrollIntoView({behavior:'smooth'});">Login</button>
-        </div>
-      </div>
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 p-4 flex justify-between items-center">
+    <div>
+      <h1 class="text-xl font-bold text-wassersGold tracking-widest">WASSERS & CO.</h1>
+      <p class="text-xs text-gray-400">Clean Water, Clear Promise</p>
+    </div>
+    <div class="relative">
+      <i class="fas fa-bell text-gray-300 text-xl"></i>
+      <span class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] px-1 rounded-full">1</span>
     </div>
   </header>
 
-  <!-- 2. Full-Bleed Hero Banner -->
-  <section class="hero-banner">
-    <div class="hero-grid">
-      <!-- Angled Bottle Showcase -->
-      <div class="hero-bottles-stage">
-        <img src="./WASSER%20HydroEase%20500%20ML%20-%20Refreshment%20Redefined.png" class="bottle-hero b-left" alt="HydroEase 500ml" />
-        <img src="./WOM20L.png" class="bottle-hero b-center" alt="Wassers & Co. 20L Water Capsule" />
-        <img src="./WASSERS%20%26%20CO.%20-%20EasyFlow%201L%20-%20Pure%20Hydration%2C%20Anytime.png" class="bottle-hero b-right" alt="EasyFlow 1L" />
+  <!-- APP CONTENT AREA -->
+  <main id="app-container" class="p-4">
+    
+    <!-- 1. HOME TAB -->
+    <section id="tab-home" class="tab-content active">
+      <div class="bg-gray-800 rounded-2xl p-6 mb-6 shadow-lg shadow-black/50 relative overflow-hidden">
+        <div class="absolute -right-10 -top-10 opacity-20"><i class="fas fa-tint text-9xl text-wassersGold"></i></div>
+        <h2 class="text-2xl font-semibold mb-2">Welcome Back</h2>
+        <p class="text-gray-300 text-sm mb-4">Your next scheduled delivery is tomorrow.</p>
+        <button onclick="switchTab('tab-shop')" class="bg-wassersGold text-black font-bold py-2 px-6 rounded-full shadow-lg">Order Now</button>
       </div>
+      <h3 class="text-lg font-semibold text-wassersGold mb-3 border-b border-gray-800 pb-2">Quick Actions</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <button class="bg-gray-800 p-4 rounded-xl flex flex-col items-center justify-center border border-gray-700">
+          <i class="fas fa-redo-alt text-2xl text-wassersGold mb-2"></i>
+          <span class="text-sm">Repeat Last Order</span>
+        </button>
+        <button class="bg-gray-800 p-4 rounded-xl flex flex-col items-center justify-center border border-gray-700">
+          <i class="fas fa-file-invoice text-2xl text-wassersGold mb-2"></i>
+          <span class="text-sm">Download GST Bill</span>
+        </button>
+      </div>
+    </section>
 
-      <!-- Bold Commercial Headline & Mini Range Strip -->
-      <div class="hero-right-col">
-        <div class="hero-crest">WASSERS &amp; CO. • SURAT</div>
-        <h1 class="hero-mega-title">
-          <span class="small-lead">EXPERIENCE</span>
-          <span class="big-impact">PURE HYDRATION</span>
-        </h1>
-        <p class="hero-desc">
-          Balanced mineral drinking water with 65 PPM TDS &amp; 7.4 pH. Delivered fresh to homes, offices, gyms, and events across Surat.
-        </p>
-        <div class="hero-buttons">
-          <a href="#catalogSection" class="btn-gold-pill">Order Water Now</a>
-          <a href="https://wa.me/918469277377?text=Hello%20Wassers%20%26%20Co.%2C%20I%20want%20to%20order%20drinking%20water%20in%20Surat." target="_blank" class="btn-navy-pill">WhatsApp Dispatch</a>
+    <!-- 2. SHOP TAB (Mai Dubai Vibe) -->
+    <section id="tab-shop" class="tab-content">
+      <h2 class="text-xl font-bold text-wassersGold mb-4">Premium Hydration</h2>
+      <div class="grid grid-cols-1 gap-5">
+        
+        <!-- 20L Capsule -->
+        <div class="bg-gray-800 rounded-2xl p-4 flex items-center shadow-lg border border-gray-700">
+          <div class="w-24 h-24 bg-gray-900 rounded-xl flex items-center justify-center border border-gray-700">
+             <!-- Replace with your transparent PNG of the jar -->
+             <i class="fas fa-prescription-bottle text-4xl text-blue-400"></i>
+          </div>
+          <div class="ml-4 flex-1">
+            <h3 class="font-bold text-lg">20L Water Capsule</h3>
+            <p class="text-wassersGold font-semibold">₹80.00 <span class="text-xs text-gray-400 line-through">₹100</span></p>
+            <div class="flex items-center mt-2">
+              <button class="bg-gray-700 w-8 h-8 rounded-full">-</button>
+              <span class="mx-4 font-bold">1</span>
+              <button class="bg-wassersGold text-black w-8 h-8 rounded-full font-bold">+</button>
+            </div>
+          </div>
         </div>
 
-        <div class="mini-lineup">
-          <img src="./WOM20L.png" alt="20L" />
-          <img src="./WASSERS%20%26%20CO.%20-%20EasyFlow%201L%20-%20Pure%20Hydration%2C%20Anytime.png" alt="1L" />
-          <img src="./WASSER%20HydroEase%20500%20ML%20-%20Refreshment%20Redefined.png" alt="500ml" />
-          <img src="./WASSER%20MiniSip%20200%20ML%20-%20Refreshment%20in%20Every%20Drop.png" alt="200ml" />
-          <div class="mini-lineup-caption">4 PACK SIZES<br><span style="color:var(--gold);">20L • 1L • 500ML • 200ML</span></div>
+        <!-- 1L PET Bottles -->
+        <div class="bg-gray-800 rounded-2xl p-4 flex items-center shadow-lg border border-gray-700">
+          <div class="w-24 h-24 bg-gray-900 rounded-xl flex items-center justify-center border border-gray-700">
+             <i class="fas fa-wine-bottle text-3xl text-blue-300"></i>
+          </div>
+          <div class="ml-4 flex-1">
+            <h3 class="font-bold text-lg">1L PET Bottle (Case)</h3>
+            <p class="text-wassersGold font-semibold">₹20.00 / btl</p>
+            <button class="mt-2 text-xs bg-gray-700 px-3 py-1 rounded-full hover:bg-gray-600">Add to Cart</button>
+          </div>
+        </div>
+
+        <button onclick="startRazorpayPayment(80)" class="w-full bg-wassersGold text-black font-bold text-lg py-4 rounded-xl mt-4 shadow-[0_0_15px_rgba(212,175,55,0.4)]">Proceed to Checkout</button>
+      </div>
+    </section>
+
+    <!-- 3. TRACK TAB (Live Streaming) -->
+    <section id="tab-track" class="tab-content">
+      <div class="bg-gray-800 rounded-t-3xl p-5 border-b border-gray-700">
+        <h2 class="text-xl font-bold text-wassersGold">Live Delivery</h2>
+        <p class="text-sm text-gray-400">Your order is on the way in a Maruti Suzuki Eeco.</p>
+      </div>
+      <!-- Google Map Container -->
+      <div id="map" class="w-full h-96 bg-gray-700 flex items-center justify-center text-gray-500">
+        <i class="fas fa-spinner fa-spin text-3xl mr-2"></i> Loading Live Map...
+      </div>
+      <div class="bg-gray-800 rounded-b-3xl p-5 flex items-center justify-between">
+        <div class="flex items-center">
+          <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center border-2 border-wassersGold"><i class="fas fa-user"></i></div>
+          <div class="ml-3">
+            <p class="font-bold">Rahul (Rider)</p>
+            <p class="text-xs text-wassersGold">ETA: 14 mins</p>
+          </div>
+        </div>
+        <a href="tel:+918469277377" class="bg-green-600 w-10 h-10 rounded-full flex items-center justify-center text-white"><i class="fas fa-phone"></i></a>
+      </div>
+    </section>
+
+    <!-- 4. WALLET TAB -->
+    <section id="tab-wallet" class="tab-content">
+      <div class="bg-gradient-to-br from-gray-800 to-black rounded-3xl p-6 border border-gray-700 shadow-xl relative overflow-hidden mb-6">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-wassersGold/10 rounded-full blur-2xl"></div>
+        <p class="text-gray-400 text-sm mb-1">Available Balance</p>
+        <h2 class="text-4xl font-bold text-white mb-6">₹1,240.00</h2>
+        <p class="text-xs text-wassersGold"><i class="fas fa-check-circle mr-1"></i> Auto-pay active for Begampura office</p>
+      </div>
+      <button class="w-full border-2 border-wassersGold text-wassersGold font-bold py-3 rounded-xl mb-4 hover:bg-wassersGold hover:text-black transition">Top Up Wallet (UPI)</button>
+      
+      <h3 class="font-bold text-gray-300 mt-6 mb-3">Recent Transactions</h3>
+      <div class="space-y-3">
+        <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg">
+          <div class="flex items-center"><i class="fas fa-arrow-down text-red-500 mr-3"></i><span>Order #4092</span></div>
+          <span class="font-bold">-₹80</span>
+        </div>
+        <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg">
+          <div class="flex items-center"><i class="fas fa-arrow-up text-green-500 mr-3"></i><span>Wallet Top Up</span></div>
+          <span class="font-bold">+₹1,000</span>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- Login Panel (Hidden until clicked) -->
-  <div id="loginModal" class="modal-card" style="display:none;">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-      <h3 style="margin:0; color:var(--navy);">Owner, Rider &amp; Client Sign In</h3>
-      <button onclick="document.getElementById('loginModal').style.display='none'" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
-    </div>
-    <input type="email" id="loginEmail" placeholder="Email Address" />
-    <input type="password" id="loginPass" placeholder="Password" />
-    <button class="btn-order-card" id="loginBtn" style="background:var(--gold);">Sign In to Dashboard</button>
-    <p id="loginMsg" style="color:#DC2626; font-size:0.85rem; margin-bottom:0;"></p>
-  </div>
+  <!-- BOTTOM NAVIGATION BAR -->
+  <nav class="fixed bottom-0 w-full bg-black/95 backdrop-blur-lg border-t border-gray-800 flex justify-around py-2 pb-safe">
+    <button onclick="switchTab('tab-home')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-wassersGold">
+      <i class="fas fa-compass text-xl mb-1"></i><span class="text-[10px] font-semibold">Explore</span>
+    </button>
+    <button onclick="switchTab('tab-shop')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-wassersGold transition">
+      <i class="fas fa-shopping-bag text-xl mb-1"></i><span class="text-[10px] font-semibold">Shop</span>
+    </button>
+    <button onclick="switchTab('tab-track')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-wassersGold transition">
+      <i class="fas fa-route text-xl mb-1"></i><span class="text-[10px] font-semibold">Track</span>
+    </button>
+    <button onclick="switchTab('tab-wallet')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-wassersGold transition">
+      <i class="fas fa-wallet text-xl mb-1"></i><span class="text-[10px] font-semibold">Wallet</span>
+    </button>
+  </nav>
 
-  <!-- 3. Product Range Section -->
-  <section id="catalogSection" class="catalog-section">
-    <div class="section-title-center">
-      <span class="section-eyebrow">Our Hydration Range</span>
-      <h2>Choose Your Pack Size</h2>
-      <p>Click "Order Now" on any pack below for fast doorstep delivery across Surat.</p>
-    </div>
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // 1. Initialize Firebase (Paste your firebaseConfig from app.js here)
+    // firebase.initializeApp(firebaseConfig);
+    // const db = firebase.firestore();
 
-    <div id="catalogGrid" class="product-grid"></div>
-
-    <!-- Order Checkout Panel -->
-    <div class="modal-card" id="checkoutSection" style="display:none;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="margin:0; color:var(--navy);">Order: <span id="selectedProdName" style="color:var(--gold);"></span></h3>
-        <button onclick="document.getElementById('checkoutSection').style.display='none'" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
-      </div>
-      <input type="text" id="custName" placeholder="Your Full Name / Business Name" />
-      <input type="tel" id="custPhone" placeholder="Mobile Number (WhatsApp)" />
-      <select id="custZone">
-        <option value="Begampura">Begampura, Surat</option>
-        <option value="Vesu">Vesu, Surat</option>
-        <option value="Adajan">Adajan, Surat</option>
-        <option value="Piplod">Piplod, Surat</option>
-        <option value="Ring Road">Ring Road / Textile Market, Surat</option>
-      </select>
-      <input type="text" id="custAddress" placeholder="Full Street / Shop / Apartment Address" />
-      <button class="btn-order-card" id="placeOrderBtn" style="background:var(--gold);">Confirm Order &amp; Pay via UPI / Cash</button>
-    </div>
-  </section>
-
-  <!-- 4. Brand Promise Band -->
-  <section id="whyWassers" class="features-band">
-    <div class="features-grid">
-      <div class="feature-box">
-        <h4>FSSAI Certified Purity</h4>
-        <p>Multi-stage purification with balanced 65 PPM TDS and refreshing 7.4 pH for crisp taste.</p>
-      </div>
-      <div class="feature-box">
-        <h4>Sanitized 20L Capsules</h4>
-        <p>Every returnable 20-liter water capsule undergoes thorough automated washing and tamper-evident sealing.</p>
-      </div>
-      <div class="feature-box">
-        <h4>Same-Day Surat Dispatch</h4>
-        <p>Dedicated local route delivery covering Begampura, Ring Road, Vesu, Adajan, and Piplod.</p>
-      </div>
-      <div class="feature-box">
-        <h4>Custom Event &amp; Corporate Supply</h4>
-        <p>Bulk subscriptions and custom-labelled bottles for weddings, clinics, gyms, and corporate offices.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Footer -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div>
-        <strong style="color:var(--gold); font-size:1.2rem; letter-spacing:1.5px;">WASSERS &amp; CO. SURAT</strong><br>
-        <small style="color:#CBD5E1;">Clean Water, Clear Promise • 24/7 Bulk &amp; Commercial Hydration Supply</small>
-      </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a id="googleReviewBtn" href="https://g.page/r/CVKdXtcKOnF3EAE/review" target="_blank" class="footer-btn-gold">★ Rate Us on Google</a>
-        <a id="websiteBtn" href="https://www.wassersand.co" target="_blank" class="footer-btn-outline">Visit www.wassersand.co</a>
-        <a href="https://wa.me/918469277377?text=Hello%20Wassers%20%26%20Co.%2C%20I%20need%20water%20delivery%20in%20Surat." target="_blank" class="footer-btn-outline">WhatsApp 846-WASSERS</a>
-      </div>
-    </div>
-  </footer>
-
-  <script type="module">
-    import { auth, db } from "./firebase-config.js";
-    import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { doc, getDoc, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    let selectedProduct = null;
-
-    const defaultProducts = [
-      { id: "20l-capsule", name: "20L Water Capsule", price: 80, volume: "20 Liter Jar", tds: "65 PPM", ph: "7.4", mediaUrl: "./WOM20L.png" },
-      { id: "1l-easyflow", name: "EasyFlow 1L Bottle", price: 20, volume: "1 Liter", tds: "65 PPM", ph: "7.4", mediaUrl: "./WASSERS%20%26%20CO.%20-%20EasyFlow%201L%20-%20Pure%20Hydration%2C%20Anytime.png" },
-      { id: "500ml-hydroease", name: "HydroEase 500ml Bottle", price: 10, volume: "500 ML", tds: "65 PPM", ph: "7.4", mediaUrl: "./WASSER%20HydroEase%20500%20ML%20-%20Refreshment%20Redefined.png" },
-      { id: "200ml-minisip", name: "MiniSip 200ml Bottle", price: 5, volume: "200 ML", tds: "65 PPM", ph: "7.4", mediaUrl: "./WASSER%20MiniSip%20200%20ML%20-%20Refreshment%20in%20Every%20Drop.png" }
-    ];
-
-    function renderCatalog(items) {
-      const grid = document.getElementById("catalogGrid");
-      grid.innerHTML = "";
-      items.forEach((p) => {
-        const prodPayload = JSON.stringify({ id: p.id, name: p.name, price: p.price }).replace(/'/g, "&#39;");
-        grid.innerHTML += `
-          <div class="product-card">
-            <div>
-              <div class="prod-stage">
-                <img src="${p.mediaUrl || './WOM20L.png'}" alt="${p.name}" onerror="this.src='./WOM20L.png'" />
-              </div>
-              <div class="spec-pill">TDS: ${p.tds || '65 PPM'} • pH: ${p.ph || '7.4'}</div>
-              <h3 class="prod-name">${p.name}</h3>
-            </div>
-            <div>
-              <div class="prod-price">₹${p.price} <span>/ ${p.volume || 'unit'}</span></div>
-              <button class="btn-order-card" onclick='window.selectItem(${prodPayload})'>Order Now</button>
-            </div>
-          </div>`;
+    // 2. Tab Switching Logic
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-wassersGold');
+        btn.classList.add('text-gray-500');
       });
+      event.currentTarget.classList.remove('text-gray-500');
+      event.currentTarget.classList.add('text-wassersGold');
     }
 
-    renderCatalog(defaultProducts);
-
-    onSnapshot(collection(db, "products"), (snap) => {
-      if (!snap.empty) {
-        const liveItems = [];
-        snap.forEach((d) => liveItems.push({ id: d.id, ...d.data() }));
-        renderCatalog(liveItems);
-      }
-    });
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) return;
-      const snap = await getDoc(doc(db, "users", user.uid));
-      const role = snap.exists() ? snap.data().role : "customer";
-      if (role === "owner" || role === "admin") {
-        window.location.href = "/admin.html";
-      } else if (role === "rider") {
-        window.location.href = "/rider.html";
-      } else {
-        document.getElementById("loginModal").style.display = "none";
-        document.getElementById("authHeader").innerHTML = `<button class="nav-pill-cta" id="signOutBtn">Sign Out</button>`;
-        document.getElementById("signOutBtn").onclick = () => signOut(auth);
-      }
-    });
-
-    document.getElementById("loginBtn").onclick = async () => {
-      try {
-        await signInWithEmailAndPassword(auth, document.getElementById("loginEmail").value, document.getElementById("loginPass").value);
-      } catch (e) {
-        document.getElementById("loginMsg").innerText = "Invalid credentials: " + e.message;
-      }
-    };
-
-    window.selectItem = (prod) => {
-      selectedProduct = prod;
-      document.getElementById("selectedProdName").innerText = `${prod.name} (₹${prod.price})`;
-      document.getElementById("checkoutSection").style.display = "block";
-      document.getElementById("checkoutSection").scrollIntoView({ behavior: "smooth" });
-    };
-
-    document.getElementById("placeOrderBtn").onclick = async () => {
-      if (!selectedProduct) return;
-      await addDoc(collection(db, "orders"), {
-        customerName: document.getElementById("custName").value,
-        customerPhone: document.getElementById("custPhone").value,
-        zone: document.getElementById("custZone").value,
-        address: document.getElementById("custAddress").value,
-        items: [selectedProduct],
-        totalAmount: selectedProduct.price,
-        paymentStatus: "Pending UPI/COD",
-        deliveryStatus: "Pending",
-        createdAt: serverTimestamp()
-      });
-      alert("Order placed! Our Surat dispatch team has received it.");
-      document.getElementById("checkoutSection").style.display = "none";
-    };
-
-    onSnapshot(doc(db, "settings", "company_info"), (snap) => {
-      if (snap.exists()) {
-        if (snap.data().googleReviewUrl) document.getElementById("googleReviewBtn").href = snap.data().googleReviewUrl;
-        if (snap.data().websiteUrl) document.getElementById("websiteBtn").href = snap.data().websiteUrl;
-      }
-    });
-  </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js');
-      });
+    // 3. Razorpay Integration Logic
+    function startRazorpayPayment(amount) {
+      var options = {
+        "key": "YOUR_RAZORPAY_KEY_ID", // Replace with your Live Key
+        "amount": amount * 100, // Amount in paise
+        "currency": "INR",
+        "name": "Wassers & Co.",
+        "description": "Premium Hydration Delivery",
+        "image": "logo.png", // Path to your golden logo
+        "handler": function (response) {
+            alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+            // Here you write to Firestore that order is paid
+        },
+        "prefill": {
+            "name": "Client Name",
+            "contact": "8469277377"
+        },
+        "theme": { "color": "#D4AF37" } // Matches Wassers Gold
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
     }
   </script>
 </body>
