@@ -30,7 +30,7 @@
   <!-- RIDER DASHBOARD -->
   <div id="riderDash" style="display:none;">
     <button onclick="startLiveTracking()" class="btn-gps" id="trackBtn">📍 Start Live GPS Tracking</button>
-    <div id="gpsStatus" style="font-size: 12px; color: #38BDF8; margin-top: 8px; margin-bottom: 16px;"></div>
+    <div id="gpsStatus" style="font-size: 12px; color: #38BDF8; margin-top: 8px; margin-bottom: 16px; font-weight: 600;"></div>
 
     <div class="card">
       <h3 style="color:#D4AF37;margin-bottom:10px;">+ Shop-to-Shop New Order</h3>
@@ -67,41 +67,47 @@
     const db = getFirestore(app);
     let gpsWatchId = null;
 
-    // GPS Tracking Function
+    /* =========================================
+       UPDATED LIVE TRACKING LOGIC
+       ========================================= */
+    const riderDocRef = doc(db, "active_deliveries", "maruti_eeco_01");
+
     window.startLiveTracking = () => {
-      const riderId = auth.currentUser ? auth.currentUser.uid : "unknown_rider";
       const statusDiv = document.getElementById('gpsStatus');
       const trackBtn = document.getElementById('trackBtn');
       
       if (navigator.geolocation) {
         statusDiv.innerText = "Locating GPS...";
+        statusDiv.style.color = "#38BDF8";
         
-        // watchPosition fires automatically every time the phone moves
         gpsWatchId = navigator.geolocation.watchPosition(async (position) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
           
           try {
-            // Blast coordinates directly to Firestore
-            await setDoc(doc(db, "active_deliveries", riderId), {
-              location: new GeoPoint(lat, lng),
+            await setDoc(riderDocRef, {
+              riderLocation: new GeoPoint(lat, lng),
               vehicle: "Maruti Suzuki Eeco",
               lastUpdated: serverTimestamp()
             }, { merge: true });
             
-            // Visual feedback for the rider
-            statusDiv.innerText = `✅ GPS Active (Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)})`;
+            // Update UI to show success
+            statusDiv.innerText = `🔴 Live Tracking Active (Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)})`;
+            statusDiv.style.color = "#22C55E"; 
             trackBtn.style.background = "#22C55E";
             trackBtn.innerText = "📡 GPS Tracking Live";
             
           } catch (error) {
             console.error("Firestore Error: ", error);
             statusDiv.innerText = "❌ Error connecting to database.";
+            statusDiv.style.color = "#ef4444";
           }
           
         }, (error) => {
           console.error("GPS Error:", error);
-          statusDiv.innerText = "❌ Please enable location services on your phone.";
+          alert("Please enable GPS/Location services on your phone.");
+          statusDiv.innerText = "❌ GPS Access Denied.";
+          statusDiv.style.color = "#ef4444";
         }, {
           enableHighAccuracy: true,
           maximumAge: 0,
@@ -112,6 +118,9 @@
       }
     };
 
+    /* =========================================
+       EXISTING LOGIN & ORDER LOGIC
+       ========================================= */
     window.loginRider = async () => {
       try {
         const email = document.getElementById('email').value;
