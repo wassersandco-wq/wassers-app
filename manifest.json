@@ -2,6 +2,7 @@
   "name": "Wassers & Co. - Clean Water, Clear Promise",
   "short_name": "Wassers & Co.",
   "description": "Official drinking water ordering, live tracking, and delivery app for Wassers & Co., Surat.",
+  "id": "/?source=pwa",
   "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
@@ -20,6 +21,13 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
