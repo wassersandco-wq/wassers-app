@@ -9,10 +9,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome for Thin Line Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  
+  <!-- IMPORTANT: Replace YOUR_GOOGLE_MAPS_API_KEY_HERE below -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY_HERE"></script>
+  
   <!-- Razorpay SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   
@@ -24,7 +24,6 @@
     }
   </script>
   <style>
-    /* Hide scrollbar for a native app feel */
     body::-webkit-scrollbar { display: none; }
     .tab-content { display: none; }
     .tab-content.active { display: block; animation: fadeIn 0.3s; }
@@ -53,8 +52,8 @@
       <div class="bg-gray-800 rounded-2xl p-6 mb-6 shadow-lg shadow-black/50 relative overflow-hidden">
         <div class="absolute -right-10 -top-10 opacity-20"><i class="fas fa-tint text-9xl text-wassersGold"></i></div>
         <h2 class="text-2xl font-semibold mb-2">Welcome Back</h2>
-        <p class="text-gray-300 text-sm mb-4">Your next scheduled delivery is tomorrow.</p>
-        <button onclick="switchTab('tab-shop')" class="bg-wassersGold text-black font-bold py-2 px-6 rounded-full shadow-lg">Order Now</button>
+        <p class="text-gray-300 text-sm mb-4">Tap below to place your next order.</p>
+        <button onclick="window.switchTab('tab-shop')" class="bg-wassersGold text-black font-bold py-2 px-6 rounded-full shadow-lg">Order Now</button>
       </div>
       <h3 class="text-lg font-semibold text-wassersGold mb-3 border-b border-gray-800 pb-2">Quick Actions</h3>
       <div class="grid grid-cols-2 gap-4">
@@ -69,20 +68,17 @@
       </div>
     </section>
 
-    <!-- 2. SHOP TAB (Mai Dubai Vibe) -->
+    <!-- 2. SHOP TAB -->
     <section id="tab-shop" class="tab-content">
       <h2 class="text-xl font-bold text-wassersGold mb-4">Premium Hydration</h2>
       <div class="grid grid-cols-1 gap-5">
-        
-        <!-- 20L Capsule -->
         <div class="bg-gray-800 rounded-2xl p-4 flex items-center shadow-lg border border-gray-700">
           <div class="w-24 h-24 bg-gray-900 rounded-xl flex items-center justify-center border border-gray-700">
-             <!-- Replace with your transparent PNG of the jar -->
              <i class="fas fa-prescription-bottle text-4xl text-blue-400"></i>
           </div>
           <div class="ml-4 flex-1">
             <h3 class="font-bold text-lg">20L Water Capsule</h3>
-            <p class="text-wassersGold font-semibold">₹80.00 <span class="text-xs text-gray-400 line-through">₹100</span></p>
+            <p class="text-wassersGold font-semibold">₹80.00</p>
             <div class="flex items-center mt-2">
               <button class="bg-gray-700 w-8 h-8 rounded-full">-</button>
               <span class="mx-4 font-bold">1</span>
@@ -90,19 +86,6 @@
             </div>
           </div>
         </div>
-
-        <!-- 1L PET Bottles -->
-        <div class="bg-gray-800 rounded-2xl p-4 flex items-center shadow-lg border border-gray-700">
-          <div class="w-24 h-24 bg-gray-900 rounded-xl flex items-center justify-center border border-gray-700">
-             <i class="fas fa-wine-bottle text-3xl text-blue-300"></i>
-          </div>
-          <div class="ml-4 flex-1">
-            <h3 class="font-bold text-lg">1L PET Bottle (Case)</h3>
-            <p class="text-wassersGold font-semibold">₹20.00 / btl</p>
-            <button class="mt-2 text-xs bg-gray-700 px-3 py-1 rounded-full hover:bg-gray-600">Add to Cart</button>
-          </div>
-        </div>
-
         <button onclick="startRazorpayPayment(80)" class="w-full bg-wassersGold text-black font-bold text-lg py-4 rounded-xl mt-4 shadow-[0_0_15px_rgba(212,175,55,0.4)]">Proceed to Checkout</button>
       </div>
     </section>
@@ -111,21 +94,21 @@
     <section id="tab-track" class="tab-content">
       <div class="bg-gray-800 rounded-t-3xl p-5 border-b border-gray-700">
         <h2 class="text-xl font-bold text-wassersGold">Live Delivery</h2>
-        <p class="text-sm text-gray-400">Your order is on the way in a Maruti Suzuki Eeco.</p>
+        <p class="text-sm text-gray-400" id="vehicle-info">Locating your delivery...</p>
       </div>
       <!-- Google Map Container -->
-      <div id="map" class="w-full h-96 bg-gray-700 flex items-center justify-center text-gray-500">
-        <i class="fas fa-spinner fa-spin text-3xl mr-2"></i> Loading Live Map...
+      <div id="map" class="w-full h-[400px] bg-gray-900 flex items-center justify-center text-gray-500">
+        Loading Secure Map...
       </div>
       <div class="bg-gray-800 rounded-b-3xl p-5 flex items-center justify-between">
         <div class="flex items-center">
-          <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center border-2 border-wassersGold"><i class="fas fa-user"></i></div>
+          <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center border-2 border-wassersGold"><i class="fas fa-user text-wassersGold"></i></div>
           <div class="ml-3">
             <p class="font-bold">Rahul (Rider)</p>
-            <p class="text-xs text-wassersGold">ETA: 14 mins</p>
+            <p class="text-xs text-green-400" id="live-status-text">🔴 Live</p>
           </div>
         </div>
-        <a href="tel:+918469277377" class="bg-green-600 w-10 h-10 rounded-full flex items-center justify-center text-white"><i class="fas fa-phone"></i></a>
+        <a href="tel:+918469277377" class="bg-green-600 w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg"><i class="fas fa-phone"></i></a>
       </div>
     </section>
 
@@ -135,48 +118,46 @@
         <div class="absolute top-0 right-0 w-32 h-32 bg-wassersGold/10 rounded-full blur-2xl"></div>
         <p class="text-gray-400 text-sm mb-1">Available Balance</p>
         <h2 class="text-4xl font-bold text-white mb-6">₹1,240.00</h2>
-        <p class="text-xs text-wassersGold"><i class="fas fa-check-circle mr-1"></i> Auto-pay active for Begampura office</p>
-      </div>
-      <button class="w-full border-2 border-wassersGold text-wassersGold font-bold py-3 rounded-xl mb-4 hover:bg-wassersGold hover:text-black transition">Top Up Wallet (UPI)</button>
-      
-      <h3 class="font-bold text-gray-300 mt-6 mb-3">Recent Transactions</h3>
-      <div class="space-y-3">
-        <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg">
-          <div class="flex items-center"><i class="fas fa-arrow-down text-red-500 mr-3"></i><span>Order #4092</span></div>
-          <span class="font-bold">-₹80</span>
-        </div>
-        <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg">
-          <div class="flex items-center"><i class="fas fa-arrow-up text-green-500 mr-3"></i><span>Wallet Top Up</span></div>
-          <span class="font-bold">+₹1,000</span>
-        </div>
       </div>
     </section>
   </main>
 
   <!-- BOTTOM NAVIGATION BAR -->
-  <nav class="fixed bottom-0 w-full bg-black/95 backdrop-blur-lg border-t border-gray-800 flex justify-around py-2 pb-safe">
-    <button onclick="switchTab('tab-home')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-wassersGold">
+  <nav class="fixed bottom-0 w-full bg-black/95 backdrop-blur-lg border-t border-gray-800 flex justify-around py-2 pb-safe z-50">
+    <button onclick="window.switchTab('tab-home')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-wassersGold">
       <i class="fas fa-compass text-xl mb-1"></i><span class="text-[10px] font-semibold">Explore</span>
     </button>
-    <button onclick="switchTab('tab-shop')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-wassersGold transition">
+    <button onclick="window.switchTab('tab-shop')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-wassersGold transition">
       <i class="fas fa-shopping-bag text-xl mb-1"></i><span class="text-[10px] font-semibold">Shop</span>
     </button>
-    <button onclick="switchTab('tab-track')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-wassersGold transition">
+    <button onclick="window.switchTab('tab-track')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-wassersGold transition">
       <i class="fas fa-route text-xl mb-1"></i><span class="text-[10px] font-semibold">Track</span>
     </button>
-    <button onclick="switchTab('tab-wallet')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-wassersGold transition">
+    <button onclick="window.switchTab('tab-wallet')" class="nav-btn w-16 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-wassersGold transition">
       <i class="fas fa-wallet text-xl mb-1"></i><span class="text-[10px] font-semibold">Wallet</span>
     </button>
   </nav>
 
-  <!-- JAVASCRIPT LOGIC -->
-  <script>
-    // 1. Initialize Firebase (Paste your firebaseConfig from app.js here)
-    // firebase.initializeApp(firebaseConfig);
-    // const db = firebase.firestore();
+  <!-- UI & FIREBASE SCRIPT -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // 2. Tab Switching Logic
-    function switchTab(tabId) {
+    // 1. IMPORTANT: PASTE YOUR FIREBASE CONFIG HERE
+    const firebaseConfig = {
+      apiKey: "YOUR_FIREBASE_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 2. Tab Switching Logic (attached to window to work with inline onclick)
+    window.switchTab = function(tabId) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       
@@ -184,32 +165,95 @@
         btn.classList.remove('text-wassersGold');
         btn.classList.add('text-gray-500');
       });
-      event.currentTarget.classList.remove('text-gray-500');
-      event.currentTarget.classList.add('text-wassersGold');
+      
+      const activeBtn = document.querySelector(`button[onclick="window.switchTab('${tabId}')"]`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-gray-500');
+        activeBtn.classList.add('text-wassersGold');
+      }
+
+      // Initialize map ONLY when Track tab is opened for the first time
+      if (tabId === 'tab-track' && !mapInitialized) {
+        initLiveMap();
+      }
+    };
+
+    // 3. Google Maps & Live Tracking Logic
+    let map;
+    let riderMarker;
+    let mapInitialized = false;
+
+    function initLiveMap() {
+      if (typeof google === 'undefined') {
+        document.getElementById('map').innerHTML = "Google Maps failed to load. Check API Key.";
+        return;
+      }
+
+      const mapElement = document.getElementById('map');
+      
+      // Mai Dubai Style Dark Map Theme
+      const darkMapStyle = [
+        { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+        { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+        { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+        { featureType: "road", elementType: "geometry", stylers: [{ color: "#38414e" }] },
+        { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#212a37" }] },
+        { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#9ca5b3" }] },
+        { featureType: "water", elementType: "geometry", stylers: [{ color: "#17263c" }] }
+      ];
+
+      map = new google.maps.Map(mapElement, {
+        center: { lat: 21.1702, lng: 72.8311 }, // Surat default
+        zoom: 15,
+        disableDefaultUI: true,
+        styles: darkMapStyle
+      });
+      
+      mapInitialized = true;
+
+      // Listen to the exact document the Rider App is writing to
+      const riderDocRef = doc(db, "active_deliveries", "maruti_eeco_01");
+      
+      onSnapshot(riderDocRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.riderLocation) {
+            const currentPos = { lat: data.riderLocation.latitude, lng: data.riderLocation.longitude };
+            
+            // Move Map
+            map.panTo(currentPos);
+
+            // Update UI text
+            if (data.vehicle) {
+              document.getElementById('vehicle-info').innerText = `Arriving in: ${data.vehicle}`;
+            }
+
+            // Create or Move Golden Marker
+            if (!riderMarker) {
+              riderMarker = new google.maps.Marker({
+                position: currentPos,
+                map: map,
+                icon: {
+                  path: google.maps.SymbolPath.CIRCLE,
+                  scale: 10,
+                  fillColor: "#D4AF37",
+                  fillOpacity: 1,
+                  strokeWeight: 3,
+                  strokeColor: "#ffffff"
+                }
+              });
+            } else {
+              riderMarker.setPosition(currentPos);
+            }
+          }
+        }
+      });
     }
 
-    // 3. Razorpay Integration Logic
-    function startRazorpayPayment(amount) {
-      var options = {
-        "key": "YOUR_RAZORPAY_KEY_ID", // Replace with your Live Key
-        "amount": amount * 100, // Amount in paise
-        "currency": "INR",
-        "name": "Wassers & Co.",
-        "description": "Premium Hydration Delivery",
-        "image": "logo.png", // Path to your golden logo
-        "handler": function (response) {
-            alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-            // Here you write to Firestore that order is paid
-        },
-        "prefill": {
-            "name": "Client Name",
-            "contact": "8469277377"
-        },
-        "theme": { "color": "#D4AF37" } // Matches Wassers Gold
-      };
-      var rzp1 = new Razorpay(options);
-      rzp1.open();
-    }
+    // Razorpay Stub
+    window.startRazorpayPayment = function(amount) {
+      alert("Payment gateway will launch for ₹" + amount);
+    };
   </script>
 </body>
 </html>
