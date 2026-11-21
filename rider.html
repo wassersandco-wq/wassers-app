@@ -29,6 +29,9 @@
 
   <!-- RIDER DASHBOARD -->
   <div id="riderDash" style="display:none;">
+    <button onclick="startLiveTracking()" class="btn-gps">📍 Start Live GPS Tracking</button>
+    <div id="gpsStatus" style="font-size: 12px; color: #38BDF8; margin-top: 8px; margin-bottom: 16px;"></div>
+
     <div class="card">
       <h3 style="color:#D4AF37;margin-bottom:10px;">+ Shop-to-Shop New Order</h3>
       <input type="text" id="shopName" placeholder="Shop / Office Name" />
@@ -56,13 +59,50 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, collection, addDoc, doc, updateDoc, query, where, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, GeoPoint } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
     import { firebaseConfig } from "./config.js";
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
     let gpsWatchId = null;
+
+    // GPS Tracking Function (Updated to v10 syntax)
+    window.startLiveTracking = () => {
+      const riderId = auth.currentUser ? auth.currentUser.uid : "unknown_rider";
+      const statusDiv = document.getElementById('gpsStatus');
+      
+      if (navigator.geolocation) {
+        statusDiv.innerText = "Locating GPS...";
+        gpsWatchId = navigator.geolocation.watchPosition(async (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          
+          try {
+            await setDoc(doc(db, "active_deliveries", riderId), {
+              location: new GeoPoint(lat, lng),
+              vehicle: "Maruti Suzuki Eeco",
+              lastUpdated: serverTimestamp()
+            }, { merge: true });
+            
+            statusDiv.innerText = "✅ GPS Active - Transmitting Location";
+          } catch (error) {
+            console.error("Firestore Error: ", error);
+            statusDiv.innerText = "❌ Error connecting to database.";
+          }
+          
+        }, (error) => {
+          console.error("GPS Error:", error);
+          statusDiv.innerText = "❌ Please enable location services on your phone.";
+        }, {
+          enableHighAccuracy: true,
+          maximumAge: 0,
+          timeout: 5000
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    };
 
     window.loginRider = async () => {
       try {
@@ -74,7 +114,6 @@
       if (user) {
         document.getElementById('loginBox').style.display = 'none';
         document.getElementById('riderDash').style.display = 'block';
-        loadDeliveries();
       }
     });
 
@@ -88,6 +127,29 @@
 
       if (!shop || !area) { alert("Enter Shop Name and Area."); return; }
 
-      await addDoc(collection(db, "orders"), {
-        customerName: shop,
-        phone
+      try {
+        await addDoc(collection(db, "orders"), {
+          customerName: shop,
+          phone: phone,
+          area: area,
+          product: prod,
+          price: Number(priceStr),
+          quantity: qty,
+          totalAmount: qty * Number(priceStr),
+          paymentStatus: pay,
+          timestamp: serverTimestamp(),
+          status: "Delivered"
+        });
+        
+        alert("Shop order submitted successfully! ✅");
+        document.getElementById('shopName').value = '';
+        document.getElementById('shopPhone').value = '';
+        document.getElementById('shopArea').value = '';
+        document.getElementById('shopQty').value = '5';
+      } catch (e) {
+        alert("Order failed: " + e.message);
+      }
+    };
+  </script>
+</body>
+</html>
