@@ -10,8 +10,8 @@
   <!-- FontAwesome for Thin Line Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- IMPORTANT: Replace YOUR_GOOGLE_MAPS_API_KEY_HERE below -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY_HERE"></script>
+  <!-- Google Maps API Key (Perfectly Integrated) -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdaFfg4SsMOWuK4mU5d_2oNX-FwQT5rgU"></script>
   
   <!-- Razorpay SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -142,21 +142,14 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    // 1. IMPORTANT: PASTE YOUR FIREBASE CONFIG HERE
-    const firebaseConfig = {
-      apiKey: "YOUR_FIREBASE_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+    
+    // Automatically pulling your exact Firebase details from your config.js file
+    import { firebaseConfig } from "./config.js"; 
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // 2. Tab Switching Logic (attached to window to work with inline onclick)
+    // Tab Switching Logic
     window.switchTab = function(tabId) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
@@ -178,7 +171,7 @@
       }
     };
 
-    // 3. Google Maps & Live Tracking Logic
+    // Google Maps & Live Tracking Logic
     let map;
     let riderMarker;
     let mapInitialized = false;
