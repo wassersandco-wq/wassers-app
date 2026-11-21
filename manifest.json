@@ -3,12 +3,12 @@
   "short_name": "Wassers & Co.",
   "description": "Official drinking water ordering, live tracking, and delivery app for Wassers & Co., Surat.",
   "id": "/?source=pwa",
-  "start_url": "/index.html",
+  "start_url": "/app.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0A192F",
-  "theme_color": "#0A192F",
+  "background_color": "#F3F4F6",
+  "theme_color": "#D4AF37",
   "icons": [
     {
       "src": "icons/icon-192.png",
