@@ -10,7 +10,7 @@
   <!-- FontAwesome for Thin Line Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Google Maps API Key (Perfectly Integrated) -->
+  <!-- Google Maps API Key -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdaFfg4SsMOWuK4mU5d_2oNX-FwQT5rgU"></script>
   
   <!-- Razorpay SDK -->
@@ -142,64 +142,6 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    const db = getFirestore(app);
-
-    let map;
-let marker;
-
-function initMapAndTrack() {
-  // Center initially on Surat
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 21.1702, lng: 72.8311 },
-    zoom: 15,
-    disableDefaultUI: true, // Hides bulky Google UI for a cleaner look
-    styles: [ { "elementType": "geometry", "stylers": [{ "color": "#242f3e" }] }, { "elementType": "labels.text.stroke", "stylers": [{ "color": "#242f3e" }] }, { "elementType": "labels.text.fill", "stylers": [{ "color": "#746855" }] } ] // Dark mode map
-  });
-
-  // Listen to the specific delivery vehicle
-  const riderDocRef = doc(db, "active_deliveries", "maruti_eeco_01");
-
-  onSnapshot(riderDocRef, (docSnap) => {
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      if (data.riderLocation) {
-        const currentPos = { 
-          lat: data.riderLocation.latitude, 
-          lng: data.riderLocation.longitude 
-        };
-
-        // Move the map center to the rider
-        map.panTo(currentPos);
-
-        // Create or update the marker
-        if (!marker) {
-          marker = new google.maps.Marker({
-            position: currentPos,
-            map: map,
-            title: data.vehicle,
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE, // Replace with custom icon URL if desired
-              scale: 8,
-              fillColor: "#D4AF37", // Wassers Gold
-              fillOpacity: 1,
-              strokeWeight: 2,
-              strokeColor: "#ffffff"
-            }
-          });
-        } else {
-          marker.setPosition(currentPos);
-        }
-      }
-    }
-  });
-}
-
-// Trigger the map load only when the client clicks the Track tab
-document.getElementById('trackTabBtn').addEventListener('click', () => {
-    if (!map) initMapAndTrack();
-});
-    
-    // Automatically pulling your exact Firebase details from your config.js file
     import { firebaseConfig } from "./config.js"; 
 
     const app = initializeApp(firebaseConfig);
@@ -221,7 +163,6 @@ document.getElementById('trackTabBtn').addEventListener('click', () => {
         activeBtn.classList.add('text-wassersGold');
       }
 
-      // Initialize map ONLY when Track tab is opened for the first time
       if (tabId === 'tab-track' && !mapInitialized) {
         initLiveMap();
       }
@@ -239,8 +180,6 @@ document.getElementById('trackTabBtn').addEventListener('click', () => {
       }
 
       const mapElement = document.getElementById('map');
-      
-      // Mai Dubai Style Dark Map Theme
       const darkMapStyle = [
         { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
         { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
@@ -260,7 +199,6 @@ document.getElementById('trackTabBtn').addEventListener('click', () => {
       
       mapInitialized = true;
 
-      // Listen to the exact document the Rider App is writing to
       const riderDocRef = doc(db, "active_deliveries", "maruti_eeco_01");
       
       onSnapshot(riderDocRef, (docSnap) => {
@@ -269,15 +207,12 @@ document.getElementById('trackTabBtn').addEventListener('click', () => {
           if (data.riderLocation) {
             const currentPos = { lat: data.riderLocation.latitude, lng: data.riderLocation.longitude };
             
-            // Move Map
             map.panTo(currentPos);
 
-            // Update UI text
             if (data.vehicle) {
               document.getElementById('vehicle-info').innerText = `Arriving in: ${data.vehicle}`;
             }
 
-            // Create or Move Golden Marker
             if (!riderMarker) {
               riderMarker = new google.maps.Marker({
                 position: currentPos,
@@ -303,13 +238,14 @@ document.getElementById('trackTabBtn').addEventListener('click', () => {
     window.startRazorpayPayment = function(amount) {
       alert("Payment gateway will launch for ₹" + amount);
     };
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-      .then(() => console.log("Service Worker Registered"));
-  }
-</script>
+  </script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log("Service Worker Registered Successfully"));
+    }
+  </script>
 </body>
 </html>
