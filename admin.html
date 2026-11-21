@@ -153,10 +153,10 @@
     };
 
     // ==========================================
-    // LIVE FLEET RADAR LOGIC (ADMIN OFFICE)
+    // LIVE FLEET RADAR LOGIC (ADMIN OFFICE) - MULTI-VEHICLE
     // ==========================================
     let adminMap;
-    let fleetMarker;
+    let fleetMarkers = {}; // Stores all active vehicle markers by ID
 
     function initAdminRadar() {
       if (typeof google === 'undefined') {
@@ -164,7 +164,7 @@
         return;
       }
 
-      // Analytical dark map style for the office dashboard (high contrast)
+      // Analytical dark map style
       const radarMapStyle = [
         { elementType: "geometry", stylers: [{ color: "#212121" }] },
         { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
@@ -175,58 +175,92 @@
       ];
 
       adminMap = new google.maps.Map(document.getElementById('admin-map'), {
-        center: { lat: 21.1702, lng: 72.8311 }, // Surat
-        zoom: 14, // Zoomed out slightly more than the client app to see the whole city
+        center: { lat: 21.1702, lng: 72.8311 }, // Centered on Surat
+        zoom: 13,
         styles: radarMapStyle,
-        disableDefaultUI: false // Office map keeps zoom controls enabled
+        disableDefaultUI: false 
       });
 
-      // Listen to the Maruti Suzuki Eeco document
-      const riderDocRef = doc(db, "active_deliveries", "maruti_eeco_01");
-      
-      onSnapshot(riderDocRef, (docSnap) => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          if (data.riderLocation) {
-            const currentPos = { lat: data.riderLocation.latitude, lng: data.riderLocation.longitude };
-            
-            // Pan the admin map to the vehicle
-            adminMap.panTo(currentPos);
+      // InfoWindow for clicking on vehicles to see details
+      const infoWindow = new google.maps.InfoWindow();
 
-            // Format the last updated time
+      // Listen to the ENTIRE "active_deliveries" collection, not just one ID
+      const fleetCollectionRef = collection(db, "active_deliveries");
+      
+      onSnapshot(fleetCollectionRef, (snap) => {
+        
+        // Update the dashboard header with the live count
+        const activeCount = snap.size;
+        document.getElementById('admin-vehicle-info').innerHTML = 
+          `<span style="color: #22C55E; font-weight: bold;">🔴 LIVE STREAMING</span> | Tracking ${activeCount} active vehicle(s) across the city.`;
+
+        // Track which IDs are in this current snapshot for cleanup
+        const currentActiveIds = new Set();
+
+        snap.forEach((docSnap) => {
+          const data = docSnap.data();
+          const riderId = docSnap.id;
+          currentActiveIds.add(riderId);
+
+          // Support both "riderLocation" and "location" depending on how your rider app sends it
+          const loc = data.riderLocation || data.location; 
+          
+          if (loc) {
+            const currentPos = { lat: loc.latitude, lng: loc.longitude };
+            
+            // Format time
             let timeString = 'Just now';
             if (data.lastUpdated) {
               timeString = data.lastUpdated.toDate().toLocaleTimeString();
             }
+            
+            const vehicleName = data.vehicle || data.name || `Vehicle ${riderId}`;
 
-            // Update the dashboard text
-            document.getElementById('admin-vehicle-info').innerHTML = 
-              `<span style="color: #22C55E; font-weight: bold;">🔴 LIVE STREAMING</span> | Vehicle: ${data.vehicle} | Last Signal: ${timeString}`;
-
-            // Create or move the admin tracking marker
-            if (!fleetMarker) {
-              fleetMarker = new google.maps.Marker({
+            // Create new marker OR update existing marker
+            if (!fleetMarkers[riderId]) {
+              fleetMarkers[riderId] = new google.maps.Marker({
                 position: currentPos,
                 map: adminMap,
-                title: 'Wassers & Co. Fleet',
+                title: vehicleName,
                 icon: {
                   path: google.maps.SymbolPath.CIRCLE,
-                  scale: 12,
-                  fillColor: "#38BDF8", // Bright blue for the admin radar to stand out
+                  scale: 10,
+                  fillColor: "#38BDF8", // Bright blue
                   fillOpacity: 1,
-                  strokeWeight: 3,
+                  strokeWeight: 2,
                   strokeColor: "#ffffff"
                 }
               });
+
+              // Allow admin to click the dot to see vehicle details
+              fleetMarkers[riderId].addListener("click", () => {
+                infoWindow.setContent(`
+                  <div style="color: #0F172A; padding: 4px; font-family: sans-serif;">
+                    <strong style="color: #00B4D8;">${vehicleName}</strong><br>
+                    <span style="font-size: 0.85rem;">Last Signal: ${timeString}</span>
+                  </div>
+                `);
+                infoWindow.open(adminMap, fleetMarkers[riderId]);
+              });
+
             } else {
-              fleetMarker.setPosition(currentPos);
+              // The marker already exists, just update its position smoothly
+              fleetMarkers[riderId].setPosition(currentPos);
             }
+          }
+        });
+
+        // CLEANUP: If a rider goes offline, remove their dot from the map
+        for (const id in fleetMarkers) {
+          if (!currentActiveIds.has(id)) {
+            fleetMarkers[id].setMap(null); // Remove from Google Map
+            delete fleetMarkers[id];       // Remove from our dictionary
           }
         }
       });
     }
 
-    // Trigger radar initialization 1.5 seconds after page loads to ensure Google Maps is ready
+    // Trigger radar initialization
     setTimeout(initAdminRadar, 1500);
   </script>
 </body>
