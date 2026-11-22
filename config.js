@@ -9,8 +9,8 @@ export const firebaseConfig = {
 };
 
 export const APP_CONFIG = {
-  razorpayKeyId: "googleReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJXXEvJFhP4DsRUp1e1wo6cXc",
+  razorpayKeyId: "",
   whatsappNumber: "918469277377",
-  googleReviewUrl: "https://g.page/r/https://g.page/r/CVKdXtcKOnF3EAE/review",
+  googleReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJXXEvJFhP4DsRUp1e1wo6cXc",
   adminEmail: "admin@wassersand.co"
 };
