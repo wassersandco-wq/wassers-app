@@ -3,30 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wassers & Co. | Premium Hydration</title>
+  <title>Wassers &amp; Co. | Premium Hydration</title>
   <link rel="manifest" href="manifest.json">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <script>
     tailwind.config = {
       theme: {
-        extend: { 
-          colors: { 
-            wassersGold: '#D4AF37', 
+        extend: {
+          colors: {
+            wassersGold: '#D4AF37',
             pureWhite: '#FFFFFF',
-            lightGray: '#F9FAFB', 
+            lightGray: '#F9FAFB',
             charcoal: '#111827',
-            maiRed: '#E3000F' /* Accent color inspired by Mai Dubai */
-          } 
+            maiRed: '#E3000F'
+          }
         }
       }
     }
   </script>
   <style>
-    /* Smooth scrolling for the whole page */
     html { scroll-behavior: smooth; }
-    /* Hero Banner Animation */
     .hero-bg {
       background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
     }
@@ -54,14 +52,12 @@
     </div>
   </div>
 
-  <!-- MAIN NAVIGATION (Mai Dubai Style) -->
-  <nav class="sticky top-0 z-50 bg-pureWhite/95 backdrop-blur-md border-b border-gray-200 py-4 px-6 md:px-12 flex justify-between items-center shadow-sm">
-    <!-- Logo -->
+  <!-- MAIN NAVIGATION -->
+  <nav class="sticky top-0 z-40 bg-pureWhite/95 backdrop-blur-md border-b border-gray-200 py-4 px-6 md:px-12 flex justify-between items-center shadow-sm">
     <a href="#" class="text-2xl md:text-3xl font-bold text-wassersGold tracking-tighter">
-      WASSERS & CO.
+      WASSERS &amp; CO.
     </a>
 
-    <!-- Desktop Menu -->
     <div class="hidden md:flex space-x-8 text-sm font-semibold text-gray-700">
       <a href="#hero" class="hover:text-wassersGold transition">Why Wassers?</a>
       <a href="#products" class="hover:text-wassersGold transition">Products</a>
@@ -69,15 +65,14 @@
       <a href="admin.html" class="hover:text-wassersGold transition">Corporate</a>
     </div>
 
-    <!-- Right Side Actions -->
     <div class="flex items-center space-x-4">
       <div class="hidden md:block text-right mr-4 border-r border-gray-300 pr-4">
         <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Deliver To</p>
         <p class="text-sm font-bold text-charcoal cursor-pointer hover:text-wassersGold">Surat, Gujarat <i class="fas fa-chevron-down text-xs"></i></p>
       </div>
-      <button class="text-gray-700 hover:text-wassersGold relative">
+      <button type="button" onclick="openCartDrawer()" class="text-gray-700 hover:text-wassersGold relative cursor-pointer" aria-label="Open Cart">
         <i class="fas fa-shopping-cart text-xl"></i>
-        <span class="absolute -top-2 -right-2 bg-wassersGold text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-wassersGold text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
       </button>
       <a href="#products" class="hidden md:block border-2 border-wassersGold text-wassersGold font-bold px-6 py-2 rounded-full hover:bg-wassersGold hover:text-white transition">
         Shop Now
@@ -85,13 +80,11 @@
     </div>
   </nav>
 
-  <!-- HERO SECTION (Massive visual like Mai Dubai) -->
+  <!-- HERO SECTION -->
   <section id="hero" class="hero-bg min-h-[600px] flex items-center relative overflow-hidden px-6 md:px-12">
-    <!-- Background Water Splashes (Abstract) -->
     <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-50 opacity-50 rounded-l-full blur-3xl -z-10"></div>
-    
+
     <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <!-- Text Content -->
       <div class="z-10">
         <h1 class="text-5xl md:text-7xl font-black text-charcoal leading-tight mb-4 uppercase">
           CRACK OPEN THE <span class="text-wassersGold">PROMISE</span>
@@ -108,21 +101,27 @@
           </a>
         </div>
       </div>
-      
-      <!-- Image Content (Floating Bottles) -->
+
       <div class="relative h-[400px] md:h-[600px] flex justify-center items-center z-10">
-        <!-- Placeholder for your actual product image. To replicate Mai Dubai, this needs to be a very high-res transparent PNG of your bottle/capsule -->
-        <div class="w-64 h-96 bg-gray-200 rounded-3xl floating-bottle border-4 border-white shadow-2xl flex flex-col items-center justify-center relative overflow-hidden">
-           <div class="absolute inset-0 bg-gradient-to-b from-blue-100 to-white opacity-50"></div>
-           <i class="fas fa-prescription-bottle text-7xl text-wassersGold mb-4 z-10"></i>
-           <h3 class="text-2xl font-black text-charcoal z-10">20L CAPSULE</h3>
-           <p class="text-sm font-bold text-gray-500 z-10">₹80 Only</p>
+        <div class="w-64 h-96 bg-white rounded-3xl floating-bottle border-4 border-white shadow-2xl flex flex-col items-center justify-center relative overflow-hidden p-4">
+          <div class="absolute inset-0 bg-gradient-to-b from-blue-50 to-white opacity-70"></div>
+          <img
+            src="./WOM20L.png"
+            alt="20L Capsule"
+            class="h-56 w-auto object-contain mb-3 z-10"
+            onerror="this.style.display='none'; document.getElementById('hero-fallback').classList.remove('hidden');"
+          >
+          <div id="hero-fallback" class="hidden flex flex-col items-center z-10 mb-2">
+            <i class="fas fa-prescription-bottle text-6xl text-wassersGold mb-2"></i>
+          </div>
+          <h3 class="text-2xl font-black text-charcoal z-10">20L CAPSULE</h3>
+          <p class="text-sm font-bold text-wassersGold z-10">₹80 Only</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PRODUCTS SECTION (Horizontal scrolling grid) -->
+  <!-- PRODUCTS SECTION -->
   <section id="products" class="py-20 px-6 md:px-12 bg-white">
     <div class="max-w-7xl mx-auto">
       <div class="flex justify-between items-end mb-12">
@@ -130,73 +129,10 @@
           <h2 class="text-3xl md:text-4xl font-black text-charcoal uppercase tracking-tight">Our Premium Range</h2>
           <p class="text-gray-500 mt-2">Available for immediate dispatch across Surat.</p>
         </div>
-        <div class="hidden md:flex space-x-2">
-          <button class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:border-wassersGold hover:text-wassersGold transition"><i class="fas fa-arrow-left"></i></button>
-          <button class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:border-wassersGold hover:text-wassersGold transition"><i class="fas fa-arrow-right"></i></button>
-        </div>
       </div>
 
-      <!-- Product Grid (Responsive: 1 col on mobile, 4 cols on desktop) -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        
-        <!-- Product Card 1 -->
-        <div class="group cursor-pointer">
-          <div class="bg-lightGray rounded-3xl h-80 p-8 flex items-center justify-center mb-6 relative overflow-hidden transition group-hover:shadow-xl">
-             <div class="absolute inset-0 bg-wassersGold opacity-0 group-hover:opacity-5 transition duration-300"></div>
-             <!-- Replace with img tag of your bottle -->
-             <i class="fas fa-prescription-bottle text-8xl text-blue-400 group-hover:scale-110 transition duration-500"></i>
-             <button class="absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-wassersGold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
-               <i class="fas fa-plus"></i>
-             </button>
-          </div>
-          <h3 class="text-xl font-bold text-charcoal">20L Water Capsule</h3>
-          <p class="text-gray-500 text-sm mb-2">Refill / Exchange</p>
-          <p class="text-2xl font-black text-wassersGold">₹80</p>
-        </div>
-
-        <!-- Product Card 2 -->
-        <div class="group cursor-pointer">
-          <div class="bg-lightGray rounded-3xl h-80 p-8 flex items-center justify-center mb-6 relative overflow-hidden transition group-hover:shadow-xl">
-             <div class="absolute inset-0 bg-wassersGold opacity-0 group-hover:opacity-5 transition duration-300"></div>
-             <i class="fas fa-wine-bottle text-7xl text-blue-300 group-hover:scale-110 transition duration-500"></i>
-             <button class="absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-wassersGold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
-               <i class="fas fa-plus"></i>
-             </button>
-          </div>
-          <h3 class="text-xl font-bold text-charcoal">1L PET Bottle</h3>
-          <p class="text-gray-500 text-sm mb-2">Single Bottle</p>
-          <p class="text-2xl font-black text-wassersGold">₹20</p>
-        </div>
-
-        <!-- Product Card 3 -->
-        <div class="group cursor-pointer">
-          <div class="bg-lightGray rounded-3xl h-80 p-8 flex items-center justify-center mb-6 relative overflow-hidden transition group-hover:shadow-xl">
-             <div class="absolute inset-0 bg-wassersGold opacity-0 group-hover:opacity-5 transition duration-300"></div>
-             <i class="fas fa-wine-bottle text-6xl text-blue-300 group-hover:scale-110 transition duration-500"></i>
-             <button class="absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-wassersGold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
-               <i class="fas fa-plus"></i>
-             </button>
-          </div>
-          <h3 class="text-xl font-bold text-charcoal">500ml PET Bottle</h3>
-          <p class="text-gray-500 text-sm mb-2">Single Bottle</p>
-          <p class="text-2xl font-black text-wassersGold">₹10</p>
-        </div>
-
-        <!-- Product Card 4 -->
-        <div class="group cursor-pointer">
-          <div class="bg-lightGray rounded-3xl h-80 p-8 flex items-center justify-center mb-6 relative overflow-hidden transition group-hover:shadow-xl">
-             <div class="absolute inset-0 bg-wassersGold opacity-0 group-hover:opacity-5 transition duration-300"></div>
-             <i class="fas fa-wine-bottle text-5xl text-blue-300 group-hover:scale-110 transition duration-500"></i>
-             <button class="absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-wassersGold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
-               <i class="fas fa-plus"></i>
-             </button>
-          </div>
-          <h3 class="text-xl font-bold text-charcoal">200ml PET Bottle</h3>
-          <p class="text-gray-500 text-sm mb-2">Single Bottle</p>
-          <p class="text-2xl font-black text-wassersGold">₹5</p>
-        </div>
-
-      </div>
+      <!-- Dynamic Product Grid -->
+      <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8"></div>
     </div>
   </section>
 
@@ -204,7 +140,7 @@
   <footer class="bg-charcoal text-white py-12 px-6 md:px-12 border-t-4 border-wassersGold">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
       <div>
-        <h2 class="text-2xl font-bold text-wassersGold mb-4">WASSERS & CO.</h2>
+        <h2 class="text-2xl font-bold text-wassersGold mb-4">WASSERS &amp; CO.</h2>
         <p class="text-gray-400 text-sm mb-4">Clean Water, Clear Promise. Serving Surat, Gujarat with premium hydration solutions.</p>
       </div>
       <div>
@@ -234,5 +170,270 @@
     </div>
   </footer>
 
+  <!-- CART DRAWER -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+    <div onclick="closeCartDrawer()" class="fixed inset-0 bg-black/50 backdrop-blur-xs"></div>
+    <aside class="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col justify-between z-10 p-6">
+      <div>
+        <div class="flex justify-between items-center border-b border-gray-200 pb-4 mb-4">
+          <h3 class="text-xl font-black text-charcoal uppercase">Your Cart</h3>
+          <button type="button" onclick="closeCartDrawer()" class="text-gray-500 hover:text-charcoal text-xl cursor-pointer" aria-label="Close Cart">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="cart-items" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1"></div>
+      </div>
+
+      <div class="border-t border-gray-200 pt-4">
+        <div class="flex justify-between items-center text-lg font-black mb-4">
+          <span>Subtotal</span>
+          <span id="cart-subtotal" class="text-wassersGold">₹0</span>
+        </div>
+        <button type="button" onclick="clearCart()" class="w-full mb-2 border border-gray-300 text-gray-700 font-semibold py-2.5 rounded-full hover:bg-gray-100 transition cursor-pointer">
+          Clear Cart
+        </button>
+        <a href="app.html" class="block text-center w-full bg-wassersGold text-white font-bold py-3 rounded-full shadow hover:opacity-95 transition">
+          Proceed to Order
+        </a>
+      </div>
+    </aside>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="cart-toast" class="fixed bottom-5 right-5 z-50 hidden bg-charcoal text-white px-5 py-3 rounded-full shadow-xl text-sm font-semibold border border-wassersGold">
+    Added to cart!
+  </div>
+
+  <script>
+    // 1. Product list with your uploaded GitHub images
+    const PRODUCTS = [
+      {
+        id: "20l-capsule",
+        name: "20L Capsule",
+        variants: [
+          { name: "1 Jar (20L)", price: 80, image: "./WOM20L.png" },
+          { name: "10 Jars Pack", price: 800, image: "./WOM20L.png" }
+        ]
+      },
+      {
+        id: "easyflow-1l",
+        name: "EasyFlow 1L",
+        variants: [
+          { name: "Case of 12 Bottles", price: 180, image: "./WASSERS & CO. - EasyFlow 1L - Pure Hydration.png" }
+        ]
+      },
+      {
+        id: "hydroease-500ml",
+        name: "HydroEase 500 ML",
+        variants: [
+          { name: "Case of 24 Bottles", price: 220, image: "./WASSER HydroEase 500 ML - Refreshment Redefined.png" }
+        ]
+      },
+      {
+        id: "minisip-200ml",
+        name: "MiniSip 200 ML",
+        variants: [
+          { name: "Case of 35 Bottles", price: 210, image: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png" }
+        ]
+      }
+    ];
+
+    // Track currently selected variant index per product
+    const selectedVariantIndex = {};
+    PRODUCTS.forEach((p) => {
+      selectedVariantIndex[p.id] = 0;
+    });
+
+    // 2. Cart state & add-to-cart handler
+    let cart = JSON.parse(localStorage.getItem("wassers_cart")) || [];
+
+    function addToCart(productId, productName, variantName, price, image) {
+      const existing = cart.find(
+        (item) => item.productId === productId && item.variantName === variantName
+      );
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ productId, productName, variantName, price, image, qty: 1 });
+      }
+      localStorage.setItem("wassers_cart", JSON.stringify(cart));
+      updateCartBadge();
+      renderCartDrawer();
+      showToast(`${productName} (${variantName}) added to cart`);
+    }
+
+    function updateCartBadge() {
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      const badge = document.getElementById("cart-count");
+      if (badge) badge.textContent = totalQty;
+    }
+
+    function selectVariant(productId, variantIdx) {
+      selectedVariantIndex[productId] = variantIdx;
+      renderProducts();
+    }
+
+    function handleAddSelected(productId) {
+      const product = PRODUCTS.find((p) => p.id === productId);
+      if (!product) return;
+      const idx = selectedVariantIndex[productId] || 0;
+      const variant = product.variants[idx] || product.variants[0];
+      addToCart(product.id, product.name, variant.name, variant.price, variant.image);
+    }
+
+    function changeItemQty(index, delta) {
+      if (!cart[index]) return;
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      localStorage.setItem("wassers_cart", JSON.stringify(cart));
+      updateCartBadge();
+      renderCartDrawer();
+    }
+
+    function clearCart() {
+      cart = [];
+      localStorage.setItem("wassers_cart", JSON.stringify(cart));
+      updateCartBadge();
+      renderCartDrawer();
+    }
+
+    function openCartDrawer() {
+      renderCartDrawer();
+      document.getElementById("cart-drawer").classList.remove("hidden");
+    }
+
+    function closeCartDrawer() {
+      document.getElementById("cart-drawer").classList.add("hidden");
+    }
+
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById("cart-toast");
+      toast.textContent = message;
+      toast.classList.remove("hidden");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 2200);
+    }
+
+    function encodeImagePath(path) {
+      return encodeURI(path);
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById("product-grid");
+      if (!grid) return;
+
+      grid.innerHTML = PRODUCTS.map((product) => {
+        const activeIdx = selectedVariantIndex[product.id] || 0;
+        const activeVariant = product.variants[activeIdx] || product.variants[0];
+
+        const variantButtons = product.variants
+          .map((variant, idx) => {
+            const isActive = idx === activeIdx;
+            const activeClasses = isActive
+              ? "bg-wassersGold text-white border-wassersGold"
+              : "bg-white text-gray-700 border-gray-300 hover:border-wassersGold";
+            return `
+              <button
+                type="button"
+                onclick="selectVariant('${product.id}', ${idx})"
+                class="text-xs font-semibold px-3 py-1.5 rounded-full border transition cursor-pointer ${activeClasses}"
+              >
+                ${variant.name}
+              </button>
+            `;
+          })
+          .join("");
+
+        return `
+          <div class="group flex flex-col justify-between bg-white rounded-3xl border border-gray-100 p-4 shadow-xs hover:shadow-xl transition">
+            <div>
+              <div class="bg-lightGray rounded-2xl h-64 p-6 flex items-center justify-center mb-4 relative overflow-hidden">
+                <img
+                  src="${encodeImagePath(activeVariant.image)}"
+                  alt="${product.name} - ${activeVariant.name}"
+                  class="h-full w-full object-contain group-hover:scale-105 transition duration-300"
+                  onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                >
+                <i class="fas fa-prescription-bottle text-7xl text-blue-400 hidden"></i>
+              </div>
+
+              <h3 class="text-xl font-bold text-charcoal">${product.name}</h3>
+              <p class="text-gray-500 text-sm mb-3">${activeVariant.name}</p>
+
+              <div class="flex flex-wrap gap-2 mb-4">
+                ${variantButtons}
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-2xl font-black text-wassersGold">₹${activeVariant.price}</span>
+              </div>
+              <button
+                type="button"
+                onclick="handleAddSelected('${product.id}')"
+                class="w-full bg-charcoal text-white font-bold py-2.5 px-4 rounded-full hover:bg-wassersGold transition flex items-center justify-center space-x-2 cursor-pointer"
+              >
+                <i class="fas fa-cart-plus"></i>
+                <span>Add to Cart</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderCartDrawer() {
+      const container = document.getElementById("cart-items");
+      const subtotalEl = document.getElementById("cart-subtotal");
+      if (!container || !subtotalEl) return;
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-gray-500 text-sm py-8 text-center">Your cart is currently empty.</p>`;
+        subtotalEl.textContent = "₹0";
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = cart
+        .map((item, idx) => {
+          const lineTotal = item.price * item.qty;
+          subtotal += lineTotal;
+          return `
+            <div class="flex items-center justify-between border border-gray-200 rounded-2xl p-3 gap-3">
+              <img
+                src="${encodeImagePath(item.image)}"
+                alt="${item.productName}"
+                class="w-14 h-14 object-contain bg-lightGray rounded-xl p-1 shrink-0"
+                onerror="this.src='./WOM20L.png'"
+              >
+              <div class="flex-1 min-w-0">
+                <p class="font-bold text-sm text-charcoal truncate">${item.productName}</p>
+                <p class="text-xs text-gray-500">${item.variantName}</p>
+                <p class="text-sm font-black text-wassersGold mt-0.5">₹${lineTotal}</p>
+              </div>
+              <div class="flex items-center space-x-2">
+                <button type="button" onclick="changeItemQty(${idx}, -1)" class="w-7 h-7 rounded-full border border-gray-300 font-bold text-sm hover:border-wassersGold cursor-pointer">-</button>
+                <span class="text-sm font-bold w-5 text-center">${item.qty}</span>
+                <button type="button" onclick="changeItemQty(${idx}, 1)" class="w-7 h-7 rounded-full border border-gray-300 font-bold text-sm hover:border-wassersGold cursor-pointer">+</button>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+
+      subtotalEl.textContent = `₹${subtotal}`;
+    }
+
+    // Initialize UI on page load
+    renderProducts();
+    updateCartBadge();
+    renderCartDrawer();
+  </script>
 </body>
 </html>
