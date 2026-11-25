@@ -213,32 +213,47 @@
 
   <script>
     // Size categories and all variants inside each size
+    // Size categories and all variants inside each size
     const SIZE_CATEGORIES = [
       {
         sizeKey: "20L",
         title: "20L Capsules",
-        subtitle: "Home & office jars and bulk packs",
+        subtitle: "Home & office jars, refills, and monthly bulk packs",
         coverImage: "./WOM20L.png",
         variants: [
           {
             id: "20l-single",
-            name: "20L Capsule — 1 Jar",
-            detail: "Single refill / exchange jar",
+            name: "20L Capsule — 1 Jar (Refill)",
+            detail: "Single jar exchange (empty jar required)",
             price: 80,
+            image: "./WOM20L.png"
+          },
+          {
+            id: "20l-new-deposit",
+            name: "20L Capsule — New Jar + Water",
+            detail: "First-time order including refundable jar deposit",
+            price: 230,
             image: "./WOM20L.png"
           },
           {
             id: "20l-5pack",
             name: "20L Capsule — 5 Jars Pack",
-            detail: "Weekly family or small shop pack",
+            detail: "Weekly home or small shop refill pack",
             price: 400,
             image: "./WOM20L.png"
           },
           {
             id: "20l-10pack",
-            name: "20L Capsule — 10 Jars Pack",
-            detail: "Bulk office & commercial pack",
-            price: 800,
+            name: "20L Capsule — 10 Jars Corporate Pack",
+            detail: "Office & commercial bulk pack",
+            price: 780,
+            image: "./WOM20L.png"
+          },
+          {
+            id: "20l-25pack",
+            name: "20L Capsule — 25 Jars Monthly Plan",
+            detail: "Best value for clinics, factories & large offices",
+            price: 1875,
             image: "./WOM20L.png"
           }
         ]
@@ -246,21 +261,28 @@
       {
         sizeKey: "1L",
         title: "1L Bottles",
-        subtitle: "EasyFlow 1L cases for dining & travel",
+        subtitle: "EasyFlow 1L cases for dining, travel & offices",
         coverImage: "./WASSERS & CO. - EasyFlow 1L - Pure Hydration.png",
         variants: [
           {
             id: "1l-case-12",
-            name: "EasyFlow 1L — Case of 12",
-            detail: "12 x 1L bottles per case",
+            name: "EasyFlow 1L — 1 Case (12 Bottles)",
+            detail: "12 x 1L bottles • Standard household & desk pack",
             price: 180,
             image: "./WASSERS & CO. - EasyFlow 1L - Pure Hydration.png"
           },
           {
             id: "1l-case-24",
             name: "EasyFlow 1L — 2 Cases (24 Bottles)",
-            detail: "24 x 1L bottles for events & meetings",
-            price: 360,
+            detail: "24 x 1L bottles • Ideal for meetings & guests",
+            price: 350,
+            image: "./WASSERS & CO. - EasyFlow 1L - Pure Hydration.png"
+          },
+          {
+            id: "1l-case-60",
+            name: "EasyFlow 1L — 5 Cases (60 Bottles)",
+            detail: "60 x 1L bottles • Wholesale & event supply",
+            price: 850,
             image: "./WASSERS & CO. - EasyFlow 1L - Pure Hydration.png"
           }
         ]
@@ -268,21 +290,28 @@
       {
         sizeKey: "500ml",
         title: "500ml Bottles",
-        subtitle: "HydroEase 500ml cases for daily carry",
+        subtitle: "HydroEase 500ml cases for daily carry & clinics",
         coverImage: "./WASSER HydroEase 500 ML - Refreshment Redefined.png",
         variants: [
           {
             id: "500ml-case-24",
-            name: "HydroEase 500 ML — Case of 24",
-            detail: "24 x 500ml bottles per case",
+            name: "HydroEase 500 ML — 1 Case (24 Bottles)",
+            detail: "24 x 500ml bottles • Standard case",
             price: 220,
             image: "./WASSER HydroEase 500 ML - Refreshment Redefined.png"
           },
           {
             id: "500ml-case-48",
             name: "HydroEase 500 ML — 2 Cases (48 Bottles)",
-            detail: "48 x 500ml bottles for clinics, shops & teams",
-            price: 440,
+            detail: "48 x 500ml bottles • Clinics, showrooms & teams",
+            price: 430,
+            image: "./WASSER HydroEase 500 ML - Refreshment Redefined.png"
+          },
+          {
+            id: "500ml-case-120",
+            name: "HydroEase 500 ML — 5 Cases (120 Bottles)",
+            detail: "120 x 500ml bottles • Corporate & banquet pack",
+            price: 1050,
             image: "./WASSER HydroEase 500 ML - Refreshment Redefined.png"
           }
         ]
@@ -290,27 +319,33 @@
       {
         sizeKey: "200ml",
         title: "200ml Bottles",
-        subtitle: "MiniSip 200ml cases for gatherings & hospitality",
+        subtitle: "MiniSip 200ml cases for events, weddings & waiting rooms",
         coverImage: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png",
         variants: [
           {
             id: "200ml-case-35",
-            name: "MiniSip 200 ML — Case of 35",
-            detail: "35 x 200ml bottles per case",
+            name: "MiniSip 200 ML — 1 Case (35 Bottles)",
+            detail: "35 x 200ml bottles • Compact single-serve case",
             price: 210,
             image: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png"
           },
           {
             id: "200ml-case-70",
             name: "MiniSip 200 ML — 2 Cases (70 Bottles)",
-            detail: "70 x 200ml bottles for functions & guests",
-            price: 420,
+            detail: "70 x 200ml bottles • Office reception & family gatherings",
+            price: 410,
+            image: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png"
+          },
+          {
+            id: "200ml-case-175",
+            name: "MiniSip 200 ML — 5 Cases (175 Bottles)",
+            detail: "175 x 200ml bottles • Event & function bulk pack",
+            price: 1000,
             image: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png"
           }
         ]
       }
     ];
-
     let activeSize = null; // null shows all 4 size cards; string ("20L", "1L", etc.) shows that size's subpage
     let cart = JSON.parse(localStorage.getItem("wassers_cart")) || [];
 
