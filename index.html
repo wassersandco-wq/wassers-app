@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wassers &amp; Co. | Premium Hydration</title>
+  <title>Wassers &amp; Co. | Pure Hydration in Surat</title>
   <link rel="manifest" href="manifest.json">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,11 +13,12 @@
       theme: {
         extend: {
           colors: {
-            wassersGold: '#D4AF37',
+            wassersGold: '#C5A059',
+            deepNavy: '#0A192F',
+            electricCyan: '#00B4D8',
             pureWhite: '#FFFFFF',
-            lightGray: '#F9FAFB',
-            charcoal: '#111827',
-            maiRed: '#E3000F'
+            softIce: '#F4F9FC',
+            charcoal: '#111827'
           }
         }
       }
@@ -25,185 +26,212 @@
   </script>
   <style>
     html { scroll-behavior: smooth; }
-    .hero-bg { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); }
-    .floating-bottle { animation: float 6s ease-in-out infinite; }
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0px); }
+    .hero-combined {
+      background: radial-gradient(circle at 80% 25%, rgba(0, 180, 216, 0.14), transparent 55%),
+                  linear-gradient(135deg, #F4F9FC 0%, #FFFFFF 65%, #EDF6FB 100%);
     }
-    /* Mai Dubai Bubble Hover Animations */
-    .bubble-img { transition: transform 0.7s ease; }
-    .bubble-container:hover .bubble-img { transform: scale(1.1); }
+    .float-slow {
+      animation: floatSlow 5.5s ease-in-out infinite;
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-14px); }
+    }
   </style>
 </head>
-<body class="bg-pureWhite text-charcoal font-sans">
+<body class="bg-pureWhite text-charcoal font-sans antialiased">
 
-  <!-- TOP INFO BAR -->
-  <div class="bg-gray-100 py-1 px-6 flex justify-between items-center text-xs text-gray-500 hidden md:flex">
-    <div class="flex space-x-4">
-      <span><i class="fas fa-truck mr-1"></i> Delivering across Surat</span>
-      <span><i class="fas fa-leaf mr-1"></i> Eco-friendly 20L Capsules</span>
+  <!-- TOP BAR (Al Ain style utility strip) -->
+  <div class="bg-deepNavy text-white py-2 px-6 md:px-12 text-xs flex flex-wrap justify-between items-center gap-2">
+    <div class="flex items-center space-x-5">
+      <span><i class="fas fa-truck text-electricCyan mr-1.5"></i> Fast Delivery Across Surat</span>
+      <span class="hidden sm:inline"><i class="fas fa-shield-alt text-wassersGold mr-1.5"></i> Hygienic 20L Capsules &amp; Cases</span>
     </div>
-    <div class="flex space-x-4 items-center">
-      <span><i class="fas fa-phone-alt mr-1"></i> Call Wassers: <strong>846-9277377</strong></span>
-      <a href="#" class="hover:text-wassersGold">Gujarati</a>
+    <div class="flex items-center space-x-4">
+      <a href="tel:+918469277377" class="hover:text-wassersGold transition">
+        <i class="fas fa-phone-alt text-electricCyan mr-1"></i> <strong>846-9277377</strong>
+      </a>
+      <a href="app.html" class="text-wassersGold font-semibold hover:underline">Live Tracking</a>
     </div>
   </div>
 
-  <!-- MAIN NAVIGATION -->
-  <nav class="sticky top-0 z-40 bg-pureWhite/95 backdrop-blur-md border-b border-gray-200 py-4 px-6 md:px-12 flex justify-between items-center shadow-sm">
-    <a href="#" class="text-2xl md:text-3xl font-bold text-wassersGold tracking-tighter">
-      WASSERS &amp; CO.
-    </a>
-    <div class="hidden md:flex space-x-8 text-sm font-semibold text-gray-700">
-      <a href="#hero" class="hover:text-wassersGold transition">Why Wassers?</a>
-      <a href="#explore-banner" class="hover:text-wassersGold transition">Products</a>
-      <a href="app.html" class="hover:text-wassersGold transition">Live Tracking</a>
-      <a href="admin.html" class="hover:text-wassersGold transition">Corporate</a>
-    </div>
-    <div class="flex items-center space-x-4">
-      <div class="hidden md:block text-right mr-4 border-r border-gray-300 pr-4">
-        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Deliver To</p>
-        <p class="text-sm font-bold text-charcoal cursor-pointer hover:text-wassersGold">Surat, Gujarat <i class="fas fa-chevron-down text-xs"></i></p>
-      </div>
-      <button type="button" onclick="openCartDrawer()" class="text-gray-700 hover:text-wassersGold relative cursor-pointer" aria-label="Open Cart">
-        <i class="fas fa-shopping-cart text-xl"></i>
-        <span id="cart-count" class="absolute -top-2 -right-2 bg-wassersGold text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
-      </button>
-      <a href="#explore-banner" class="hidden md:block border-2 border-wassersGold text-wassersGold font-bold px-6 py-2 rounded-full hover:bg-wassersGold hover:text-white transition">
-        Shop Now
+  <!-- STICKY NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 md:px-12 py-4 shadow-xs">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href="#" class="text-2xl md:text-3xl font-black tracking-tight text-wassersGold">
+        WASSERS &amp; CO.
       </a>
-    </div>
-  </nav>
 
-  <!-- HERO SECTION -->
-  <section id="hero" class="hero-bg min-h-[600px] flex items-center relative overflow-hidden px-6 md:px-12">
-    <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-50 opacity-50 rounded-l-full blur-3xl -z-10"></div>
-    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <div class="z-10">
-        <h1 class="text-5xl md:text-7xl font-black text-charcoal leading-tight mb-4 uppercase">
-          CRACK OPEN THE <span class="text-wassersGold">PROMISE</span>
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
+        <a href="#hero" class="hover:text-wassersGold transition">Home</a>
+        <a href="#products" class="hover:text-wassersGold transition">Our Range</a>
+        <a href="#why-wassers" class="hover:text-wassersGold transition">Why Wassers</a>
+        <a href="app.html" class="hover:text-wassersGold transition">Order App</a>
+        <a href="admin.html" class="hover:text-wassersGold transition">Corporate</a>
+      </nav>
+
+      <div class="flex items-center space-x-4">
+        <button type="button" onclick="openCartDrawer()" class="relative p-2 text-charcoal hover:text-wassersGold transition cursor-pointer" aria-label="Open Cart">
+          <i class="fas fa-shopping-bag text-xl"></i>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-wassersGold text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+        </button>
+        <a href="#products" class="hidden sm:inline-block bg-deepNavy text-white text-sm font-bold px-5 py-2.5 rounded-full hover:bg-wassersGold transition">
+          Shop Now
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION (Masafi energy + Al Ain clarity) -->
+  <section id="hero" class="hero-combined py-14 md:py-24 px-6 md:px-12 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7 space-y-6">
+        <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-electricCyan/10 text-deepNavy border border-electricCyan/30">
+          <i class="fas fa-droplet text-electricCyan mr-2"></i> Daily Hydration in Surat
+        </span>
+
+        <h1 class="text-4xl sm:text-6xl font-black text-deepNavy leading-[1.08] tracking-tight uppercase">
+          Pure Hydration.<br>
+          <span class="text-wassersGold">Every Single Day.</span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-md">
-          Premium hydration delivered directly to your home or office in Surat. Experience the pure taste of Wassers.
+
+        <p class="text-base sm:text-lg text-gray-600 max-w-xl leading-relaxed">
+          From 20L home &amp; office capsules to EasyFlow 1L, HydroEase 500 ML, and MiniSip 200 ML cases—order in seconds and track your delivery live.
         </p>
-        <div class="flex space-x-4">
-          <a href="#shop-grid" class="bg-wassersGold text-white font-bold px-8 py-3 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition transform">
-            Order Delivery
+
+        <div class="flex flex-wrap gap-4 pt-1">
+          <a href="#products" class="bg-wassersGold text-white font-bold px-8 py-3.5 rounded-full shadow-lg hover:opacity-95 transition">
+            Explore Products
           </a>
-          <a href="app.html" class="bg-white border-2 border-charcoal text-charcoal font-bold px-8 py-3 rounded-full hover:bg-charcoal hover:text-white transition">
-            Track Driver
+          <a href="app.html" class="bg-white border-2 border-deepNavy text-deepNavy font-bold px-7 py-3.5 rounded-full hover:bg-deepNavy hover:text-white transition">
+            Track Delivery
           </a>
         </div>
+
+        <!-- Quick Category Pills (Al Ain style) -->
+        <div class="flex flex-wrap gap-2.5 pt-2">
+          <a href="#products" class="px-4 py-2 rounded-full bg-white border border-gray-200 text-xs font-bold text-charcoal hover:border-wassersGold transition">20L Capsule</a>
+          <a href="#products" class="px-4 py-2 rounded-full bg-white border border-gray-200 text-xs font-bold text-charcoal hover:border-wassersGold transition">1L Bottles</a>
+          <a href="#products" class="px-4 py-2 rounded-full bg-white border border-gray-200 text-xs font-bold text-charcoal hover:border-wassersGold transition">500 ML Bottles</a>
+          <a href="#products" class="px-4 py-2 rounded-full bg-white border border-gray-200 text-xs font-bold text-charcoal hover:border-wassersGold transition">200 ML Bottles</a>
+        </div>
       </div>
-      <div class="relative h-[400px] md:h-[600px] flex justify-center items-center z-10">
-        <div class="w-64 h-96 bg-white rounded-3xl floating-bottle border-4 border-white shadow-2xl flex flex-col items-center justify-center relative overflow-hidden p-4">
-          <div class="absolute inset-0 bg-gradient-to-b from-blue-50 to-white opacity-70"></div>
-          <img src="icons/wassers-20L.png" alt="20L Capsule" class="h-56 w-auto object-contain mb-3 z-10" onerror="this.style.display='none'; document.getElementById('hero-fallback').classList.remove('hidden');">
-          <div id="hero-fallback" class="hidden flex flex-col items-center z-10 mb-2">
-            <i class="fas fa-prescription-bottle text-6xl text-wassersGold mb-2"></i>
+
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="float-slow bg-white rounded-3xl p-8 shadow-2xl border border-gray-100 max-w-sm w-full text-center">
+          <div class="h-64 flex items-center justify-center bg-softIce rounded-2xl p-4 mb-5">
+            <img
+              src="./WOM20L.png"
+              alt="20L Capsule"
+              class="max-h-full w-auto object-contain"
+              onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+            >
+            <i class="fas fa-prescription-bottle text-7xl text-electricCyan hidden"></i>
           </div>
-          <h3 class="text-2xl font-black text-charcoal z-10">20L CAPSULE</h3>
-          <p class="text-sm font-bold text-wassersGold z-10">₹80 Only</p>
+          <p class="text-xs font-bold uppercase tracking-widest text-electricCyan mb-1">Most Popular</p>
+          <h2 class="text-2xl font-black text-deepNavy">20L Capsule</h2>
+          <p class="text-sm text-gray-500 mt-1 mb-4">1 Jar (20L) • Home &amp; Office Refill</p>
+          <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+            <span class="text-2xl font-black text-wassersGold">₹80</span>
+            <button type="button" onclick="addToCart('20l-capsule', '20L Capsule', '1 Jar (20L)', 80, './WOM20L.png')" class="bg-deepNavy text-white text-sm font-bold px-5 py-2.5 rounded-full hover:bg-wassersGold transition cursor-pointer">
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MAI DUBAI STYLE PRODUCTS BANNER -->
-  <section id="explore-banner" class="relative w-full h-[500px] md:h-[650px] overflow-hidden" style="background: linear-gradient(135deg, #bae6fd 0%, #e0f2fe 50%, #D4AF37 100%);">
-    
-    <!-- White Water Bubbles Overlay -->
-    <div class="absolute top-12 left-20 w-16 h-16 bg-white rounded-full opacity-80 shadow-md"></div>
-    <div class="absolute bottom-24 left-1/3 w-10 h-10 bg-white rounded-full opacity-90 shadow-md"></div>
-    <div class="absolute top-1/4 right-32 w-24 h-24 bg-white rounded-full opacity-80 shadow-md"></div>
-    <div class="absolute bottom-16 right-1/4 w-12 h-12 bg-white rounded-full opacity-90 shadow-md"></div>
+  <!-- PRODUCT CATALOG SECTION -->
+  <section id="products" class="py-20 px-6 md:px-12 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-wassersGold mb-1">Product Lineup</p>
+          <h2 class="text-3xl md:text-4xl font-black text-deepNavy uppercase tracking-tight">Choose Your Pack</h2>
+        </div>
+        <p class="text-sm text-gray-500">Select a pack variant and add directly to your cart.</p>
+      </div>
 
-    <!-- Bubble 1: Far Left (1L EasyFlow) -->
-    <div class="bubble-container absolute left-[-10%] md:left-[2%] top-[10%] md:top-[15%] w-48 h-48 md:w-80 md:h-80 rounded-full border-[8px] border-white bg-white overflow-hidden shadow-2xl z-10 flex justify-center items-center">
-      <img src="icons/wassers-1L.png" alt="1L PET Bottles" class="bubble-img w-[80%] h-[80%] object-contain" onerror="this.outerHTML='<i class=\'fas fa-wine-bottle text-6xl text-blue-300\'></i>'">
-    </div>
-
-    <!-- Bubble 2: Center Left (500ml HydroEase) -->
-    <div class="bubble-container absolute left-[15%] md:left-[25%] bottom-[5%] md:bottom-[10%] w-40 h-40 md:w-64 md:h-64 rounded-full border-[8px] border-white bg-white overflow-hidden shadow-xl z-20 flex justify-center items-center">
-      <img src="icons/wassers-500ml.png" alt="500ml Bottles" class="bubble-img w-[80%] h-[80%] object-contain" onerror="this.outerHTML='<i class=\'fas fa-wine-bottle text-5xl text-blue-300\'></i>'">
-    </div>
-
-    <!-- Bubble 3: Center Right (20L Capsule) -->
-    <div class="bubble-container absolute right-[-5%] md:right-[5%] top-[15%] md:top-[20%] w-56 h-56 md:w-96 md:h-96 rounded-full border-[8px] border-white bg-white overflow-hidden shadow-2xl z-10 flex justify-center items-center">
-      <img src="icons/wassers-20L.png" alt="20L Capsule" class="bubble-img w-[80%] h-[80%] object-contain" onerror="this.outerHTML='<i class=\'fas fa-prescription-bottle text-7xl text-wassersGold\'></i>'">
-    </div>
-
-    <!-- Bubble 4: Far Right (200ml MiniSip) -->
-    <div class="bubble-container absolute right-[15%] md:right-[28%] bottom-[10%] md:bottom-[15%] w-36 h-36 md:w-56 md:h-56 rounded-full border-[8px] border-white bg-white overflow-hidden shadow-xl z-20 flex justify-center items-center">
-      <img src="icons/wassers-200ml.png" alt="200ml Bottles" class="bubble-img w-[80%] h-[80%] object-contain" onerror="this.outerHTML='<i class=\'fas fa-wine-bottle text-4xl text-blue-300\'></i>'">
-    </div>
-
-    <!-- Center Pill Tab: Explore Our Products -->
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
-      <a href="#shop-grid" class="bg-white px-10 py-5 md:px-16 md:py-6 rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.2)] border border-gray-100 hover:scale-105 transition transform cursor-pointer flex flex-col items-center group">
-        <h2 class="text-2xl md:text-4xl font-bold text-charcoal tracking-tight group-hover:text-wassersGold transition">Explore Our Products</h2>
-      </a>
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7"></div>
     </div>
   </section>
 
-  <!-- SHOPPING GRID CONTAINER (Restored for JavaScript to load products) -->
-  <section id="shop-grid" class="py-16 bg-lightGray border-t border-gray-200">
-    <div class="max-w-7xl mx-auto px-6 md:px-12">
-      <h2 class="text-3xl font-black text-charcoal uppercase tracking-tight mb-8 text-center">Order Online</h2>
-      <div id="product-grid" class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <!-- Products render here automatically via JS -->
+  <!-- WHY WASSERS SECTION (Masafi lifestyle highlights + Al Ain trust blocks) -->
+  <section id="why-wassers" class="py-16 px-6 md:px-12 bg-softIce border-y border-gray-100">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <p class="text-xs font-bold uppercase tracking-widest text-electricCyan mb-1">The Wassers Standard</p>
+        <h2 class="text-3xl font-black text-deepNavy">Built for Everyday Reliability</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-3xl p-7 border border-gray-100 shadow-xs">
+          <div class="w-12 h-12 rounded-2xl bg-softIce text-electricCyan flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3 class="text-lg font-bold text-deepNavy mb-2">Prompt Local Dispatch</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Reliable doorstep and office delivery across Surat with real-time order and vehicle status.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-7 border border-gray-100 shadow-xs">
+          <div class="w-12 h-12 rounded-2xl bg-softIce text-wassersGold flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-boxes-stacked"></i>
+          </div>
+          <h3 class="text-lg font-bold text-deepNavy mb-2">Every Occasion Covered</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Single 20L capsules, 10-jar bulk packs, and convenient 1L, 500 ML, and 200 ML bottle cases.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-7 border border-gray-100 shadow-xs">
+          <div class="w-12 h-12 rounded-2xl bg-softIce text-deepNavy flex items-center justify-center text-xl mb-4">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3 class="text-lg font-bold text-deepNavy mb-2">Direct Support</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Need bulk or recurring supply? Call or message us directly on <strong>846-9277377</strong>.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-charcoal text-white py-12 px-6 md:px-12 border-t-4 border-wassersGold">
+  <footer class="bg-deepNavy text-white py-12 px-6 md:px-12 border-t-4 border-wassersGold">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div>
-        <h2 class="text-2xl font-bold text-wassersGold mb-4">WASSERS &amp; CO.</h2>
-        <p class="text-gray-400 text-sm mb-4">Clean Water, Clear Promise. Serving Surat, Gujarat with premium hydration solutions.</p>
+      <div class="md:col-span-2">
+        <h2 class="text-2xl font-black text-wassersGold mb-3">WASSERS &amp; CO.</h2>
+        <p class="text-gray-300 text-sm max-w-md leading-relaxed">
+          Clean Water, Clear Promise. Serving homes, shops, events, and offices across Surat, Gujarat.
+        </p>
       </div>
       <div>
-        <h3 class="font-bold mb-4 uppercase tracking-widest text-sm">Quick Links</h3>
-        <ul class="space-y-2 text-gray-400 text-sm">
-          <li><a href="#" class="hover:text-wassersGold">About Us</a></li>
-          <li><a href="admin.html" class="hover:text-wassersGold">Corporate Office Dashboard</a></li>
-          <li><a href="app.html" class="hover:text-wassersGold">Live Driver Tracking</a></li>
+        <h3 class="text-xs font-bold uppercase tracking-widest text-wassersGold mb-4">Navigation</h3>
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li><a href="#products" class="hover:text-wassersGold transition">Products</a></li>
+          <li><a href="app.html" class="hover:text-wassersGold transition">Live Tracking &amp; App</a></li>
+          <li><a href="admin.html" class="hover:text-wassersGold transition">Corporate Portal</a></li>
         </ul>
       </div>
       <div>
-        <h3 class="font-bold mb-4 uppercase tracking-widest text-sm">Contact</h3>
-        <ul class="space-y-2 text-gray-400 text-sm">
-          <li><i class="fas fa-phone mr-2"></i> 846-9277377</li>
-          <li><i class="fas fa-map-marker-alt mr-2"></i> Surat, Gujarat</li>
+        <h3 class="text-xs font-bold uppercase tracking-widest text-wassersGold mb-4">Contact</h3>
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li><i class="fas fa-phone mr-2 text-electricCyan"></i> 846-9277377</li>
+          <li><i class="fas fa-location-dot mr-2 text-electricCyan"></i> Surat, Gujarat</li>
         </ul>
-      </div>
-      <div>
-        <h3 class="font-bold mb-4 uppercase tracking-widest text-sm">Download App</h3>
-        <div class="flex space-x-4">
-          <div class="bg-gray-800 p-2 rounded flex items-center cursor-pointer border border-gray-700 hover:border-wassersGold">
-            <i class="fab fa-google-play text-2xl mr-2"></i>
-            <div class="text-xs">GET IT ON<br><strong class="text-sm">Google Play</strong></div>
-          </div>
-        </div>
       </div>
     </div>
   </footer>
 
-  <!-- CART DRAWER -->
+  <!-- SLIDE-OUT CART DRAWER -->
   <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
-    <div onclick="closeCartDrawer()" class="fixed inset-0 bg-black/50 backdrop-blur-xs"></div>
+    <div onclick="closeCartDrawer()" class="fixed inset-0 bg-black/50"></div>
     <aside class="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col justify-between z-10 p-6">
       <div>
         <div class="flex justify-between items-center border-b border-gray-200 pb-4 mb-4">
-          <h3 class="text-xl font-black text-charcoal uppercase">Your Cart</h3>
+          <h3 class="text-xl font-black text-deepNavy uppercase">Your Cart</h3>
           <button type="button" onclick="closeCartDrawer()" class="text-gray-500 hover:text-charcoal text-xl cursor-pointer" aria-label="Close Cart">
             <i class="fas fa-times"></i>
           </button>
         </div>
-        <div id="cart-items" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1"></div>
+        <div id="cart-items" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1"></div>
       </div>
 
       <div class="border-t border-gray-200 pt-4">
@@ -221,28 +249,61 @@
     </aside>
   </div>
 
-  <!-- TOAST NOTIFICATION -->
-  <div id="cart-toast" class="fixed bottom-5 right-5 z-50 hidden bg-charcoal text-white px-5 py-3 rounded-full shadow-xl text-sm font-semibold border border-wassersGold">
-    Added to cart!
+  <!-- TOAST -->
+  <div id="cart-toast" class="fixed bottom-5 right-5 z-50 hidden bg-deepNavy text-white px-5 py-3 rounded-full shadow-xl text-sm font-semibold border border-wassersGold">
+    Added to cart
   </div>
 
   <script>
+    // 1. Product list with your uploaded GitHub images
     const PRODUCTS = [
-      { id: "20l-capsule", name: "20L Capsule", variants: [ { name: "1 Jar (20L)", price: 80, image: "icons/wassers-20L.png" }, { name: "10 Jars Pack", price: 800, image: "icons/wassers-20L.png" } ] },
-      { id: "easyflow-1l", name: "EasyFlow 1L", variants: [ { name: "Case of 12 Bottles", price: 180, image: "icons/wassers-1L.png" } ] },
-      { id: "hydroease-500ml", name: "HydroEase 500 ML", variants: [ { name: "Case of 24 Bottles", price: 220, image: "icons/wassers-500ml.png" } ] },
-      { id: "minisip-200ml", name: "MiniSip 200 ML", variants: [ { name: "Case of 35 Bottles", price: 210, image: "icons/wassers-200ml.png" } ] }
+      {
+        id: "20l-capsule",
+        name: "20L Capsule",
+        variants: [
+          { name: "1 Jar (20L)", price: 80, image: "./WOM20L.png" },
+          { name: "10 Jars Pack", price: 800, image: "./WOM20L.png" }
+        ]
+      },
+      {
+        id: "easyflow-1l",
+        name: "EasyFlow 1L",
+        variants: [
+          { name: "Case of 12 Bottles", price: 180, image: "./WASSERS & CO. - EasyFlow 1L - Pure Hydration.png" }
+        ]
+      },
+      {
+        id: "hydroease-500ml",
+        name: "HydroEase 500 ML",
+        variants: [
+          { name: "Case of 24 Bottles", price: 220, image: "./WASSER HydroEase 500 ML - Refreshment Redefined.png" }
+        ]
+      },
+      {
+        id: "minisip-200ml",
+        name: "MiniSip 200 ML",
+        variants: [
+          { name: "Case of 35 Bottles", price: 210, image: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png" }
+        ]
+      }
     ];
 
-    const selectedVariantIndex = {};
-    PRODUCTS.forEach((p) => { selectedVariantIndex[p.id] = 0; });
+    // 2. Cart state & add-to-cart handler
     let cart = JSON.parse(localStorage.getItem("wassers_cart")) || [];
 
     function addToCart(productId, productName, variantName, price, image) {
-      const existing = cart.find((item) => item.productId === productId && item.variantName === variantName);
-      if (existing) { existing.qty += 1; } else { cart.push({ productId, productName, variantName, price, image, qty: 1 }); }
+      const existing = cart.find(
+        (item) => item.productId === productId && item.variantName === variantName
+      );
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ productId, productName, variantName, price, image, qty: 1 });
+      }
       localStorage.setItem("wassers_cart", JSON.stringify(cart));
-      updateCartBadge(); renderCartDrawer(); showToast(`${productName} (${variantName}) added to cart`);
+      updateCartBadge();
+      renderCartDrawer();
+      showToast(`${productName} (${variantName}) added`);
     }
 
     function updateCartBadge() {
@@ -251,44 +312,58 @@
       if (badge) badge.textContent = totalQty;
     }
 
-    function selectVariant(productId, variantIdx) {
-      selectedVariantIndex[productId] = variantIdx;
+    const selectedVariantIndex = {};
+    PRODUCTS.forEach((p) => {
+      selectedVariantIndex[p.id] = 0;
+    });
+
+    function selectVariant(productId, idx) {
+      selectedVariantIndex[productId] = idx;
       renderProducts();
     }
 
     function handleAddSelected(productId) {
       const product = PRODUCTS.find((p) => p.id === productId);
       if (!product) return;
-      const idx = selectedVariantIndex[productId] || 0;
-      const variant = product.variants[idx] || product.variants[0];
+      const variant = product.variants[selectedVariantIndex[productId] || 0] || product.variants[0];
       addToCart(product.id, product.name, variant.name, variant.price, variant.image);
     }
 
     function changeItemQty(index, delta) {
       if (!cart[index]) return;
       cart[index].qty += delta;
-      if (cart[index].qty <= 0) { cart.splice(index, 1); }
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
       localStorage.setItem("wassers_cart", JSON.stringify(cart));
-      updateCartBadge(); renderCartDrawer();
+      updateCartBadge();
+      renderCartDrawer();
     }
 
     function clearCart() {
-      cart = []; localStorage.setItem("wassers_cart", JSON.stringify(cart));
-      updateCartBadge(); renderCartDrawer();
+      cart = [];
+      localStorage.setItem("wassers_cart", JSON.stringify(cart));
+      updateCartBadge();
+      renderCartDrawer();
     }
 
-    function openCartDrawer() { renderCartDrawer(); document.getElementById("cart-drawer").classList.remove("hidden"); }
-    function closeCartDrawer() { document.getElementById("cart-drawer").classList.add("hidden"); }
+    function openCartDrawer() {
+      renderCartDrawer();
+      document.getElementById("cart-drawer").classList.remove("hidden");
+    }
+
+    function closeCartDrawer() {
+      document.getElementById("cart-drawer").classList.add("hidden");
+    }
 
     let toastTimer = null;
-    function showToast(message) {
-      const toast = document.getElementById("cart-toast");
-      toast.textContent = message; toast.classList.remove("hidden");
+    function showToast(msg) {
+      const el = document.getElementById("cart-toast");
+      el.textContent = msg;
+      el.classList.remove("hidden");
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => { toast.classList.add("hidden"); }, 2200);
+      toastTimer = setTimeout(() => el.classList.add("hidden"), 2000);
     }
-
-    function encodeImagePath(path) { return encodeURI(path); }
 
     function renderProducts() {
       const grid = document.getElementById("product-grid");
@@ -297,28 +372,55 @@
       grid.innerHTML = PRODUCTS.map((product) => {
         const activeIdx = selectedVariantIndex[product.id] || 0;
         const activeVariant = product.variants[activeIdx] || product.variants[0];
-        const variantButtons = product.variants.map((variant, idx) => {
-          const isActive = idx === activeIdx;
-          const activeClasses = isActive ? "bg-wassersGold text-white border-wassersGold" : "bg-white text-gray-700 border-gray-300 hover:border-wassersGold";
-          return `<button type="button" onclick="selectVariant('${product.id}', ${idx})" class="text-xs font-semibold px-3 py-1.5 rounded-full border transition cursor-pointer ${activeClasses}">${variant.name}</button>`;
+
+        const pills = product.variants.map((v, idx) => {
+          const active = idx === activeIdx;
+          return `
+            <button
+              type="button"
+              onclick="selectVariant('${product.id}', ${idx})"
+              class="text-xs font-semibold px-3 py-1 rounded-full border transition cursor-pointer ${
+                active
+                  ? "bg-deepNavy text-white border-deepNavy"
+                  : "bg-white text-gray-700 border-gray-300 hover:border-wassersGold"
+              }"
+            >
+              ${v.name}
+            </button>
+          `;
         }).join("");
 
         return `
-          <div class="group flex flex-col justify-between bg-white rounded-3xl border border-gray-200 p-4 shadow-sm hover:shadow-xl transition">
+          <div class="bg-white rounded-3xl border border-gray-200 p-5 flex flex-col justify-between shadow-xs hover:shadow-xl transition">
             <div>
-              <div class="bg-lightGray rounded-2xl h-56 p-6 flex items-center justify-center mb-4 relative overflow-hidden">
-                <img src="${encodeImagePath(activeVariant.image)}" alt="${product.name}" class="h-full w-full object-contain group-hover:scale-105 transition duration-300" onerror="this.style.display='none';">
+              <div class="bg-softIce rounded-2xl h-56 p-4 flex items-center justify-center mb-4">
+                <img
+                  src="${encodeURI(activeVariant.image)}"
+                  alt="${product.name} - ${activeVariant.name}"
+                  class="max-h-full w-auto object-contain"
+                  onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                >
+                <i class="fas fa-prescription-bottle text-6xl text-electricCyan hidden"></i>
               </div>
-              <h3 class="text-xl font-bold text-charcoal">${product.name}</h3>
-              <p class="text-gray-500 text-sm mb-3">${activeVariant.name}</p>
-              <div class="flex flex-wrap gap-2 mb-4">${variantButtons}</div>
+
+              <h3 class="text-xl font-bold text-deepNavy">${product.name}</h3>
+              <p class="text-xs text-gray-500 mb-3">${activeVariant.name}</p>
+
+              <div class="flex flex-wrap gap-2 mb-4">
+                ${pills}
+              </div>
             </div>
+
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="text-2xl font-black text-wassersGold">₹${activeVariant.price}</span>
               </div>
-              <button type="button" onclick="handleAddSelected('${product.id}')" class="w-full bg-charcoal text-white font-bold py-2.5 px-4 rounded-full hover:bg-wassersGold transition flex items-center justify-center space-x-2 cursor-pointer">
-                <i class="fas fa-cart-plus"></i><span>Add to Cart</span>
+              <button
+                type="button"
+                onclick="handleAddSelected('${product.id}')"
+                class="w-full bg-wassersGold text-white font-bold py-2.5 px-4 rounded-full hover:opacity-95 transition cursor-pointer"
+              >
+                Add to Cart
               </button>
             </div>
           </div>
@@ -327,36 +429,43 @@
     }
 
     function renderCartDrawer() {
-      const container = document.getElementById("cart-items");
+      const box = document.getElementById("cart-items");
       const subtotalEl = document.getElementById("cart-subtotal");
-      if (!container || !subtotalEl) return;
+      if (!box || !subtotalEl) return;
+
       if (cart.length === 0) {
-        container.innerHTML = `<p class="text-gray-500 text-sm py-8 text-center">Your cart is currently empty.</p>`;
-        subtotalEl.textContent = "₹0"; return;
+        box.innerHTML = `<p class="text-sm text-gray-500 text-center py-8">Your cart is empty.</p>`;
+        subtotalEl.textContent = "₹0";
+        return;
       }
+
       let subtotal = 0;
-      container.innerHTML = cart.map((item, idx) => {
-        const lineTotal = item.price * item.qty; subtotal += lineTotal;
+      box.innerHTML = cart.map((item, idx) => {
+        const line = item.price * item.qty;
+        subtotal += line;
         return `
           <div class="flex items-center justify-between border border-gray-200 rounded-2xl p-3 gap-3">
-            <img src="${encodeImagePath(item.image)}" alt="${item.productName}" class="w-14 h-14 object-contain bg-lightGray rounded-xl p-1 shrink-0" onerror="this.src='icons/wassers-20L.png'">
+            <img src="${encodeURI(item.image || './WOM20L.png')}" alt="${item.productName}" class="w-12 h-12 object-contain bg-softIce rounded-xl p-1 shrink-0" onerror="this.src='./WOM20L.png'">
             <div class="flex-1 min-w-0">
-              <p class="font-bold text-sm text-charcoal truncate">${item.productName}</p>
+              <p class="font-bold text-sm text-deepNavy truncate">${item.productName}</p>
               <p class="text-xs text-gray-500">${item.variantName}</p>
-              <p class="text-sm font-black text-wassersGold mt-0.5">₹${lineTotal}</p>
+              <p class="text-sm font-black text-wassersGold">₹${line}</p>
             </div>
             <div class="flex items-center space-x-2">
-              <button type="button" onclick="changeItemQty(${idx}, -1)" class="w-7 h-7 rounded-full border border-gray-300 font-bold text-sm hover:border-wassersGold cursor-pointer">-</button>
-              <span class="text-sm font-bold w-5 text-center">${item.qty}</span>
-              <button type="button" onclick="changeItemQty(${idx}, 1)" class="w-7 h-7 rounded-full border border-gray-300 font-bold text-sm hover:border-wassersGold cursor-pointer">+</button>
+              <button type="button" onclick="changeItemQty(${idx}, -1)" class="w-7 h-7 rounded-full border border-gray-300 font-bold cursor-pointer">-</button>
+              <span class="text-sm font-bold w-4 text-center">${item.qty}</span>
+              <button type="button" onclick="changeItemQty(${idx}, 1)" class="w-7 h-7 rounded-full border border-gray-300 font-bold cursor-pointer">+</button>
             </div>
           </div>
         `;
       }).join("");
+
       subtotalEl.textContent = `₹${subtotal}`;
     }
 
-    renderProducts(); updateCartBadge(); renderCartDrawer();
+    renderProducts();
+    updateCartBadge();
+    renderCartDrawer();
   </script>
 </body>
 </html>
