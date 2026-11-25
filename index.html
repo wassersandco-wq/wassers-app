@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wassers &amp; Co. | Pure Hydration in Surat</title>
+  <title>Wassers &amp; Co. | Drinking Water &amp; Hydration in Surat</title>
   <link rel="manifest" href="manifest.json">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,11 +13,14 @@
       theme: {
         extend: {
           colors: {
-            wassersGold: '#C5A059',
-            deepNavy: '#0A192F',
-            electricCyan: '#00B4D8',
+            masafiBlue: '#1D3B8B',
+            masafiDarkBlue: '#152B69',
+            masafiAccent: '#2563EB',
+            wassersGold: '#FACC15',
+            wassersGoldDark: '#D4AF37',
+            limeWave: '#84CC16',
             pureWhite: '#FFFFFF',
-            softIce: '#F4F9FC',
+            softIce: '#F4F7FB',
             charcoal: '#111827'
           }
         }
@@ -26,156 +29,253 @@
   </script>
   <style>
     html { scroll-behavior: smooth; }
-    .hero-combined {
-      background: radial-gradient(circle at 80% 25%, rgba(0, 180, 216, 0.14), transparent 55%),
-                  linear-gradient(135deg, #F4F9FC 0%, #FFFFFF 65%, #EDF6FB 100%);
+    .hero-banner-bg {
+      background:
+        radial-gradient(circle at 62% 52%, rgba(59, 130, 246, 0.28), transparent 46%),
+        linear-gradient(135deg, #162F75 0%, #1E40AF 52%, #17337E 100%);
+    }
+    .watermark-text {
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: rgba(255, 255, 255, 0.06);
+      user-select: none;
+      pointer-events: none;
     }
   </style>
 </head>
 <body class="bg-pureWhite text-charcoal font-sans antialiased">
 
-  <!-- TOP BAR -->
-  <div class="bg-deepNavy text-white py-2 px-6 md:px-12 text-xs flex flex-wrap justify-between items-center gap-2">
+  <!-- TOP UTILITY BAR (LIVE BETTER | CONTACT) -->
+  <div class="bg-masafiBlue text-white px-6 md:px-14 py-2 text-[11px] font-bold tracking-wider uppercase flex justify-between items-center border-b border-white/10">
+    <a href="#products" class="hover:text-wassersGold transition">CLEAN WATER, CLEAR PROMISE</a>
     <div class="flex items-center space-x-5">
-      <span><i class="fas fa-truck text-electricCyan mr-1.5"></i> Fast Delivery Across Surat</span>
-      <span class="hidden sm:inline"><i class="fas fa-shield-alt text-wassersGold mr-1.5"></i> Hygienic 20L Capsules &amp; Cases</span>
-    </div>
-    <div class="flex items-center space-x-4">
-      <a href="tel:+918469277377" class="hover:text-wassersGold transition">
-        <i class="fas fa-phone-alt text-electricCyan mr-1"></i> <strong>846-9277377</strong>
-      </a>
-      <a href="app.html" class="text-wassersGold font-semibold hover:underline">Live Tracking</a>
+      <a href="tel:+918469277377" class="hover:text-wassersGold transition">CONTACT</a>
     </div>
   </div>
 
-  <!-- STICKY NAVBAR -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 px-6 md:px-12 py-4 shadow-xs">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <a href="#" onclick="resetToAllSizes()" class="text-2xl md:text-3xl font-black tracking-tight text-wassersGold">
-        WASSERS &amp; CO.
+  <!-- MAIN NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 bg-white border-b border-gray-200 px-6 md:px-14 py-3.5 shadow-xs">
+    <div class="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
+      <!-- Brand Wordmark -->
+      <a href="#" onclick="resetToAllSizes()" class="text-2xl md:text-3xl font-black italic tracking-tight text-masafiBlue shrink-0">
+        wassers
       </a>
 
-      <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-700">
-        <a href="#hero" onclick="resetToAllSizes()" class="hover:text-wassersGold transition">Home</a>
-        <a href="#products" class="hover:text-wassersGold transition">Categories</a>
-        <a href="app.html" class="hover:text-wassersGold transition">Order App</a>
-        <a href="admin.html" class="hover:text-wassersGold transition">Corporate</a>
+      <!-- Center Navigation -->
+      <nav class="hidden lg:flex items-center space-x-7 text-xs font-extrabold uppercase tracking-wider text-masafiBlue">
+        <button type="button" onclick="openSizeSubpage('20L')" class="px-5 py-2 rounded-full bg-masafiBlue text-white hover:bg-masafiDarkBlue transition cursor-pointer">
+          WATER
+        </button>
+        <button type="button" onclick="openSizeSubpage('1L')" class="hover:text-wassersGoldDark transition cursor-pointer">
+          1L CASES
+        </button>
+        <button type="button" onclick="openSizeSubpage('500ml')" class="hover:text-wassersGoldDark transition cursor-pointer">
+          500ML CASES
+        </button>
+        <button type="button" onclick="openSizeSubpage('200ml')" class="hover:text-wassersGoldDark transition cursor-pointer">
+          200ML CASES
+        </button>
+        <a href="#products" onclick="resetToAllSizes()" class="hover:text-wassersGoldDark transition">
+          BUNDLE OFFERS
+        </a>
       </nav>
 
-      <div class="flex items-center space-x-4">
-        <button type="button" onclick="openCartDrawer()" class="relative p-2 text-charcoal hover:text-wassersGold transition cursor-pointer" aria-label="Open Cart">
-          <i class="fas fa-shopping-bag text-xl"></i>
-          <span id="cart-count" class="absolute -top-1 -right-1 bg-wassersGold text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+      <!-- Right Icons: Search, Cart, Live App/Account -->
+      <div class="flex items-center space-x-5 text-masafiBlue">
+        <a href="#products" aria-label="Browse Products" class="hover:text-wassersGoldDark transition">
+          <i class="fas fa-search text-lg"></i>
+        </a>
+
+        <button type="button" onclick="openCartDrawer()" aria-label="Open Cart" class="relative hover:text-wassersGoldDark transition cursor-pointer">
+          <i class="fas fa-shopping-bag text-lg"></i>
+          <span id="cart-count" class="absolute -top-2 -right-2.5 bg-wassersGold text-charcoal text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
         </button>
-        <a href="#products" class="hidden sm:inline-block bg-deepNavy text-white text-sm font-bold px-5 py-2.5 rounded-full hover:bg-wassersGold transition">
-          Shop Now
+
+        <a href="app.html" aria-label="Order App &amp; Live Tracking" class="hover:text-wassersGoldDark transition">
+          <i class="far fa-user text-lg"></i>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section id="hero" class="hero-combined py-12 md:py-16 px-6 md:px-12 border-b border-gray-100">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-      <div class="lg:col-span-7 space-y-5">
-        <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-electricCyan/10 text-deepNavy border border-electricCyan/30">
-          <i class="fas fa-droplet text-electricCyan mr-2"></i> Surat Hydration Store
-        </span>
+  <!-- HERO BANNER -->
+  <section id="hero" class="hero-banner-bg relative overflow-hidden text-white min-h-[520px] md:min-h-[580px] flex items-center px-6 md:px-14 py-12">
+    <!-- Subtle Background Watermark -->
+    <div class="watermark-text text-[140px] md:text-[230px] leading-none absolute right-[-20px] top-1/2 -translate-y-1/2 z-0">
+      wassers
+    </div>
 
-        <h1 class="text-4xl sm:text-5xl font-black text-deepNavy leading-tight uppercase">
-          Pick Your Size.<br>
-          <span class="text-wassersGold">See Every Option.</span>
-        </h1>
+    <!-- Left Carousel Arrow -->
+    <button type="button" onclick="cycleHeroSlide(-1)" aria-label="Previous Banner" class="hidden sm:flex w-9 h-9 rounded-full bg-white/90 text-masafiBlue items-center justify-center shadow-md hover:bg-white transition z-20 shrink-0 mr-3 cursor-pointer">
+      <i class="fas fa-chevron-left text-xs"></i>
+    </button>
 
-        <p class="text-base text-gray-600 max-w-xl">
-          Tap <strong>20L</strong>, <strong>1L</strong>, <strong>500ml</strong>, or <strong>200ml</strong> below to open its variant subpage with photos, prices, and instant ordering.
-        </p>
+    <div class="max-w-[1340px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
+      <!-- Left Promotional Copy -->
+      <div class="lg:col-span-4 space-y-3 text-left">
+        <div class="inline-block">
+          <p id="hero-kicker" class="text-4xl sm:text-5xl font-black tracking-tight text-white leading-none">
+            Wassers
+          </p>
+          <p id="hero-headline" class="text-4xl sm:text-5xl font-black tracking-tight text-white leading-none mt-1">
+            Surat
+          </p>
+          <span id="hero-badge" class="inline-block bg-wassersGold text-charcoal font-black italic text-2xl sm:text-3xl px-3 py-0.5 mt-2 -rotate-2 shadow-md">
+            delivery
+          </span>
+        </div>
 
-        <!-- Size Subpage Jump Buttons -->
-        <div class="flex flex-wrap gap-2.5 pt-1">
-          <button type="button" onclick="openSizeSubpage('20L')" class="px-4 py-2 rounded-full bg-deepNavy text-white text-xs font-bold hover:bg-wassersGold transition cursor-pointer">20L Capsules</button>
-          <button type="button" onclick="openSizeSubpage('1L')" class="px-4 py-2 rounded-full bg-white border border-gray-300 text-xs font-bold text-deepNavy hover:border-wassersGold transition cursor-pointer">1L Bottles</button>
-          <button type="button" onclick="openSizeSubpage('500ml')" class="px-4 py-2 rounded-full bg-white border border-gray-300 text-xs font-bold text-deepNavy hover:border-wassersGold transition cursor-pointer">500ml Bottles</button>
-          <button type="button" onclick="openSizeSubpage('200ml')" class="px-4 py-2 rounded-full bg-white border border-gray-300 text-xs font-bold text-deepNavy hover:border-wassersGold transition cursor-pointer">200ml Bottles</button>
+        <div class="pt-4">
+          <p id="hero-subhead" class="text-2xl sm:text-3xl font-black uppercase tracking-tight leading-tight">
+            DEALS<br>RUN DEEP!
+          </p>
+          <p id="hero-caption" class="text-sm font-medium text-white/90 mt-1">
+            20L capsules &amp; bottle cases in Surat!
+          </p>
+          <p class="text-[10px] text-white/60 mt-2">
+            T&amp;Cs apply • Call 846-9277377
+          </p>
         </div>
       </div>
 
-      <div class="lg:col-span-5 flex justify-center">
-        <div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 max-w-xs w-full text-center">
-          <div class="h-48 flex items-center justify-center bg-softIce rounded-2xl p-4 mb-4">
-            <img
-              src="./WOM20L.png"
-              alt="20L Capsule"
-              class="max-h-full w-auto object-contain"
-              onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
-            >
-            <i class="fas fa-prescription-bottle text-6xl text-electricCyan hidden"></i>
+      <!-- Center Product Showcase Lineup -->
+      <div class="lg:col-span-5 flex flex-col items-center justify-center">
+        <div class="relative w-full max-w-xl">
+          <!-- Top Row: 1L, 20L Capsule, 500ml -->
+          <div class="grid grid-cols-3 gap-3 items-end">
+            <div onclick="openSizeSubpage('1L')" class="cursor-pointer bg-white rounded-2xl p-3 shadow-xl border-2 border-white/80 hover:-translate-y-1 transition text-center">
+              <img
+                src="./WASSERS%20%26%20CO.%20-%20EasyFlow%201L%20-%20Pure%20Hydration.png"
+                alt="EasyFlow 1L"
+                class="h-24 sm:h-28 w-full object-contain mx-auto mb-1"
+                onerror="this.outerHTML='<div class=\'h-24 flex items-center justify-center text-masafiBlue font-black text-lg\'>1L</div>'"
+              >
+              <span class="block text-[10px] font-black uppercase text-masafiBlue">1L Case</span>
+            </div>
+
+            <div onclick="openSizeSubpage('20L')" class="cursor-pointer bg-white rounded-2xl p-3 shadow-2xl border-2 border-wassersGold hover:-translate-y-1.5 transition text-center -mt-4">
+              <img
+                src="./WOM20L.png"
+                alt="20L Capsule"
+                class="h-32 sm:h-40 w-full object-contain mx-auto mb-1"
+                onerror="this.outerHTML='<div class=\'h-32 flex items-center justify-center text-masafiBlue font-black text-xl\'>20L</div>'"
+              >
+              <span class="block text-[11px] font-black uppercase text-masafiBlue">20L Capsule • ₹80</span>
+            </div>
+
+            <div onclick="openSizeSubpage('500ml')" class="cursor-pointer bg-white rounded-2xl p-3 shadow-xl border-2 border-white/80 hover:-translate-y-1 transition text-center">
+              <img
+                src="./WASSER%20HydroEase%20500%20ML%20-%20Refreshment%20Redefined.png"
+                alt="HydroEase 500ml"
+                class="h-24 sm:h-28 w-full object-contain mx-auto mb-1"
+                onerror="this.outerHTML='<div class=\'h-24 flex items-center justify-center text-masafiBlue font-black text-lg\'>500ml</div>'"
+              >
+              <span class="block text-[10px] font-black uppercase text-masafiBlue">500ml Case</span>
+            </div>
           </div>
-          <h2 class="text-xl font-black text-deepNavy">20L Capsule</h2>
-          <p class="text-xs text-gray-500 mt-1 mb-3">Single jars &amp; bulk packs</p>
-          <button type="button" onclick="openSizeSubpage('20L')" class="w-full bg-wassersGold text-white text-sm font-bold py-2.5 rounded-full hover:opacity-95 transition cursor-pointer">
-            View 20L Variants
-          </button>
+
+          <!-- Bottom Row: 200ml MiniSip -->
+          <div class="mt-3 flex justify-center">
+            <div onclick="openSizeSubpage('200ml')" class="cursor-pointer bg-white rounded-2xl px-5 py-2.5 shadow-xl border-2 border-white/80 hover:-translate-y-1 transition flex items-center gap-3">
+              <img
+                src="./WASSER%20MiniSip%20200%20ML%20-%20Refreshment%20in%20Every%20Drop.png"
+                alt="MiniSip 200ml"
+                class="h-14 w-20 object-contain"
+                onerror="this.outerHTML='<span class=\'font-black text-masafiBlue text-sm\'>200ml</span>'"
+              >
+              <div class="text-left">
+                <p class="text-xs font-black text-masafiBlue uppercase">MiniSip 200ml</p>
+                <p class="text-[10px] text-gray-500 font-semibold">Events &amp; Daily Cases</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Right Pill CTA -->
+      <div class="lg:col-span-3 flex justify-start lg:justify-end">
+        <a href="#products" class="inline-flex items-center justify-center text-center bg-masafiAccent hover:bg-wassersGold hover:text-charcoal text-white font-black text-xs sm:text-sm uppercase tracking-wider px-7 py-4 rounded-full shadow-2xl border border-white/25 transition leading-snug">
+          SHOP BUNDLE<br>OFFERS
+        </a>
       </div>
     </div>
+
+    <!-- Right Carousel Arrow -->
+    <button type="button" onclick="cycleHeroSlide(1)" aria-label="Next Banner" class="hidden sm:flex w-9 h-9 rounded-full bg-white/90 text-masafiBlue items-center justify-center shadow-md hover:bg-white transition z-20 shrink-0 ml-3 cursor-pointer">
+      <i class="fas fa-chevron-right text-xs"></i>
+    </button>
+
+    <!-- Lime Accent Wave Along Bottom Edge -->
+    <svg viewBox="0 0 1440 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute bottom-0 left-0 w-full h-5 pointer-events-none z-10" preserveAspectRatio="none">
+      <path d="M0 18C240 2 480 34 720 18C960 2 1200 34 1440 18V36H0V18Z" fill="#84CC16"/>
+    </svg>
   </section>
 
-  <!-- CATEGORIES & SUBPAGE SECTION -->
-  <section id="products" class="py-16 px-6 md:px-12 bg-white min-h-[520px]">
-    <div class="max-w-7xl mx-auto">
+  <!-- SIZE CATEGORIES & VARIANT SUBPAGE SECTION -->
+  <section id="products" class="py-14 px-6 md:px-14 bg-white min-h-[500px]">
+    <div class="max-w-[1340px] mx-auto">
 
-      <!-- Subpage Header / Size Switcher Bar -->
+      <!-- Subpage Header / Size Switcher Bar (shown when a size is selected) -->
       <div id="subpage-bar" class="hidden flex-wrap items-center justify-between gap-4 bg-softIce border border-gray-200 rounded-2xl p-4 mb-8">
         <div class="flex items-center gap-3">
-          <button type="button" onclick="resetToAllSizes()" class="px-4 py-2 rounded-full bg-white border border-gray-300 text-xs font-bold text-deepNavy hover:border-wassersGold transition cursor-pointer">
+          <button type="button" onclick="resetToAllSizes()" class="px-4 py-2 rounded-full bg-white border border-gray-300 text-xs font-bold text-masafiBlue hover:border-masafiBlue transition cursor-pointer">
             <i class="fas fa-arrow-left mr-1"></i> All Sizes
           </button>
           <div>
-            <p class="text-[11px] font-bold uppercase tracking-wider text-electricCyan">Selected Size Subpage</p>
-            <h2 id="subpage-title" class="text-2xl font-black text-deepNavy">20L Variants</h2>
+            <p class="text-[11px] font-bold uppercase tracking-wider text-masafiAccent">Size Subpage</p>
+            <h2 id="subpage-title" class="text-xl sm:text-2xl font-black text-masafiBlue">20L Capsules — All Variants</h2>
           </div>
         </div>
-
         <div id="size-tabs" class="flex flex-wrap gap-2"></div>
       </div>
 
-      <!-- Default Overview Heading (shown when no single size subpage is active) -->
-      <div id="overview-header" class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <!-- Default Section Heading -->
+      <div id="overview-header" class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
         <div>
-          <p class="text-xs font-bold uppercase tracking-widest text-wassersGold mb-1">Shop by Size</p>
-          <h2 class="text-3xl md:text-4xl font-black text-deepNavy uppercase tracking-tight">Select a Size Category</h2>
+          <p class="text-xs font-extrabold uppercase tracking-widest text-masafiAccent">Shop by Size</p>
+          <h2 class="text-2xl sm:text-4xl font-black text-masafiBlue uppercase tracking-tight">Select 20L, 1L, 500ml or 200ml</h2>
         </div>
-        <p class="text-sm text-gray-500">Click any size card to open all variants in that size.</p>
+        <p class="text-xs sm:text-sm text-gray-500">Tap any size card to view all variants, prices, and order options.</p>
       </div>
 
-      <!-- Dynamic Cards Container -->
-      <div id="catalog-view" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7"></div>
+      <!-- Dynamic Cards Grid -->
+      <div id="catalog-view" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-deepNavy text-white py-12 px-6 md:px-12 border-t-4 border-wassersGold">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+  <footer class="bg-masafiBlue text-white py-10 px-6 md:px-14">
+    <div class="max-w-[1340px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
       <div>
-        <h2 class="text-2xl font-black text-wassersGold mb-3">WASSERS &amp; CO.</h2>
-        <p class="text-gray-300 text-sm">Clean Water, Clear Promise. Serving Surat, Gujarat.</p>
+        <h3 class="text-2xl font-black italic text-wassersGold mb-2">wassers</h3>
+        <p class="text-white/85">Clean Water, Clear Promise. Direct water capsule &amp; bottle case delivery across Surat.</p>
       </div>
       <div>
-        <h3 class="text-xs font-bold uppercase tracking-widest text-wassersGold mb-4">Quick Links</h3>
-        <ul class="space-y-2 text-sm text-gray-300">
+        <h4 class="text-xs font-extrabold uppercase tracking-wider text-wassersGold mb-3">Quick Links</h4>
+        <ul class="space-y-2 text-white/85">
           <li><a href="#products" onclick="resetToAllSizes()" class="hover:text-wassersGold">All Sizes</a></li>
           <li><a href="app.html" class="hover:text-wassersGold">Order App &amp; Live Tracking</a></li>
-          <li><a href="admin.html" class="hover:text-wassersGold">Corporate Portal</a></li>
+          <li><a href="admin.html" class="hover:text-wassersGold">Corporate Dashboard</a></li>
         </ul>
       </div>
       <div>
-        <h3 class="text-xs font-bold uppercase tracking-widest text-wassersGold mb-4">Contact</h3>
-        <p class="text-sm text-gray-300 mb-1"><i class="fas fa-phone mr-2 text-electricCyan"></i> 846-9277377</p>
-        <p class="text-sm text-gray-300"><i class="fas fa-location-dot mr-2 text-electricCyan"></i> Surat, Gujarat</p>
+        <h4 class="text-xs font-extrabold uppercase tracking-wider text-wassersGold mb-3">Contact</h4>
+        <p class="text-white/85 mb-1"><i class="fas fa-phone mr-2 text-wassersGold"></i> 846-9277377</p>
+        <p class="text-white/85"><i class="fas fa-map-marker-alt mr-2 text-wassersGold"></i> Surat, Gujarat</p>
       </div>
     </div>
   </footer>
+
+  <!-- FLOATING WHATSAPP BUTTON (Bottom Right) -->
+  <a
+    href="https://wa.me/918469277377?text=Hello%20Wassers%20%26%20Co.%2C%20I%20want%20to%20place%20a%20water%20order."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat on WhatsApp"
+    class="fixed bottom-5 right-5 z-40 w-13 h-13 w-14 h-14 rounded-full bg-[#25D366] text-white shadow-2xl flex items-center justify-center text-2xl hover:scale-105 transition"
+  >
+    <i class="fab fa-whatsapp"></i>
+  </a>
 
   <!-- CART DRAWER -->
   <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
@@ -183,7 +283,7 @@
     <aside class="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col justify-between z-10 p-6">
       <div>
         <div class="flex justify-between items-center border-b border-gray-200 pb-4 mb-4">
-          <h3 class="text-xl font-black text-deepNavy uppercase">Your Cart</h3>
+          <h3 class="text-xl font-black text-masafiBlue uppercase">Your Cart</h3>
           <button type="button" onclick="closeCartDrawer()" class="text-gray-500 hover:text-charcoal text-xl cursor-pointer" aria-label="Close Cart">
             <i class="fas fa-times"></i>
           </button>
@@ -194,30 +294,57 @@
       <div class="border-t border-gray-200 pt-4">
         <div class="flex justify-between items-center text-lg font-black mb-4">
           <span>Subtotal</span>
-          <span id="cart-subtotal" class="text-wassersGold">₹0</span>
+          <span id="cart-subtotal" class="text-masafiBlue">₹0</span>
         </div>
         <button type="button" onclick="clearCart()" class="w-full mb-2 border border-gray-300 text-gray-700 font-semibold py-2.5 rounded-full hover:bg-gray-100 transition cursor-pointer">
           Clear Cart
         </button>
-        <a href="app.html" class="block text-center w-full bg-wassersGold text-white font-bold py-3 rounded-full shadow hover:opacity-95 transition">
-          Order Now
+        <a href="app.html" class="block text-center w-full bg-masafiBlue text-white font-bold py-3 rounded-full shadow hover:bg-masafiDarkBlue transition">
+          Proceed to Order
         </a>
       </div>
     </aside>
   </div>
 
   <!-- TOAST -->
-  <div id="cart-toast" class="fixed bottom-5 right-5 z-50 hidden bg-deepNavy text-white px-5 py-3 rounded-full shadow-xl text-sm font-semibold border border-wassersGold">
+  <div id="cart-toast" class="fixed bottom-22 right-5 z-50 hidden bg-masafiBlue text-white px-5 py-3 rounded-full shadow-xl text-sm font-bold border border-wassersGold">
     Added to cart
   </div>
 
   <script>
-    // Size categories and all variants inside each size
+    const HERO_SLIDES = [
+      {
+        kicker: "Wassers",
+        headline: "Surat",
+        badge: "delivery",
+        subhead: "DEALS<br>RUN DEEP!",
+        caption: "20L capsules & bottle cases in Surat!"
+      },
+      {
+        kicker: "20L Jar",
+        headline: "Refills",
+        badge: "₹80 only",
+        subhead: "HOME &amp;<br>OFFICE",
+        caption: "Fast doorstep & shop exchange across Surat."
+      }
+    ];
+    let heroIndex = 0;
+
+    function cycleHeroSlide(dir) {
+      heroIndex = (heroIndex + dir + HERO_SLIDES.length) % HERO_SLIDES.length;
+      const s = HERO_SLIDES[heroIndex];
+      document.getElementById("hero-kicker").textContent = s.kicker;
+      document.getElementById("hero-headline").textContent = s.headline;
+      document.getElementById("hero-badge").textContent = s.badge;
+      document.getElementById("hero-subhead").innerHTML = s.subhead;
+      document.getElementById("hero-caption").textContent = s.caption;
+    }
+
     const SIZE_CATEGORIES = [
       {
         sizeKey: "20L",
         title: "20L Capsules",
-        subtitle: "Home & office jars, refills, and monthly bulk packs",
+        subtitle: "Home & office jars, refills, and bulk packs",
         coverImage: "./WOM20L.png",
         variants: [
           {
@@ -251,7 +378,7 @@
           {
             id: "20l-25pack",
             name: "20L Capsule — 25 Jars Monthly Plan",
-            detail: "Best value for clinics, factories & large offices",
+            detail: "Clinics, factories & bulk supply",
             price: 1875,
             image: "./WOM20L.png"
           }
@@ -266,315 +393,18 @@
           {
             id: "1l-case-12",
             name: "EasyFlow 1L — 1 Case (12 Bottles)",
-            detail: "12 x 1L bottles • Standard household & desk pack",
+            detail: "12 x 1L bottles per case",
             price: 180,
             image: "./WASSERS & CO. - EasyFlow 1L - Pure Hydration.png"
           },
           {
             id: "1l-case-24",
             name: "EasyFlow 1L — 2 Cases (24 Bottles)",
-            detail: "24 x 1L bottles • Ideal for meetings & guests",
+            detail: "24 x 1L bottles for meetings & guests",
             price: 350,
             image: "./WASSERS & CO. - EasyFlow 1L - Pure Hydration.png"
           },
           {
             id: "1l-case-60",
             name: "EasyFlow 1L — 5 Cases (60 Bottles)",
-            detail: "60 x 1L bottles • Wholesale & event supply",
-            price: 850,
-            image: "./WASSERS & CO. - EasyFlow 1L - Pure Hydration.png"
-          }
-        ]
-      },
-      {
-        sizeKey: "500ml",
-        title: "500ml Bottles",
-        subtitle: "HydroEase 500ml cases for daily carry & clinics",
-        coverImage: "./WASSER HydroEase 500 ML - Refreshment Redefined.png",
-        variants: [
-          {
-            id: "500ml-case-24",
-            name: "HydroEase 500 ML — 1 Case (24 Bottles)",
-            detail: "24 x 500ml bottles • Standard case",
-            price: 220,
-            image: "./WASSER HydroEase 500 ML - Refreshment Redefined.png"
-          },
-          {
-            id: "500ml-case-48",
-            name: "HydroEase 500 ML — 2 Cases (48 Bottles)",
-            detail: "48 x 500ml bottles • Clinics, showrooms & teams",
-            price: 430,
-            image: "./WASSER HydroEase 500 ML - Refreshment Redefined.png"
-          },
-          {
-            id: "500ml-case-120",
-            name: "HydroEase 500 ML — 5 Cases (120 Bottles)",
-            detail: "120 x 500ml bottles • Corporate & banquet pack",
-            price: 1050,
-            image: "./WASSER HydroEase 500 ML - Refreshment Redefined.png"
-          }
-        ]
-      },
-      {
-        sizeKey: "200ml",
-        title: "200ml Bottles",
-        subtitle: "MiniSip 200ml cases for events, weddings & waiting rooms",
-        coverImage: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png",
-        variants: [
-          {
-            id: "200ml-case-35",
-            name: "MiniSip 200 ML — 1 Case (35 Bottles)",
-            detail: "35 x 200ml bottles • Compact single-serve case",
-            price: 210,
-            image: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png"
-          },
-          {
-            id: "200ml-case-70",
-            name: "MiniSip 200 ML — 2 Cases (70 Bottles)",
-            detail: "70 x 200ml bottles • Office reception & family gatherings",
-            price: 410,
-            image: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png"
-          },
-          {
-            id: "200ml-case-175",
-            name: "MiniSip 200 ML — 5 Cases (175 Bottles)",
-            detail: "175 x 200ml bottles • Event & function bulk pack",
-            price: 1000,
-            image: "./WASSER MiniSip 200 ML - Refreshment in Every Drop.png"
-          }
-        ]
-      }
-    ];
-    let activeSize = null; // null shows all 4 size cards; string ("20L", "1L", etc.) shows that size's subpage
-    let cart = JSON.parse(localStorage.getItem("wassers_cart")) || [];
-
-    function openSizeSubpage(sizeKey) {
-      activeSize = sizeKey;
-      renderView();
-      document.getElementById("products").scrollIntoView({ behavior: "smooth" });
-    }
-
-    function resetToAllSizes() {
-      activeSize = null;
-      renderView();
-    }
-
-    function renderSizeTabs() {
-      const tabsEl = document.getElementById("size-tabs");
-      if (!tabsEl) return;
-      tabsEl.innerHTML = SIZE_CATEGORIES.map((cat) => {
-        const isCurrent = cat.sizeKey === activeSize;
-        return `
-          <button
-            type="button"
-            onclick="openSizeSubpage('${cat.sizeKey}')"
-            class="px-3.5 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
-              isCurrent
-                ? "bg-wassersGold text-white"
-                : "bg-white text-deepNavy border border-gray-300 hover:border-wassersGold"
-            }"
-          >
-            ${cat.sizeKey}
-          </button>
-        `;
-      }).join("");
-    }
-
-    function renderView() {
-      const view = document.getElementById("catalog-view");
-      const subpageBar = document.getElementById("subpage-bar");
-      const overviewHeader = document.getElementById("overview-header");
-      const subpageTitle = document.getElementById("subpage-title");
-      if (!view) return;
-
-      if (!activeSize) {
-        subpageBar.classList.add("hidden");
-        subpageBar.classList.remove("flex");
-        overviewHeader.classList.remove("hidden");
-
-        view.innerHTML = SIZE_CATEGORIES.map((cat) => {
-          const startingPrice = Math.min(...cat.variants.map((v) => v.price));
-          return `
-            <div onclick="openSizeSubpage('${cat.sizeKey}')" class="group cursor-pointer bg-white rounded-3xl border border-gray-200 p-5 flex flex-col justify-between shadow-xs hover:shadow-xl hover:border-wassersGold transition">
-              <div>
-                <div class="bg-softIce rounded-2xl h-56 p-4 flex items-center justify-center mb-4">
-                  <img
-                    src="${encodeURI(cat.coverImage)}"
-                    alt="${cat.title}"
-                    class="max-h-full w-auto object-contain group-hover:scale-105 transition duration-300"
-                    onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
-                  >
-                  <i class="fas fa-prescription-bottle text-6xl text-electricCyan hidden"></i>
-                </div>
-                <span class="text-[11px] font-bold uppercase tracking-wider text-electricCyan">${cat.variants.length} Variants</span>
-                <h3 class="text-2xl font-black text-deepNavy mt-0.5">${cat.title}</h3>
-                <p class="text-xs text-gray-500 mt-1">${cat.subtitle}</p>
-              </div>
-              <div class="flex items-center justify-between pt-4 mt-4 border-t border-gray-100">
-                <span class="text-lg font-black text-wassersGold">From ₹${startingPrice}</span>
-                <span class="text-xs font-bold text-deepNavy group-hover:text-wassersGold">
-                  View Options <i class="fas fa-arrow-right ml-1"></i>
-                </span>
-              </div>
-            </div>
-          `;
-        }).join("");
-        return;
-      }
-
-      const category = SIZE_CATEGORIES.find((c) => c.sizeKey === activeSize) || SIZE_CATEGORIES[0];
-      subpageBar.classList.remove("hidden");
-      subpageBar.classList.add("flex");
-      overviewHeader.classList.add("hidden");
-      subpageTitle.textContent = `${category.title} — All Variants`;
-      renderSizeTabs();
-
-      view.innerHTML = category.variants.map((variant) => `
-        <div class="bg-white rounded-3xl border border-gray-200 p-5 flex flex-col justify-between shadow-xs hover:shadow-xl transition">
-          <div>
-            <div class="bg-softIce rounded-2xl h-56 p-4 flex items-center justify-center mb-4">
-              <img
-                src="${encodeURI(variant.image)}"
-                alt="${variant.name}"
-                class="max-h-full w-auto object-contain"
-                onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
-              >
-              <i class="fas fa-prescription-bottle text-6xl text-electricCyan hidden"></i>
-            </div>
-            <h3 class="text-lg font-black text-deepNavy">${variant.name}</h3>
-            <p class="text-xs text-gray-500 mt-1 mb-4">${variant.detail}</p>
-          </div>
-
-          <div>
-            <p class="text-2xl font-black text-wassersGold mb-3">₹${variant.price}</p>
-            <div class="flex gap-2">
-              <button
-                type="button"
-                onclick="addToCart('${category.sizeKey}', '${variant.id}', '${variant.name}', ${variant.price}, '${variant.image}', false)"
-                class="flex-1 bg-softIce text-deepNavy border border-gray-300 text-xs font-bold py-2.5 px-3 rounded-full hover:border-wassersGold transition cursor-pointer"
-              >
-                Add to Cart
-              </button>
-              <button
-                type="button"
-                onclick="addToCart('${category.sizeKey}', '${variant.id}', '${variant.name}', ${variant.price}, '${variant.image}', true)"
-                class="flex-1 bg-wassersGold text-white text-xs font-bold py-2.5 px-3 rounded-full hover:opacity-95 transition cursor-pointer"
-              >
-                Order Now
-              </button>
-            </div>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function addToCart(productId, variantId, variantName, price, image, goToCheckout) {
-      const existing = cart.find(
-        (item) => item.productId === productId && item.variantName === variantName
-      );
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({
-          productId,
-          productName: `${productId} Range`,
-          variantId,
-          variantName,
-          price,
-          image,
-          qty: 1
-        });
-      }
-      localStorage.setItem("wassers_cart", JSON.stringify(cart));
-      updateCartBadge();
-      renderCartDrawer();
-
-      if (goToCheckout) {
-        window.location.href = "app.html";
-      } else {
-        showToast(`${variantName} added to cart`);
-      }
-    }
-
-    function updateCartBadge() {
-      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-      const badge = document.getElementById("cart-count");
-      if (badge) badge.textContent = totalQty;
-    }
-
-    function changeItemQty(index, delta) {
-      if (!cart[index]) return;
-      cart[index].qty += delta;
-      if (cart[index].qty <= 0) {
-        cart.splice(index, 1);
-      }
-      localStorage.setItem("wassers_cart", JSON.stringify(cart));
-      updateCartBadge();
-      renderCartDrawer();
-    }
-
-    function clearCart() {
-      cart = [];
-      localStorage.setItem("wassers_cart", JSON.stringify(cart));
-      updateCartBadge();
-      renderCartDrawer();
-    }
-
-    function openCartDrawer() {
-      renderCartDrawer();
-      document.getElementById("cart-drawer").classList.remove("hidden");
-    }
-
-    function closeCartDrawer() {
-      document.getElementById("cart-drawer").classList.add("hidden");
-    }
-
-    let toastTimer = null;
-    function showToast(msg) {
-      const el = document.getElementById("cart-toast");
-      el.textContent = msg;
-      el.classList.remove("hidden");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.add("hidden"), 2000);
-    }
-
-    function renderCartDrawer() {
-      const box = document.getElementById("cart-items");
-      const subtotalEl = document.getElementById("cart-subtotal");
-      if (!box || !subtotalEl) return;
-
-      if (cart.length === 0) {
-        box.innerHTML = `<p class="text-sm text-gray-500 text-center py-8">Your cart is empty.</p>`;
-        subtotalEl.textContent = "₹0";
-        return;
-      }
-
-      let subtotal = 0;
-      box.innerHTML = cart.map((item, idx) => {
-        const line = item.price * item.qty;
-        subtotal += line;
-        return `
-          <div class="flex items-center justify-between border border-gray-200 rounded-2xl p-3 gap-3">
-            <img src="${encodeURI(item.image || './WOM20L.png')}" alt="${item.variantName}" class="w-12 h-12 object-contain bg-softIce rounded-xl p-1 shrink-0" onerror="this.src='./WOM20L.png'">
-            <div class="flex-1 min-w-0">
-              <p class="font-bold text-sm text-deepNavy truncate">${item.variantName}</p>
-              <p class="text-sm font-black text-wassersGold">₹${line}</p>
-            </div>
-            <div class="flex items-center space-x-2">
-              <button type="button" onclick="changeItemQty(${idx}, -1)" class="w-7 h-7 rounded-full border border-gray-300 font-bold cursor-pointer">-</button>
-              <span class="text-sm font-bold w-4 text-center">${item.qty}</span>
-              <button type="button" onclick="changeItemQty(${idx}, 1)" class="w-7 h-7 rounded-full border border-gray-300 font-bold cursor-pointer">+</button>
-            </div>
-          </div>
-        `;
-      }).join("");
-
-      subtotalEl.textContent = `₹${subtotal}`;
-    }
-
-    renderView();
-    updateCartBadge();
-    renderCartDrawer();
-  </script>
-</body>
-</html>
+            detail: "60 x 1L bottles for events &
