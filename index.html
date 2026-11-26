@@ -16,81 +16,84 @@
             wassersNavy: '#0A192F', 
             wassersGold: '#C5A059',
             wassersBlue: '#00B4D8',
-            pureWhite: '#FFFFFF',
-            bgGray: '#F8F9FA',
-            borderGray: '#E5E7EB'
-          },
-          fontFamily: {
-            sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+            borderGray: '#E5E7EB',
+            lightGray: '#F9FAFB'
           }
         }
       }
     }
   </script>
   <style>
-    body { background-color: #F8F9FA; -webkit-tap-highlight-color: transparent; }
-    /* Hide scrollbar for a native app feel */
-    ::-webkit-scrollbar { display: none; }
+    body { background-color: #FFFFFF; -webkit-tap-highlight-color: transparent; }
+    /* Hide scrollbar for a cleaner desktop feel */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 10px; }
     
-    /* Modern smooth slide-in for the cart */
     .cart-drawer { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
     .cart-drawer.open { transform: translateX(0); }
-    
-    /* Quantity Input Styling */
     input[type="number"]::-webkit-inner-spin-button, 
     input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   </style>
 </head>
-<body class="text-gray-800 pb-20 selection:bg-wassersGold selection:text-white">
+<body class="text-gray-800 pb-20 md:pb-0 selection:bg-wassersGold selection:text-white">
 
-  <!-- TOP APP HEADER -->
-  <header class="sticky top-0 z-40 bg-pureWhite border-b border-borderGray shadow-sm px-4 py-3 flex justify-between items-center">
-    <div class="flex items-center space-x-3">
-      <button class="text-wassersNavy text-xl focus:outline-none">
+  <!-- MASAFI STYLE DESKTOP/MOBILE HEADER -->
+  <header class="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm px-4 md:px-10 py-4 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <button class="md:hidden text-wassersNavy text-xl focus:outline-none">
         <i class="fas fa-bars"></i>
       </button>
-      <div class="flex flex-col">
-        <h1 class="text-lg font-black text-wassersNavy tracking-tight leading-none uppercase">Wassers & Co.</h1>
-        <span class="text-[9px] text-gray-500 font-semibold tracking-wider">Clean Water, Clear Promise</span>
+      <div class="flex flex-col cursor-pointer" onclick="window.location.href='index.html'">
+        <h1 class="text-xl md:text-2xl font-black text-wassersNavy tracking-tight leading-none uppercase">Wassers & Co.</h1>
       </div>
     </div>
-    <div class="flex items-center space-x-4">
-      <button class="text-wassersNavy focus:outline-none"><i class="fas fa-search"></i></button>
-      <button onclick="toggleCart()" class="text-wassersNavy relative focus:outline-none">
-        <i class="fas fa-shopping-cart text-xl"></i>
-        <span id="header-cart-count" class="absolute -top-1.5 -right-2 bg-wassersGold text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border border-white">0</span>
+    
+    <!-- Desktop Search Bar -->
+    <div class="hidden md:flex flex-1 max-w-xl mx-8 relative">
+      <input type="text" placeholder="Search for products..." class="w-full bg-lightGray border border-gray-300 rounded-full py-2 px-6 text-sm focus:outline-none focus:border-wassersGold">
+      <i class="fas fa-search absolute right-4 top-3 text-gray-400"></i>
+    </div>
+
+    <div class="flex items-center space-x-6 text-wassersNavy">
+      <button class="hidden md:block hover:text-wassersGold font-semibold text-sm">Sign In</button>
+      <button onclick="toggleCart()" class="relative focus:outline-none hover:text-wassersGold transition">
+        <i class="fas fa-shopping-cart text-2xl"></i>
+        <span id="header-cart-count" class="absolute -top-2 -right-3 bg-wassersGold text-white text-[11px] font-bold h-5 w-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
       </button>
     </div>
   </header>
 
-  <!-- PROMO BANNER -->
-  <div class="bg-wassersNavy px-4 py-3 flex items-center justify-between">
-    <div class="text-white">
-      <p class="text-xs font-semibold uppercase tracking-wider text-wassersGold mb-0.5">Subscribe & Save</p>
-      <p class="text-[10px] opacity-90">Get automated weekly deliveries in Surat.</p>
+  <!-- MASAFI STYLE HERO BANNER -->
+  <div class="w-full bg-gradient-to-r from-wassersNavy to-blue-900 px-6 py-8 md:py-12 flex items-center justify-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+    <div class="text-center z-10">
+      <h2 class="text-white text-2xl md:text-4xl font-black uppercase tracking-wide mb-2">Pure Hydration Delivered</h2>
+      <p class="text-blue-200 text-sm md:text-base font-semibold mb-6">Automate your weekly deliveries in Surat</p>
+      <button class="bg-wassersGold hover:bg-white hover:text-wassersNavy text-wassersNavy text-sm font-bold px-8 py-2.5 rounded-full shadow-lg transition">
+        View Subscription Plans
+      </button>
     </div>
-    <button class="bg-wassersGold text-wassersNavy text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
-      Plans
-    </button>
   </div>
 
-  <!-- MAIN PRODUCT GRID -->
-  <main class="p-3">
-    <!-- Category Tabs -->
-    <div class="flex overflow-x-auto space-x-2 mb-4 pb-1">
-      <button class="bg-wassersNavy text-white text-xs font-bold px-5 py-2 rounded-full whitespace-nowrap shadow-sm">All Products</button>
-      <button class="bg-white border border-borderGray text-gray-600 text-xs font-semibold px-5 py-2 rounded-full whitespace-nowrap shadow-sm">20L Capsules</button>
-      <button class="bg-white border border-borderGray text-gray-600 text-xs font-semibold px-5 py-2 rounded-full whitespace-nowrap shadow-sm">PET Bottles</button>
+  <!-- MAIN PRODUCT SECTION -->
+  <main class="max-w-7xl mx-auto px-4 md:px-10 py-8">
+    
+    <!-- Filter Tabs (Masafi Style) -->
+    <div class="flex border-b border-gray-200 mb-8 overflow-x-auto no-scrollbar">
+      <button class="border-b-4 border-wassersNavy text-wassersNavy font-bold px-6 py-3 text-sm whitespace-nowrap">All Products</button>
+      <button class="border-b-4 border-transparent text-gray-500 hover:text-wassersNavy font-semibold px-6 py-3 text-sm whitespace-nowrap transition">20L Capsules</button>
+      <button class="border-b-4 border-transparent text-gray-500 hover:text-wassersNavy font-semibold px-6 py-3 text-sm whitespace-nowrap transition">PET Bottles</button>
     </div>
 
-    <!-- Product Grid Container (Injected via JS) -->
-    <div id="product-grid" class="grid grid-cols-2 gap-3">
-      <!-- Products will render here -->
+    <!-- Product Grid (Responsive: 2 cols on mobile, 4 cols on desktop) -->
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+      <!-- Products inject here via JS -->
     </div>
   </main>
 
-  <!-- BOTTOM NAVIGATION BAR -->
-  <nav class="fixed bottom-0 w-full bg-pureWhite border-t border-borderGray flex justify-around py-2 pb-safe z-30 shadow-[0_-2px_10px_rgba(0,0,0,0.03)]">
+  <!-- MOBILE BOTTOM NAVIGATION BAR (Hidden on Desktop) -->
+  <nav class="md:hidden fixed bottom-0 w-full bg-white border-t border-borderGray flex justify-around py-2 pb-safe z-30 shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
     <button class="w-16 flex flex-col items-center justify-center text-wassersNavy">
       <i class="fas fa-store text-lg mb-1"></i><span class="text-[9px] font-bold">Shop</span>
     </button>
@@ -107,41 +110,34 @@
 
   <!-- SLIDE-IN CART DRAWER -->
   <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-wassersNavy/40 backdrop-blur-sm z-50 hidden transition-opacity"></div>
-  <aside id="cart-drawer" class="cart-drawer fixed right-0 top-0 h-full w-[85%] max-w-sm bg-pureWhite shadow-2xl z-50 flex flex-col">
-    <!-- Cart Header -->
-    <div class="px-4 py-4 border-b border-borderGray flex justify-between items-center bg-wassersNavy text-white">
-      <h3 class="text-lg font-bold tracking-wide uppercase flex items-center"><i class="fas fa-shopping-cart mr-2"></i> Your Cart</h3>
-      <button onclick="toggleCart()" class="text-white hover:text-wassersGold text-xl focus:outline-none">
+  <aside id="cart-drawer" class="cart-drawer fixed right-0 top-0 h-full w-[90%] md:w-[400px] bg-white shadow-2xl z-50 flex flex-col border-l border-gray-200">
+    <div class="px-6 py-5 border-b border-gray-200 flex justify-between items-center bg-white">
+      <h3 class="text-xl font-black text-wassersNavy uppercase tracking-tight">Your Cart</h3>
+      <button onclick="toggleCart()" class="text-gray-400 hover:text-wassersNavy text-2xl focus:outline-none transition">
         <i class="fas fa-times"></i>
       </button>
     </div>
-    
-    <!-- Cart Items Area -->
-    <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4 bg-bgGray">
+    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 bg-lightGray">
       <!-- Items inject here -->
     </div>
-
-    <!-- Cart Footer -->
-    <div class="p-4 border-t border-borderGray bg-pureWhite">
-      <div class="flex justify-between items-center mb-4 text-wassersNavy">
-        <span class="font-bold text-sm uppercase">Total (Incl. GST)</span>
-        <span id="cart-total" class="text-xl font-black text-wassersGold">₹0</span>
+    <div class="p-6 border-t border-gray-200 bg-white shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
+      <div class="flex justify-between items-center mb-6">
+        <span class="font-bold text-gray-600 uppercase text-sm">Subtotal</span>
+        <span id="cart-total" class="text-2xl font-black text-wassersNavy">₹0.00</span>
       </div>
-      <button onclick="startCheckout()" class="w-full bg-wassersNavy text-white font-bold py-3.5 rounded-full shadow-md flex items-center justify-center space-x-2 active:scale-95 transition-transform">
-        <span>Proceed to Checkout</span> <i class="fas fa-arrow-right text-sm"></i>
+      <button onclick="startCheckout()" class="w-full bg-wassersNavy hover:bg-wassersGold text-white font-bold py-4 rounded-full shadow-lg transition flex items-center justify-center space-x-2 text-sm uppercase tracking-wider">
+        <i class="fas fa-lock mr-2"></i> Checkout Securely
       </button>
-      <p class="text-[10px] text-center text-gray-400 mt-3"><i class="fas fa-lock text-wassersGold mr-1"></i> Secure Payment via Razorpay</p>
     </div>
   </aside>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toast" class="fixed top-16 left-1/2 transform -translate-x-1/2 bg-wassersNavy text-white px-6 py-2 rounded-full shadow-lg text-xs font-bold border border-wassersGold z-50 hidden opacity-0 transition-opacity duration-300 pointer-events-none">
+  <div id="toast" class="fixed bottom-24 md:top-24 md:bottom-auto left-1/2 transform -translate-x-1/2 bg-wassersNavy text-white px-6 py-3 rounded-full shadow-2xl text-sm font-bold border border-wassersGold z-50 hidden opacity-0 transition-opacity duration-300 pointer-events-none">
     Item added to cart
   </div>
 
   <!-- JAVASCRIPT FOR LOGIC -->
   <script>
-    // 1. Define Products (Using your exact names and prices)
     const products = [
       { id: "20l-capsule", title: "20L Water Capsule", desc: "Refill / Exchange Jar", price: 80, image: "icons/wassers-20L.png" },
       { id: "easyflow-1l", title: "EasyFlow 1L", desc: "Case of 12 PET Bottles", price: 180, image: "icons/wassers-1L.png" },
@@ -149,51 +145,41 @@
       { id: "minisip-200ml", title: "MiniSip 200 ML", desc: "Case of 35 PET Bottles", price: 210, image: "icons/wassers-200ml.png" }
     ];
 
-    // Local state for product card quantity selectors
     const cardQuantities = {};
     products.forEach(p => cardQuantities[p.id] = 1);
-
-    // Global Cart State
     let cart = JSON.parse(localStorage.getItem("wassers_cart")) || [];
-
-    // --- UI RENDERING ---
 
     function renderProductGrid() {
       const grid = document.getElementById("product-grid");
       grid.innerHTML = products.map(product => {
         const currentQty = cardQuantities[product.id];
         return `
-          <div class="bg-pureWhite rounded-xl border border-borderGray p-3 shadow-sm flex flex-col justify-between h-full">
-            <!-- Product Image -->
-            <div class="h-32 mb-2 flex items-center justify-center p-2">
-              <img src="${product.image}" alt="${product.title}" class="max-h-full max-w-full object-contain drop-shadow-md" onerror="this.outerHTML='<i class=\\'fas fa-prescription-bottle text-5xl text-gray-300\\'></i>'">
+          <div class="bg-white rounded-lg border border-gray-200 p-4 flex flex-col justify-between h-full hover:shadow-lg transition duration-300 group">
+            <div class="h-40 md:h-48 mb-4 flex items-center justify-center p-2 relative">
+              <img src="${product.image}" alt="${product.title}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-500" onerror="this.outerHTML='<i class=\\'fas fa-image text-5xl text-gray-200\\'></i>'">
             </div>
             
-            <!-- Product Info -->
-            <div class="mb-3 flex-1 flex flex-col">
-              <h3 class="text-xs font-bold text-wassersNavy leading-tight mb-1">${product.title}</h3>
-              <p class="text-[10px] text-gray-500 mb-2">${product.desc}</p>
+            <div class="mb-4 flex-1 flex flex-col">
+              <h3 class="text-sm md:text-base font-bold text-wassersNavy leading-tight mb-1">${product.title}</h3>
+              <p class="text-xs text-gray-500 mb-3">${product.desc}</p>
               <div class="mt-auto">
-                <span class="text-sm font-black text-wassersNavy">₹${product.price}.00</span>
+                <span class="text-lg font-black text-wassersNavy">₹${product.price.toFixed(2)}</span>
               </div>
             </div>
             
-            <!-- Masafi Style Action Area (Qty + Add Button) -->
-            <div class="flex flex-col space-y-2 mt-auto">
-              <!-- Qty Selector -->
-              <div class="flex items-center justify-between border border-borderGray rounded-full p-1 bg-bgGray">
-                <button onclick="updateCardQty('${product.id}', -1)" class="w-7 h-7 flex items-center justify-center text-gray-600 rounded-full hover:bg-gray-200 focus:outline-none">
-                  <i class="fas fa-minus text-[10px]"></i>
+            <!-- Masafi Style Quantity & Add Button -->
+            <div class="flex flex-col space-y-3 mt-auto">
+              <div class="flex items-center justify-between border border-gray-300 rounded-md p-1 bg-white">
+                <button onclick="updateCardQty('${product.id}', -1)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded focus:outline-none transition">
+                  <i class="fas fa-minus text-xs"></i>
                 </button>
-                <span id="qty-disp-${product.id}" class="text-xs font-bold text-wassersNavy">${currentQty}</span>
-                <button onclick="updateCardQty('${product.id}', 1)" class="w-7 h-7 flex items-center justify-center text-gray-600 rounded-full hover:bg-gray-200 focus:outline-none">
-                  <i class="fas fa-plus text-[10px]"></i>
+                <span id="qty-disp-${product.id}" class="text-sm font-bold text-wassersNavy">${currentQty}</span>
+                <button onclick="updateCardQty('${product.id}', 1)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded focus:outline-none transition">
+                  <i class="fas fa-plus text-xs"></i>
                 </button>
               </div>
-              
-              <!-- Add to Cart Pill -->
-              <button onclick="addToCart('${product.id}')" class="w-full bg-wassersNavy text-pureWhite text-xs font-bold py-2.5 rounded-full shadow-md active:bg-wassersGold transition-colors flex items-center justify-center space-x-1">
-                <i class="fas fa-shopping-bag mr-1"></i> <span>Add to Cart</span>
+              <button onclick="addToCart('${product.id}')" class="w-full bg-wassersNavy text-white text-xs md:text-sm font-bold py-3 rounded-full shadow hover:bg-wassersGold hover:shadow-md transition flex items-center justify-center uppercase tracking-wider">
+                Add to Cart
               </button>
             </div>
           </div>
@@ -206,15 +192,15 @@
       const totalEl = document.getElementById("cart-total");
       const countEl = document.getElementById("header-cart-count");
       
-      // Update global badges
       const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
       countEl.textContent = totalItems;
       
       if (cart.length === 0) {
         container.innerHTML = `
-          <div class="flex flex-col items-center justify-center h-full text-gray-400 mt-10">
-            <i class="fas fa-shopping-cart text-5xl mb-4 opacity-50"></i>
-            <p class="text-sm font-semibold">Your cart is empty</p>
+          <div class="flex flex-col items-center justify-center h-full text-gray-400 mt-20">
+            <i class="fas fa-shopping-cart text-6xl mb-6 opacity-30 text-wassersNavy"></i>
+            <p class="text-base font-bold text-wassersNavy">Your cart is empty.</p>
+            <p class="text-sm mt-2 text-center">Looks like you haven't added any premium hydration yet.</p>
           </div>
         `;
         totalEl.textContent = "₹0.00";
@@ -226,29 +212,26 @@
         const lineTotal = item.price * item.qty;
         subtotal += lineTotal;
         return `
-          <div class="bg-pureWhite rounded-xl border border-borderGray p-3 shadow-sm flex items-center gap-3">
-            <div class="w-16 h-16 bg-bgGray rounded-lg flex items-center justify-center p-1 shrink-0">
-              <img src="${item.image}" class="max-h-full object-contain" onerror="this.outerHTML='<i class=\\'fas fa-image text-gray-300\\'></i>'">
+          <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm flex items-center gap-4">
+            <div class="w-16 h-16 bg-white border border-gray-100 rounded-md flex items-center justify-center p-2 shrink-0">
+              <img src="${item.image}" class="max-h-full object-contain" onerror="this.outerHTML='<i class=\\'fas fa-image text-gray-200\\'></i>'">
             </div>
             <div class="flex-1 min-w-0">
-              <h4 class="text-xs font-bold text-wassersNavy truncate">${item.title}</h4>
-              <p class="text-[10px] text-gray-500 mb-1">${item.desc}</p>
-              <p class="text-sm font-black text-wassersGold">₹${lineTotal}.00</p>
+              <h4 class="text-sm font-bold text-wassersNavy truncate">${item.title}</h4>
+              <p class="text-xs text-gray-500 mb-2">${item.desc}</p>
+              <p class="text-sm font-black text-wassersGold">₹${lineTotal.toFixed(2)}</p>
             </div>
-            <!-- Cart Item Qty Controls -->
-            <div class="flex flex-col items-center border border-borderGray rounded-full bg-bgGray">
-              <button onclick="changeCartItemQty(${idx}, 1)" class="w-6 h-6 flex items-center justify-center text-wassersNavy"><i class="fas fa-plus text-[8px]"></i></button>
-              <span class="text-xs font-bold w-6 text-center py-1">${item.qty}</span>
-              <button onclick="changeCartItemQty(${idx}, -1)" class="w-6 h-6 flex items-center justify-center text-wassersNavy"><i class="fas fa-minus text-[8px]"></i></button>
+            <div class="flex flex-col items-center border border-gray-300 rounded-md bg-white">
+              <button onclick="changeCartItemQty(${idx}, 1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded-t"><i class="fas fa-plus text-[10px]"></i></button>
+              <span class="text-xs font-bold w-full text-center py-1 text-wassersNavy border-y border-gray-200">${item.qty}</span>
+              <button onclick="changeCartItemQty(${idx}, -1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded-b"><i class="fas fa-minus text-[10px]"></i></button>
             </div>
           </div>
         `;
       }).join('');
       
-      totalEl.textContent = `₹${subtotal}.00`;
+      totalEl.textContent = `₹${subtotal.toFixed(2)}`;
     }
-
-    // --- LOGIC FUNCTIONS ---
 
     function updateCardQty(productId, delta) {
       if (cardQuantities[productId] + delta > 0) {
@@ -260,18 +243,11 @@
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
       const qtyToAdd = cardQuantities[productId];
-      
       const existing = cart.find(item => item.id === productId);
-      if (existing) {
-        existing.qty += qtyToAdd;
-      } else {
-        cart.push({ ...product, qty: qtyToAdd });
-      }
+      if (existing) { existing.qty += qtyToAdd; } else { cart.push({ ...product, qty: qtyToAdd }); }
       
-      // Reset card qty back to 1 after adding
       cardQuantities[productId] = 1;
       document.getElementById(`qty-disp-${productId}`).textContent = 1;
-      
       saveCart();
       showToast(`${qtyToAdd} x ${product.title} added`);
     }
@@ -284,34 +260,23 @@
       }
     }
 
-    function saveCart() {
-      localStorage.setItem("wassers_cart", JSON.stringify(cart));
-      renderCartDrawer();
-    }
-
-    // --- UI UTILS ---
+    function saveCart() { localStorage.setItem("wassers_cart", JSON.stringify(cart)); renderCartDrawer(); }
 
     function toggleCart() {
       const drawer = document.getElementById('cart-drawer');
       const overlay = document.getElementById('cart-overlay');
       if (drawer.classList.contains('open')) {
-        drawer.classList.remove('open');
-        overlay.classList.add('hidden');
+        drawer.classList.remove('open'); overlay.classList.add('hidden');
       } else {
-        drawer.classList.add('open');
-        overlay.classList.remove('hidden');
-        renderCartDrawer();
+        drawer.classList.add('open'); overlay.classList.remove('hidden'); renderCartDrawer();
       }
     }
 
     let toastTimer;
     function showToast(message) {
       const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.remove('hidden');
-      // small delay to allow display block to apply before animating opacity
+      toast.textContent = message; toast.classList.remove('hidden');
       setTimeout(() => toast.classList.remove('opacity-0'), 10);
-      
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => {
         toast.classList.add('opacity-0');
@@ -321,14 +286,10 @@
 
     function startCheckout() {
       if(cart.length === 0) return alert("Your cart is empty.");
-      alert("Redirecting to Razorpay secure checkout...");
+      alert("Redirecting to secure checkout...");
     }
 
-    // Initialize
-    window.onload = () => {
-      renderProductGrid();
-      renderCartDrawer();
-    };
+    window.onload = () => { renderProductGrid(); renderCartDrawer(); };
   </script>
 </body>
 </html>
