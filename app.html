@@ -3,259 +3,221 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Wassers &amp; Co. | App</title>
+  <title>Wassers & Co. | Clean Water, Clear Promise</title>
   <link rel="manifest" href="manifest.json">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdaFfg4SsMOWuK4mU5d_2oNX-FwQT5rgU"></script>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
+  
   <script>
     tailwind.config = {
       theme: {
-        extend: {
-          colors: {
-            wassersGold: '#D4AF37',
+        extend: { 
+          colors: { 
+            wassersNavy: '#0A192F', 
+            wassersGold: '#C5A059',
+            wassersBlue: '#00B4D8',
             pureWhite: '#FFFFFF',
-            lightGray: '#F3F4F6',
-            charcoal: '#1F2937',
-            maiBlue: '#E0F2FE'
+            bgGray: '#F8F9FA',
+            borderGray: '#E5E7EB'
+          },
+          fontFamily: {
+            sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
           }
         }
       }
     }
   </script>
   <style>
-    body::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .snap-x-mandatory { scroll-snap-type: x mandatory; }
-    .snap-center { scroll-snap-align: center; }
+    body { background-color: #F8F9FA; -webkit-tap-highlight-color: transparent; }
+    /* Hide scrollbar for a native app feel */
+    ::-webkit-scrollbar { display: none; }
+    
+    /* Modern smooth slide-in for the cart */
+    .cart-drawer { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+    .cart-drawer.open { transform: translateX(0); }
+    
+    /* Quantity Input Styling */
+    input[type="number"]::-webkit-inner-spin-button, 
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   </style>
 </head>
-<body class="bg-lightGray text-charcoal font-sans pb-24 selection:bg-wassersGold selection:text-white">
+<body class="text-gray-800 pb-20 selection:bg-wassersGold selection:text-white">
 
-  <!-- HEADER -->
-  <header class="sticky top-0 z-50 bg-pureWhite/95 backdrop-blur-md border-b border-gray-200 p-4 shadow-sm">
-    <div class="flex justify-between items-center">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 bg-maiBlue rounded-full flex items-center justify-center border border-blue-200">
-          <i class="fas fa-user text-blue-500"></i>
-        </div>
-        <div>
-          <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Deliver To</p>
-          <p class="text-sm font-bold flex items-center text-charcoal">
-            Surat, Gujarat <i class="fas fa-chevron-down ml-1 text-xs text-wassersGold"></i>
-          </p>
-        </div>
+  <!-- TOP APP HEADER -->
+  <header class="sticky top-0 z-40 bg-pureWhite border-b border-borderGray shadow-sm px-4 py-3 flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+      <button class="text-wassersNavy text-xl focus:outline-none">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="flex flex-col">
+        <h1 class="text-lg font-black text-wassersNavy tracking-tight leading-none uppercase">Wassers & Co.</h1>
+        <span class="text-[9px] text-gray-500 font-semibold tracking-wider">Clean Water, Clear Promise</span>
       </div>
-      <div class="flex items-center space-x-3">
-        <button type="button" onclick="document.getElementById('checkout-box').scrollIntoView({behavior:'smooth'})" class="relative text-charcoal hover:text-wassersGold cursor-pointer" aria-label="View Cart">
-          <i class="fas fa-shopping-cart text-lg"></i>
-          <span id="app-cart-badge" class="absolute -top-2 -right-2 bg-wassersGold text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
-        </button>
-        <a href="index.html" class="text-xs font-bold text-gray-500 hover:text-charcoal"><i class="fas fa-home"></i> Main Site</a>
-      </div>
+    </div>
+    <div class="flex items-center space-x-4">
+      <button class="text-wassersNavy focus:outline-none"><i class="fas fa-search"></i></button>
+      <button onclick="toggleCart()" class="text-wassersNavy relative focus:outline-none">
+        <i class="fas fa-shopping-cart text-xl"></i>
+        <span id="header-cart-count" class="absolute -top-1.5 -right-2 bg-wassersGold text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border border-white">0</span>
+      </button>
     </div>
   </header>
 
-  <main id="app-container" class="max-w-2xl mx-auto">
+  <!-- PROMO BANNER -->
+  <div class="bg-wassersNavy px-4 py-3 flex items-center justify-between">
+    <div class="text-white">
+      <p class="text-xs font-semibold uppercase tracking-wider text-wassersGold mb-0.5">Subscribe & Save</p>
+      <p class="text-[10px] opacity-90">Get automated weekly deliveries in Surat.</p>
+    </div>
+    <button class="bg-wassersGold text-wassersNavy text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
+      Plans
+    </button>
+  </div>
 
-    <!-- 1. SHOP & CHECKOUT TAB -->
-    <section id="tab-home" class="tab-content active p-4">
-      <div class="flex overflow-x-auto snap-x-mandatory no-scrollbar space-x-4 mb-6 pb-2">
-        <div class="min-w-[90%] snap-center bg-pureWhite p-5 rounded-2xl border border-gray-200 relative overflow-hidden shadow-md">
-          <div class="absolute right-[-20px] bottom-[-20px] opacity-10"><i class="fas fa-tint text-9xl text-blue-500"></i></div>
-          <h3 class="text-xl font-bold text-charcoal mb-1">Subscribe &amp; Save</h3>
-          <p class="text-sm text-gray-500 mb-4">Get 20L capsules delivered weekly across Surat.</p>
-          <a href="#checkout-box" class="inline-block bg-wassersGold text-white text-xs font-bold py-2 px-4 rounded-full shadow-md">Order Now</a>
-        </div>
-      </div>
+  <!-- MAIN PRODUCT GRID -->
+  <main class="p-3">
+    <!-- Category Tabs -->
+    <div class="flex overflow-x-auto space-x-2 mb-4 pb-1">
+      <button class="bg-wassersNavy text-white text-xs font-bold px-5 py-2 rounded-full whitespace-nowrap shadow-sm">All Products</button>
+      <button class="bg-white border border-borderGray text-gray-600 text-xs font-semibold px-5 py-2 rounded-full whitespace-nowrap shadow-sm">20L Capsules</button>
+      <button class="bg-white border border-borderGray text-gray-600 text-xs font-semibold px-5 py-2 rounded-full whitespace-nowrap shadow-sm">PET Bottles</button>
+    </div>
 
-      <h3 class="text-lg font-bold mb-3 text-charcoal">Quick Order</h3>
-      <div class="grid grid-cols-2 gap-4 mb-8">
-
-        <!-- 20L Capsule -->
-        <div class="bg-pureWhite rounded-2xl p-3 border border-gray-200 flex flex-col justify-between shadow-sm">
-          <div class="h-32 flex items-center justify-center mb-2 bg-gray-50 rounded-xl p-2 border border-gray-100">
-            <img src="./WOM20L.png" alt="20L Capsule" class="max-h-full object-contain drop-shadow-md" onerror="this.outerHTML='<i class=\'fas fa-prescription-bottle text-5xl text-blue-400\'></i>'">
-          </div>
-          <div>
-            <h4 class="text-sm font-bold leading-tight mb-1 text-charcoal">20L Capsule</h4>
-            <p class="text-[11px] text-gray-500 font-medium mb-2 uppercase tracking-wide">1 Jar (20L)</p>
-            <div class="flex justify-between items-center mt-2">
-              <span class="text-lg font-bold text-charcoal">₹80</span>
-              <button type="button" onclick="window.appAddToCart('20l-capsule', '20L Capsule', '1 Jar (20L)', 80, './WOM20L.png')" class="bg-wassersGold w-8 h-8 rounded-full flex items-center justify-center text-white shadow-md hover:scale-105 transition cursor-pointer">
-                <i class="fas fa-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- EasyFlow 1L -->
-        <div class="bg-pureWhite rounded-2xl p-3 border border-gray-200 flex flex-col justify-between shadow-sm">
-          <div class="h-32 flex items-center justify-center mb-2 bg-gray-50 rounded-xl p-2 border border-gray-100">
-            <img src="./WASSERS%20%26%20CO.%20-%20EasyFlow%201L%20-%20Pure%20Hydration.png" alt="EasyFlow 1L" class="max-h-full object-contain drop-shadow-md" onerror="this.outerHTML='<i class=\'fas fa-wine-bottle text-5xl text-blue-300\'></i>'">
-          </div>
-          <div>
-            <h4 class="text-sm font-bold leading-tight mb-1 text-charcoal">EasyFlow 1L</h4>
-            <p class="text-[11px] text-gray-500 font-medium mb-2 uppercase tracking-wide">Case of 12 Bottles</p>
-            <div class="flex justify-between items-center mt-2">
-              <span class="text-lg font-bold text-charcoal">₹180</span>
-              <button type="button" onclick="window.appAddToCart('easyflow-1l', 'EasyFlow 1L', 'Case of 12 Bottles', 180, './WASSERS & CO. - EasyFlow 1L - Pure Hydration.png')" class="bg-wassersGold w-8 h-8 rounded-full flex items-center justify-center text-white shadow-md hover:scale-105 transition cursor-pointer">
-                <i class="fas fa-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- HydroEase 500 ML -->
-        <div class="bg-pureWhite rounded-2xl p-3 border border-gray-200 flex flex-col justify-between shadow-sm">
-          <div class="h-32 flex items-center justify-center mb-2 bg-gray-50 rounded-xl p-2 border border-gray-100">
-            <img src="./WASSER%20HydroEase%20500%20ML%20-%20Refreshment%20Redefined.png" alt="HydroEase 500 ML" class="max-h-full object-contain drop-shadow-md" onerror="this.outerHTML='<i class=\'fas fa-wine-bottle text-5xl text-blue-300\'></i>'">
-          </div>
-          <div>
-            <h4 class="text-sm font-bold leading-tight mb-1 text-charcoal">HydroEase 500 ML</h4>
-            <p class="text-[11px] text-gray-500 font-medium mb-2 uppercase tracking-wide">Case of 24 Bottles</p>
-            <div class="flex justify-between items-center mt-2">
-              <span class="text-lg font-bold text-charcoal">₹220</span>
-              <button type="button" onclick="window.appAddToCart('hydroease-500ml', 'HydroEase 500 ML', 'Case of 24 Bottles', 220, './WASSER HydroEase 500 ML - Refreshment Redefined.png')" class="bg-wassersGold w-8 h-8 rounded-full flex items-center justify-center text-white shadow-md hover:scale-105 transition cursor-pointer">
-                <i class="fas fa-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- MiniSip 200 ML -->
-        <div class="bg-pureWhite rounded-2xl p-3 border border-gray-200 flex flex-col justify-between shadow-sm">
-          <div class="h-32 flex items-center justify-center mb-2 bg-gray-50 rounded-xl p-2 border border-gray-100">
-            <img src="./WASSER%20MiniSip%20200%20ML%20-%20Refreshment%20in%20Every%20Drop.png" alt="MiniSip 200 ML" class="max-h-full object-contain drop-shadow-md" onerror="this.outerHTML='<i class=\'fas fa-wine-bottle text-5xl text-blue-300\'></i>'">
-          </div>
-          <div>
-            <h4 class="text-sm font-bold leading-tight mb-1 text-charcoal">MiniSip 200 ML</h4>
-            <p class="text-[11px] text-gray-500 font-medium mb-2 uppercase tracking-wide">Case of 35 Bottles</p>
-            <div class="flex justify-between items-center mt-2">
-              <span class="text-lg font-bold text-charcoal">₹210</span>
-              <button type="button" onclick="window.appAddToCart('minisip-200ml', 'MiniSip 200 ML', 'Case of 35 Bottles', 210, './WASSER MiniSip 200 ML - Refreshment in Every Drop.png')" class="bg-wassersGold w-8 h-8 rounded-full flex items-center justify-center text-white shadow-md hover:scale-105 transition cursor-pointer">
-                <i class="fas fa-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- CART & DELIVERY CHECKOUT BOX -->
-      <div id="checkout-box" class="bg-pureWhite rounded-3xl p-5 border border-gray-200 shadow-md">
-        <div class="flex justify-between items-center border-b border-gray-100 pb-3 mb-4">
-          <h3 class="text-lg font-black text-charcoal uppercase">Your Order Cart</h3>
-          <span id="checkout-total" class="text-xl font-black text-wassersGold">₹0</span>
-        </div>
-
-        <div id="checkout-items" class="space-y-3 mb-5"></div>
-
-        <form id="order-form" class="space-y-3">
-          <div>
-            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Full Name / Shop Name *</label>
-            <input id="cust-name" type="text" required placeholder="e.g., Rameshbhai / Krishna Traders" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-wassersGold">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Mobile Number *</label>
-            <input id="cust-phone" type="tel" required placeholder="10-digit mobile number" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-wassersGold">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Delivery Address (Surat) *</label>
-            <textarea id="cust-address" rows="2" required placeholder="Shop/Flat No., Building, Area (e.g., Varachha, Begampura, Ring Road)" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-wassersGold"></textarea>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Payment Mode</label>
-            <select id="payment-method" class="w-full border border-gray-300 rounded-xl px-3.5 py-2.5 text-sm bg-white focus:outline-none focus:border-wassersGold">
-              <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-              <option value="UPI on Delivery">UPI on Delivery</option>
-            </select>
-          </div>
-          <button id="place-order-btn" type="submit" class="w-full bg-wassersGold text-white font-bold py-3.5 rounded-full shadow-lg hover:opacity-95 transition cursor-pointer mt-2">
-            Confirm &amp; Place Order
-          </button>
-        </form>
-      </div>
-    </section>
-
-    <!-- 2. TRACK TAB -->
-    <section id="tab-track" class="tab-content p-4">
-      <div class="bg-pureWhite rounded-t-3xl p-5 border border-b-0 border-gray-200 shadow-sm">
-        <h2 class="text-xl font-bold text-charcoal">Live Delivery</h2>
-        <p class="text-sm text-gray-500" id="vehicle-info">Locating your delivery...</p>
-      </div>
-      <div id="map" class="w-full h-[450px] bg-gray-200 flex items-center justify-center text-gray-600 border-x border-gray-200">
-        Loading Secure Map...
-      </div>
-      <div class="bg-pureWhite rounded-b-3xl p-5 border border-t-0 border-gray-200 flex items-center justify-between shadow-md">
-        <div class="flex items-center">
-          <div class="w-12 h-12 bg-maiBlue rounded-full flex items-center justify-center border-2 border-blue-200"><i class="fas fa-user text-blue-500"></i></div>
-          <div class="ml-3">
-            <p class="font-bold text-charcoal">Rahul (Rider)</p>
-            <p class="text-xs text-green-600 font-semibold">Live on map</p>
-          </div>
-        </div>
-        <a href="tel:+918469277377" class="bg-green-500 w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg"><i class="fas fa-phone"></i></a>
-      </div>
-    </section>
-
-    <!-- 3. WALLET TAB -->
-    <section id="tab-wallet" class="tab-content p-4">
-      <div class="bg-pureWhite rounded-3xl p-6 border border-gray-200 shadow-md relative overflow-hidden mb-6">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-wassersGold/10 rounded-full blur-2xl"></div>
-        <p class="text-gray-500 text-sm mb-1 font-semibold">Wassers Balance</p>
-        <h2 class="text-4xl font-bold text-charcoal mb-6">₹0.00</h2>
-        <button type="button" onclick="startRazorpayPayment(500)" class="w-full bg-wassersGold text-white font-bold py-3 rounded-xl shadow-lg cursor-pointer">Top Up Wallet via UPI</button>
-      </div>
-    </section>
-
+    <!-- Product Grid Container (Injected via JS) -->
+    <div id="product-grid" class="grid grid-cols-2 gap-3">
+      <!-- Products will render here -->
+    </div>
   </main>
 
   <!-- BOTTOM NAVIGATION BAR -->
-  <nav class="fixed bottom-0 w-full bg-pureWhite/95 backdrop-blur-lg border-t border-gray-200 flex justify-around py-3 z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
-    <button type="button" onclick="window.switchTab('tab-home')" class="nav-btn w-16 flex flex-col items-center justify-center text-wassersGold transition cursor-pointer">
-      <i class="fas fa-store text-xl mb-1"></i><span class="text-[10px] font-bold">Shop</span>
+  <nav class="fixed bottom-0 w-full bg-pureWhite border-t border-borderGray flex justify-around py-2 pb-safe z-30 shadow-[0_-2px_10px_rgba(0,0,0,0.03)]">
+    <button class="w-16 flex flex-col items-center justify-center text-wassersNavy">
+      <i class="fas fa-store text-lg mb-1"></i><span class="text-[9px] font-bold">Shop</span>
     </button>
-    <button type="button" onclick="window.switchTab('tab-track')" class="nav-btn w-16 flex flex-col items-center justify-center text-gray-400 hover:text-wassersGold transition cursor-pointer">
-      <i class="fas fa-route text-xl mb-1"></i><span class="text-[10px] font-bold">Track</span>
+    <a href="track.html" class="w-16 flex flex-col items-center justify-center text-gray-400 hover:text-wassersNavy transition">
+      <i class="fas fa-route text-lg mb-1"></i><span class="text-[9px] font-bold">Track</span>
+    </a>
+    <button class="w-16 flex flex-col items-center justify-center text-gray-400 hover:text-wassersNavy transition">
+      <i class="fas fa-wallet text-lg mb-1"></i><span class="text-[9px] font-bold">Wallet</span>
     </button>
-    <button type="button" onclick="window.switchTab('tab-wallet')" class="nav-btn w-16 flex flex-col items-center justify-center text-gray-400 hover:text-wassersGold transition cursor-pointer">
-      <i class="fas fa-wallet text-xl mb-1"></i><span class="text-[10px] font-bold">Wallet</span>
+    <button class="w-16 flex flex-col items-center justify-center text-gray-400 hover:text-wassersNavy transition">
+      <i class="fas fa-user text-lg mb-1"></i><span class="text-[9px] font-bold">Account</span>
     </button>
   </nav>
 
-  <!-- FIREBASE & CART CHECKOUT SCRIPT -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, onSnapshot, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import { firebaseConfig } from "./config.js";
+  <!-- SLIDE-IN CART DRAWER -->
+  <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-wassersNavy/40 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <aside id="cart-drawer" class="cart-drawer fixed right-0 top-0 h-full w-[85%] max-w-sm bg-pureWhite shadow-2xl z-50 flex flex-col">
+    <!-- Cart Header -->
+    <div class="px-4 py-4 border-b border-borderGray flex justify-between items-center bg-wassersNavy text-white">
+      <h3 class="text-lg font-bold tracking-wide uppercase flex items-center"><i class="fas fa-shopping-cart mr-2"></i> Your Cart</h3>
+      <button onclick="toggleCart()" class="text-white hover:text-wassersGold text-xl focus:outline-none">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <!-- Cart Items Area -->
+    <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4 bg-bgGray">
+      <!-- Items inject here -->
+    </div>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    <!-- Cart Footer -->
+    <div class="p-4 border-t border-borderGray bg-pureWhite">
+      <div class="flex justify-between items-center mb-4 text-wassersNavy">
+        <span class="font-bold text-sm uppercase">Total (Incl. GST)</span>
+        <span id="cart-total" class="text-xl font-black text-wassersGold">₹0</span>
+      </div>
+      <button onclick="startCheckout()" class="w-full bg-wassersNavy text-white font-bold py-3.5 rounded-full shadow-md flex items-center justify-center space-x-2 active:scale-95 transition-transform">
+        <span>Proceed to Checkout</span> <i class="fas fa-arrow-right text-sm"></i>
+      </button>
+      <p class="text-[10px] text-center text-gray-400 mt-3"><i class="fas fa-lock text-wassersGold mr-1"></i> Secure Payment via Razorpay</p>
+    </div>
+  </aside>
 
-    // Sync with localStorage cart shared with index.html
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed top-16 left-1/2 transform -translate-x-1/2 bg-wassersNavy text-white px-6 py-2 rounded-full shadow-lg text-xs font-bold border border-wassersGold z-50 hidden opacity-0 transition-opacity duration-300 pointer-events-none">
+    Item added to cart
+  </div>
+
+  <!-- JAVASCRIPT FOR LOGIC -->
+  <script>
+    // 1. Define Products (Using your exact names and prices)
+    const products = [
+      { id: "20l-capsule", title: "20L Water Capsule", desc: "Refill / Exchange Jar", price: 80, image: "icons/wassers-20L.png" },
+      { id: "easyflow-1l", title: "EasyFlow 1L", desc: "Case of 12 PET Bottles", price: 180, image: "icons/wassers-1L.png" },
+      { id: "hydroease-500ml", title: "HydroEase 500 ML", desc: "Case of 24 PET Bottles", price: 220, image: "icons/wassers-500ml.png" },
+      { id: "minisip-200ml", title: "MiniSip 200 ML", desc: "Case of 35 PET Bottles", price: 210, image: "icons/wassers-200ml.png" }
+    ];
+
+    // Local state for product card quantity selectors
+    const cardQuantities = {};
+    products.forEach(p => cardQuantities[p.id] = 1);
+
+    // Global Cart State
     let cart = JSON.parse(localStorage.getItem("wassers_cart")) || [];
 
-    function saveAndRenderCart() {
-      localStorage.setItem("wassers_cart", JSON.stringify(cart));
-      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-      const badge = document.getElementById("app-cart-badge");
-      if (badge) badge.textContent = totalQty;
+    // --- UI RENDERING ---
 
-      const container = document.getElementById("checkout-items");
-      const totalEl = document.getElementById("checkout-total");
-      if (!container || !totalEl) return;
+    function renderProductGrid() {
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = products.map(product => {
+        const currentQty = cardQuantities[product.id];
+        return `
+          <div class="bg-pureWhite rounded-xl border border-borderGray p-3 shadow-sm flex flex-col justify-between h-full">
+            <!-- Product Image -->
+            <div class="h-32 mb-2 flex items-center justify-center p-2">
+              <img src="${product.image}" alt="${product.title}" class="max-h-full max-w-full object-contain drop-shadow-md" onerror="this.outerHTML='<i class=\\'fas fa-prescription-bottle text-5xl text-gray-300\\'></i>'">
+            </div>
+            
+            <!-- Product Info -->
+            <div class="mb-3 flex-1 flex flex-col">
+              <h3 class="text-xs font-bold text-wassersNavy leading-tight mb-1">${product.title}</h3>
+              <p class="text-[10px] text-gray-500 mb-2">${product.desc}</p>
+              <div class="mt-auto">
+                <span class="text-sm font-black text-wassersNavy">₹${product.price}.00</span>
+              </div>
+            </div>
+            
+            <!-- Masafi Style Action Area (Qty + Add Button) -->
+            <div class="flex flex-col space-y-2 mt-auto">
+              <!-- Qty Selector -->
+              <div class="flex items-center justify-between border border-borderGray rounded-full p-1 bg-bgGray">
+                <button onclick="updateCardQty('${product.id}', -1)" class="w-7 h-7 flex items-center justify-center text-gray-600 rounded-full hover:bg-gray-200 focus:outline-none">
+                  <i class="fas fa-minus text-[10px]"></i>
+                </button>
+                <span id="qty-disp-${product.id}" class="text-xs font-bold text-wassersNavy">${currentQty}</span>
+                <button onclick="updateCardQty('${product.id}', 1)" class="w-7 h-7 flex items-center justify-center text-gray-600 rounded-full hover:bg-gray-200 focus:outline-none">
+                  <i class="fas fa-plus text-[10px]"></i>
+                </button>
+              </div>
+              
+              <!-- Add to Cart Pill -->
+              <button onclick="addToCart('${product.id}')" class="w-full bg-wassersNavy text-pureWhite text-xs font-bold py-2.5 rounded-full shadow-md active:bg-wassersGold transition-colors flex items-center justify-center space-x-1">
+                <i class="fas fa-shopping-bag mr-1"></i> <span>Add to Cart</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
 
+    function renderCartDrawer() {
+      const container = document.getElementById("cart-items");
+      const totalEl = document.getElementById("cart-total");
+      const countEl = document.getElementById("header-cart-count");
+      
+      // Update global badges
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      countEl.textContent = totalItems;
+      
       if (cart.length === 0) {
-        container.innerHTML = `<p class="text-sm text-gray-500 py-3">Your cart is empty. Tap <strong>+</strong> on any product above or <a href="index.html#products" class="text-wassersGold font-bold underline">browse products</a>.</p>`;
-        totalEl.textContent = "₹0";
+        container.innerHTML = `
+          <div class="flex flex-col items-center justify-center h-full text-gray-400 mt-10">
+            <i class="fas fa-shopping-cart text-5xl mb-4 opacity-50"></i>
+            <p class="text-sm font-semibold">Your cart is empty</p>
+          </div>
+        `;
+        totalEl.textContent = "₹0.00";
         return;
       }
 
@@ -264,175 +226,109 @@
         const lineTotal = item.price * item.qty;
         subtotal += lineTotal;
         return `
-          <div class="flex items-center justify-between border border-gray-100 bg-gray-50 rounded-2xl p-2.5 gap-3">
-            <img src="${encodeURI(item.image || './WOM20L.png')}" alt="${item.productName}" class="w-12 h-12 object-contain bg-white rounded-xl p-1 shrink-0" onerror="this.src='./WOM20L.png'">
-            <div class="flex-1 min-w-0">
-              <p class="font-bold text-sm text-charcoal truncate">${item.productName}</p>
-              <p class="text-xs text-gray-500">${item.variantName} • ₹${item.price} each</p>
+          <div class="bg-pureWhite rounded-xl border border-borderGray p-3 shadow-sm flex items-center gap-3">
+            <div class="w-16 h-16 bg-bgGray rounded-lg flex items-center justify-center p-1 shrink-0">
+              <img src="${item.image}" class="max-h-full object-contain" onerror="this.outerHTML='<i class=\\'fas fa-image text-gray-300\\'></i>'">
             </div>
-            <div class="flex items-center space-x-2">
-              <button type="button" onclick="window.appChangeQty(${idx}, -1)" class="w-7 h-7 rounded-full bg-white border border-gray-300 font-bold text-sm hover:border-wassersGold cursor-pointer">-</button>
-              <span class="text-sm font-bold w-4 text-center">${item.qty}</span>
-              <button type="button" onclick="window.appChangeQty(${idx}, 1)" class="w-7 h-7 rounded-full bg-white border border-gray-300 font-bold text-sm hover:border-wassersGold cursor-pointer">+</button>
+            <div class="flex-1 min-w-0">
+              <h4 class="text-xs font-bold text-wassersNavy truncate">${item.title}</h4>
+              <p class="text-[10px] text-gray-500 mb-1">${item.desc}</p>
+              <p class="text-sm font-black text-wassersGold">₹${lineTotal}.00</p>
+            </div>
+            <!-- Cart Item Qty Controls -->
+            <div class="flex flex-col items-center border border-borderGray rounded-full bg-bgGray">
+              <button onclick="changeCartItemQty(${idx}, 1)" class="w-6 h-6 flex items-center justify-center text-wassersNavy"><i class="fas fa-plus text-[8px]"></i></button>
+              <span class="text-xs font-bold w-6 text-center py-1">${item.qty}</span>
+              <button onclick="changeCartItemQty(${idx}, -1)" class="w-6 h-6 flex items-center justify-center text-wassersNavy"><i class="fas fa-minus text-[8px]"></i></button>
             </div>
           </div>
         `;
-      }).join("");
-
-      totalEl.textContent = `₹${subtotal}`;
+      }).join('');
+      
+      totalEl.textContent = `₹${subtotal}.00`;
     }
 
-    window.appAddToCart = function(productId, productName, variantName, price, image) {
-      const existing = cart.find(i => i.productId === productId && i.variantName === variantName);
+    // --- LOGIC FUNCTIONS ---
+
+    function updateCardQty(productId, delta) {
+      if (cardQuantities[productId] + delta > 0) {
+        cardQuantities[productId] += delta;
+        document.getElementById(`qty-disp-${productId}`).textContent = cardQuantities[productId];
+      }
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      const qtyToAdd = cardQuantities[productId];
+      
+      const existing = cart.find(item => item.id === productId);
       if (existing) {
-        existing.qty += 1;
+        existing.qty += qtyToAdd;
       } else {
-        cart.push({ productId, productName, variantName, price, image, qty: 1 });
+        cart.push({ ...product, qty: qtyToAdd });
       }
-      saveAndRenderCart();
-    };
-
-    window.appChangeQty = function(idx, delta) {
-      if (!cart[idx]) return;
-      cart[idx].qty += delta;
-      if (cart[idx].qty <= 0) {
-        cart.splice(idx, 1);
-      }
-      saveAndRenderCart();
-    };
-
-    // Submit order to Firestore "orders" collection
-    document.getElementById("order-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (cart.length === 0) {
-        alert("Please add at least one product to your cart first.");
-        return;
-      }
-
-      const btn = document.getElementById("place-order-btn");
-      btn.disabled = true;
-      btn.textContent = "Placing Order...";
-
-      const customerName = document.getElementById("cust-name").value.trim();
-      const customerPhone = document.getElementById("cust-phone").value.trim();
-      const address = document.getElementById("cust-address").value.trim();
-      const paymentMethod = document.getElementById("payment-method").value;
-      const totalAmount = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-
-      try {
-        const orderRef = await addDoc(collection(db, "orders"), {
-          customerId: auth.currentUser ? auth.currentUser.uid : "guest",
-          customerName,
-          customerPhone,
-          address,
-          lat: 21.1702,
-          lng: 72.8311,
-          items: cart,
-          totalAmount,
-          paymentMethod,
-          paymentStatus: "Pending",
-          assignedRiderId: "maruti_eeco_01",
-          status: "Pending",
-          riderLiveLocation: null,
-          createdAt: serverTimestamp()
-        });
-
-        cart = [];
-        saveAndRenderCart();
-        document.getElementById("order-form").reset();
-        alert(`Order confirmed! Your Order ID is ${orderRef.id}. You can track your delivery in the Track tab.`);
-        window.switchTab("tab-track");
-      } catch (error) {
-        console.error("Firestore Order Error:", error);
-        alert("Could not save order: " + error.message);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Confirm & Place Order";
-      }
-    });
-
-    // Tab switching
-    window.switchTab = function(tabId) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('text-wassersGold');
-        btn.classList.add('text-gray-400');
-      });
-
-      const activeBtn = document.querySelector(`button[onclick="window.switchTab('${tabId}')"]`);
-      if (activeBtn) {
-        activeBtn.classList.remove('text-gray-400');
-        activeBtn.classList.add('text-wassersGold');
-      }
-
-      if (tabId === 'tab-track' && !mapInitialized) {
-        initLiveMap();
-      }
-    };
-
-    let map;
-    let riderMarker;
-    let mapInitialized = false;
-
-    function initLiveMap() {
-      if (typeof google === 'undefined') {
-        document.getElementById('map').innerHTML = "Google Maps failed to load. Check API Key.";
-        return;
-      }
-
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 21.1702, lng: 72.8311 },
-        zoom: 15,
-        disableDefaultUI: true
-      });
-      mapInitialized = true;
-
-      const riderDocRef = doc(db, "active_deliveries", "maruti_eeco_01");
-      onSnapshot(riderDocRef, (docSnap) => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          if (data.riderLocation) {
-            const currentPos = { lat: data.riderLocation.latitude, lng: data.riderLocation.longitude };
-            map.panTo(currentPos);
-            if (data.vehicle) {
-              document.getElementById('vehicle-info').innerText = `Arriving in: ${data.vehicle}`;
-            }
-            if (!riderMarker) {
-              riderMarker = new google.maps.Marker({
-                position: currentPos,
-                map,
-                icon: {
-                  path: google.maps.SymbolPath.CIRCLE,
-                  scale: 10,
-                  fillColor: "#D4AF37",
-                  fillOpacity: 1,
-                  strokeWeight: 3,
-                  strokeColor: "#ffffff"
-                }
-              });
-            } else {
-              riderMarker.setPosition(currentPos);
-            }
-          }
-        }
-      });
+      
+      // Reset card qty back to 1 after adding
+      cardQuantities[productId] = 1;
+      document.getElementById(`qty-disp-${productId}`).textContent = 1;
+      
+      saveCart();
+      showToast(`${qtyToAdd} x ${product.title} added`);
     }
 
-    window.startRazorpayPayment = function(amount) {
-      alert("Payment gateway will launch for ₹" + amount);
-    };
-
-    // Initial render
-    saveAndRenderCart();
-  </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(() => console.log("Service Worker Active"));
+    function changeCartItemQty(index, delta) {
+      if (cart[index]) {
+        cart[index].qty += delta;
+        if (cart[index].qty <= 0) cart.splice(index, 1);
+        saveCart();
+      }
     }
+
+    function saveCart() {
+      localStorage.setItem("wassers_cart", JSON.stringify(cart));
+      renderCartDrawer();
+    }
+
+    // --- UI UTILS ---
+
+    function toggleCart() {
+      const drawer = document.getElementById('cart-drawer');
+      const overlay = document.getElementById('cart-overlay');
+      if (drawer.classList.contains('open')) {
+        drawer.classList.remove('open');
+        overlay.classList.add('hidden');
+      } else {
+        drawer.classList.add('open');
+        overlay.classList.remove('hidden');
+        renderCartDrawer();
+      }
+    }
+
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      // small delay to allow display block to apply before animating opacity
+      setTimeout(() => toast.classList.remove('opacity-0'), 10);
+      
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0');
+        setTimeout(() => toast.classList.add('hidden'), 300);
+      }, 2500);
+    }
+
+    function startCheckout() {
+      if(cart.length === 0) return alert("Your cart is empty.");
+      alert("Redirecting to Razorpay secure checkout...");
+    }
+
+    // Initialize
+    window.onload = () => {
+      renderProductGrid();
+      renderCartDrawer();
+    };
   </script>
 </body>
 </html>
