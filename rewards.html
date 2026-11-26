@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wassers & Co. | Pure Rewards</title>
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: { 
+          colors: { 
+            wassersNavy: '#0A192F', 
+            wassersGold: '#C5A059',
+            wassersBlue: '#00B4D8',
+            bgLight: '#F8F9FA'
+          },
+          fontFamily: {
+            sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #FFFFFF; -webkit-tap-highlight-color: transparent; }
+    ::-webkit-scrollbar { display: none; }
+    
+    /* FAQ Accordion Styling */
+    details > summary { list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] summary ~ * { animation: slideDown 0.3s ease-in-out; }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="text-gray-800 selection:bg-wassersGold selection:text-white">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm px-4 md:px-10 py-4 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <button class="md:hidden text-wassersNavy text-xl focus:outline-none"><i class="fas fa-bars"></i></button>
+      <div class="flex flex-col cursor-pointer" onclick="window.location.href='app.html'">
+        <h1 class="text-xl md:text-2xl font-black text-wassersNavy tracking-tight leading-none uppercase">Wassers & Co.</h1>
+      </div>
+    </div>
+    <div class="hidden md:flex space-x-8 text-sm font-bold text-wassersNavy">
+      <a href="app.html" class="hover:text-wassersGold transition">Shop</a>
+      <a href="#" class="text-wassersGold transition">Rewards</a>
+      <a href="track.html" class="hover:text-wassersGold transition">Track Delivery</a>
+    </div>
+    <div class="flex items-center space-x-6 text-wassersNavy">
+      <button class="hover:text-wassersGold font-bold text-sm hidden md:block">Sign In</button>
+    </div>
+  </header>
+
+  <!-- REWARDS HERO SECTION -->
+  <section class="relative bg-gradient-to-br from-wassersNavy to-[#061020] text-center pt-20 pb-32 px-4 overflow-hidden">
+    <!-- Optional: Add a lifestyle background image with opacity here -->
+    <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1547489432-cf93fa6c71ee?q=80&w=2000&auto=format&fit=crop');"></div>
+    
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <h1 class="text-3xl md:text-5xl font-black text-white uppercase tracking-wider mb-4 drop-shadow-lg">
+        Stay Hydrated.<br>Get Rewarded.
+      </h1>
+      <p class="text-wassersGold text-sm md:text-lg font-semibold mb-8 tracking-wide">
+        MORE WASSERS. MORE REWARDS FOR YOU.
+      </p>
+      <button class="bg-white text-wassersNavy font-black uppercase text-sm px-8 py-3.5 rounded-full shadow-[0_4px_14px_0_rgba(255,255,255,0.39)] hover:bg-gray-100 hover:shadow-lg transition-all flex items-center justify-center mx-auto space-x-2">
+        <span>Join Pure Rewards</span>
+        <i class="fas fa-arrow-right text-xs"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- OVERLAPPING FEATURE CARDS -->
+  <section class="relative z-20 max-w-5xl mx-auto px-4 -mt-16 mb-16">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 flex flex-col aspect-[4/5] hover:-translate-y-2 transition-transform duration-300">
+        <div class="flex-1 bg-gray-100 p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=600&auto=format&fit=crop');"></div>
+        <div class="p-3 bg-wassersNavy text-white">
+          <h3 class="text-xs md:text-sm font-bold uppercase text-wassersGold">Join</h3>
+          <p class="text-[10px] md:text-xs font-semibold">Pure Rewards</p>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 flex flex-col aspect-[4/5] hover:-translate-y-2 transition-transform duration-300">
+        <div class="flex-1 bg-gray-200 p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1550503023-eb3a3399ed61?q=80&w=600&auto=format&fit=crop');"></div>
+        <div class="p-3 bg-wassersNavy text-white">
+          <h3 class="text-xs md:text-sm font-bold uppercase text-wassersGold">Earn Points</h3>
+          <p class="text-[10px] md:text-xs font-semibold">With Every Order</p>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 flex flex-col aspect-[4/5] hover:-translate-y-2 transition-transform duration-300">
+        <div class="flex-1 bg-gray-100 p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1517502884422-41eaead166d4?q=80&w=600&auto=format&fit=crop');"></div>
+        <div class="p-3 bg-wassersNavy text-white">
+          <h3 class="text-xs md:text-sm font-bold uppercase text-wassersGold">Track</h3>
+          <p class="text-[10px] md:text-xs font-semibold">Your Live Balance</p>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 flex flex-col aspect-[4/5] hover:-translate-y-2 transition-transform duration-300">
+        <div class="flex-1 bg-gray-200 p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600&auto=format&fit=crop');"></div>
+        <div class="p-3 bg-wassersNavy text-white">
+          <h3 class="text-xs md:text-sm font-bold uppercase text-wassersGold">Redeem</h3>
+          <p class="text-[10px] md:text-xs font-semibold">For Free Water</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MID SECTION: EARNING POINTS -->
+  <section class="bg-[#FFFDF9] py-16 px-6 border-y border-gray-100 relative overflow-hidden">
+    <div class="absolute -right-20 -top-20 opacity-5">
+      <i class="fas fa-tint text-[300px] text-wassersNavy"></i>
+    </div>
+    <div class="max-w-4xl mx-auto text-center md:text-left flex flex-col md:flex-row items-center gap-10">
+      <div class="flex-1">
+        <h2 class="text-2xl md:text-4xl font-black text-wassersNavy uppercase tracking-tight mb-4">
+          Sip, Shop, Score.<br>Earning Points Made Easy!
+        </h2>
+        <p class="text-gray-600 font-medium mb-8">
+          Unlock exclusive discounts on 20L capsules and PET cases every time you hydrate with Wassers & Co.
+        </p>
+        <button class="bg-wassersNavy text-white font-bold uppercase text-sm px-8 py-3 rounded-full shadow-lg hover:bg-wassersGold transition-colors w-full md:w-auto">
+          Join Pure Rewards <i class="fas fa-arrow-right ml-2 text-xs"></i>
+        </button>
+      </div>
+      <div class="flex-1 flex justify-center">
+        <!-- Phone Mockup Placeholder -->
+        <div class="w-48 h-96 bg-white rounded-[2.5rem] border-[8px] border-gray-100 shadow-2xl flex items-center justify-center relative overflow-hidden">
+          <div class="absolute top-0 w-24 h-4 bg-gray-100 rounded-b-xl"></div>
+          <i class="fas fa-mobile-alt text-6xl text-gray-200"></i>
+          <p class="absolute bottom-10 font-bold text-wassersNavy text-sm text-center px-4">Wassers<br>App Profile</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREQUENTLY ASKED QUESTIONS -->
+  <section class="py-16 px-4 max-w-3xl mx-auto">
+    <div class="flex items-center justify-center space-x-4 mb-10">
+      <div class="h-px bg-gray-300 w-12"></div>
+      <h2 class="text-sm font-bold uppercase tracking-widest text-gray-500">Frequently Asked Questions</h2>
+      <div class="h-px bg-gray-300 w-12"></div>
+    </div>
+
+    <div class="space-y-2">
+      <!-- FAQ 1 -->
+      <details class="group border-b border-gray-200">
+        <summary class="flex justify-between items-center font-bold cursor-pointer list-none py-4 text-wassersNavy">
+          <span>1. What is Pure Rewards?</span>
+          <span class="transition group-open:rotate-45"><i class="fas fa-plus text-wassersGold"></i></span>
+        </summary>
+        <div class="text-gray-600 text-sm pb-4 px-2">
+          Pure Rewards is the official loyalty program for Wassers & Co. Earn points on every jar delivered to your home or office in Surat.
+        </div>
+      </details>
+      <!-- FAQ 2 -->
+      <details class="group border-b border-gray-200">
+        <summary class="flex justify-between items-center font-bold cursor-pointer list-none py-4 text-wassersNavy">
+          <span>2. Do I need to pay to become a member?</span>
+          <span class="transition group-open:rotate-45"><i class="fas fa-plus text-wassersGold"></i></span>
+        </summary>
+        <div class="text-gray-600 text-sm pb-4 px-2">
+          No, joining is completely free! Just create an account on our app to start earning.
+        </div>
+      </details>
+      <!-- FAQ 3 -->
+      <details class="group border-b border-gray-200">
+        <summary class="flex justify-between items-center font-bold cursor-pointer list-none py-4 text-wassersNavy">
+          <span>3. How do I earn points?</span>
+          <span class="transition group-open:rotate-45"><i class="fas fa-plus text-wassersGold"></i></span>
+        </summary>
+        <div class="text-gray-600 text-sm pb-4 px-2">
+          You earn points for every ₹1 spent on 20L capsules, 1L bottles, 500ml bottles, and 200ml mini-sips.
+        </div>
+      </details>
+      <!-- FAQ 4 -->
+      <details class="group border-b border-gray-200">
+        <summary class="flex justify-between items-center font-bold cursor-pointer list-none py-4 text-wassersNavy">
+          <span>4. How do I redeem my points?</span>
+          <span class="transition group-open:rotate-45"><i class="fas fa-plus text-wassersGold"></i></span>
+        </summary>
+        <div class="text-gray-600 text-sm pb-4 px-2">
+          During checkout, you can apply your points directly to your cart to offset the cost of your order.
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- BOTTOM HERO -->
+  <section class="bg-bgLight text-center pt-16">
+    <h2 class="text-2xl md:text-4xl font-black text-wassersNavy uppercase tracking-tight mb-6">
+      More Wassers. More Rewards.
+    </h2>
+    <button class="bg-wassersNavy text-white font-bold uppercase text-sm px-8 py-3 rounded-full shadow-lg hover:bg-wassersGold transition-colors mb-10">
+      Join Pure Rewards <i class="fas fa-arrow-right ml-2 text-xs"></i>
+    </button>
+    <div class="w-full h-64 md:h-96 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=2000&auto=format&fit=crop');"></div>
+  </section>
+
+  <!-- MASAFI STYLE FOOTER -->
+  <footer>
+    <!-- Brand Story (Light Section) -->
+    <div class="bg-bgLight py-10 px-6 md:px-12 text-center border-t border-gray-200">
+      <h2 class="text-2xl font-black text-wassersNavy italic mb-4">Wassers & Co.</h2>
+      <p class="text-gray-500 text-xs md:text-sm max-w-4xl mx-auto leading-relaxed mb-4">
+        Since our launch, Wassers & Co. has been dedicated to providing premium hydration solutions across Surat. From our signature 20L water capsules to our convenient PET range, we ensure every drop meets the highest standards of purity. 
+      </p>
+      <p class="text-gray-500 text-xs md:text-sm max-w-4xl mx-auto leading-relaxed">
+        We are committed to sustainability, service, and unparalleled quality. Thank you for making us your trusted hydration partner.
+      </p>
+    </div>
+
+    <!-- Main Footer Links (Deep Navy Section) -->
+    <div class="bg-wassersNavy text-white py-12 px-6 md:px-12">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+        
+        <!-- Address -->
+        <div>
+          <h2 class="text-2xl font-black text-wassersGold mb-6 tracking-tight">Wassers & Co.</h2>
+          <h3 class="font-bold text-sm uppercase tracking-wider mb-3">Address</h3>
+          <p class="text-gray-300 text-xs leading-relaxed mb-4">
+            Begampura<br>
+            Surat, Gujarat, India<br>
+            Toll Free: 846-WASSERS<br>
+            (846-9277377)
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Quick Links</h3>
+          <ul class="space-y-2 text-gray-300 text-xs">
+            <li><a href="#" class="hover:text-wassersGold">Home</a></li>
+            <li><a href="#" class="hover:text-wassersGold">Products</a></li>
+            <li><a href="#" class="hover:text-wassersGold">Pure Rewards</a></li>
+            <li><a href="#" class="hover:text-wassersGold">About Us</a></li>
+            <li><a href="admin.html" class="hover:text-wassersGold">Admin Login</a></li>
+          </ul>
+        </div>
+
+        <!-- Terms & Policies -->
+        <div>
+          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Terms & Policies</h3>
+          <ul class="space-y-2 text-gray-300 text-xs">
+            <li><a href="#" class="hover:text-wassersGold">Terms & Conditions</a></li>
+            <li><a href="#" class="hover:text-wassersGold">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-wassersGold">Delivery & Return Policy</a></li>
+          </ul>
+        </div>
+
+        <!-- Social & App -->
+        <div>
+          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Follow Us</h3>
+          <div class="flex space-x-4 mb-8">
+            <a href="#" class="text-white hover:text-wassersGold text-lg"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white hover:text-wassersGold text-lg"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-white hover:text-wassersGold text-lg"><i class="fab fa-whatsapp"></i></a>
+          </div>
+          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Get Wassers App</h3>
+          <div class="flex flex-col space-y-3">
+            <button class="bg-black border border-gray-700 rounded-md px-3 py-1.5 flex items-center w-32 hover:border-wassersGold transition">
+              <i class="fab fa-google-play text-xl mr-2"></i>
+              <div class="text-left">
+                <div class="text-[8px] uppercase">Get it on</div>
+                <div class="text-xs font-bold leading-tight">Google Play</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+      </div>
+      
+      <div class="mt-12 pt-6 border-t border-gray-700 text-center text-[10px] text-gray-400">
+        Copyright &copy; 2026 Wassers & Co. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
