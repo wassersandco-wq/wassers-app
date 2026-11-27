@@ -6,14 +6,12 @@
   <title>Wassers & Co. | Customer Portal</title>
   <link rel="manifest" href="manifest.json">
   
-  <!-- WhatsApp & Social Media Preview Tags (Open Graph) -->
   <meta property="og:title" content="Wassers & Co. | Premium Hydration">
   <meta property="og:description" content="Order 20L water capsules and PET bottles. Live tracking and free delivery across Surat.">
   <meta property="og:image" content="https://app.wassersand.co/icons/icon-512.png">
   <meta property="og:url" content="https://app.wassersand.co/">
   <meta property="og:type" content="website">
 
-  <!-- Apple iOS Native App Optimization -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Wassers & Co.">
@@ -59,83 +57,93 @@
     </div>
   </header>
 
-  <!-- VIEW 1: LOGIN / SIGNUP SCREEN -->
+  <!-- VIEW 1: MULTI-LOGIN SCREEN -->
   <main id="auth-view" class="max-w-md mx-auto mt-12 px-6">
     <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 text-center">
       <div class="w-20 h-20 bg-lightGray rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-white shadow-sm">
         <i class="fas fa-user-circle text-5xl text-gray-300"></i>
       </div>
       <h2 class="text-2xl font-black text-wassersNavy mb-2 uppercase tracking-tight">Welcome Back</h2>
-      <p class="text-sm text-gray-500 mb-8">Sign in to manage your orders, track deliveries, and view your Pure Rewards balance.</p>
+      <p class="text-sm text-gray-500 mb-8">Sign in to manage your orders, track deliveries, and view your Pure Rewards.</p>
       
-      <button onclick="signInWithGoogle()" class="w-full bg-white border border-gray-300 text-gray-700 font-bold py-3 rounded-full hover:bg-gray-50 transition shadow-sm flex items-center justify-center space-x-3 mb-4">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo" class="w-5 h-5">
+      <!-- Option 1: Google Login -->
+      <button onclick="window.signInWithGoogle()" class="w-full bg-white border border-gray-300 text-gray-700 font-bold py-3.5 rounded-xl hover:bg-gray-50 transition shadow-sm flex items-center justify-center space-x-3 mb-3 cursor-pointer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" class="w-5 h-5">
         <span>Continue with Google</span>
       </button>
+
+      <!-- Option 2: Phone Login (UI stub) -->
+      <button onclick="alert('Phone login requires SMS gateway setup. Please use Google or Guest login for now.')" class="w-full bg-wassersNavy text-white font-bold py-3.5 rounded-xl hover:bg-black transition shadow-sm flex items-center justify-center space-x-3 mb-6 cursor-pointer">
+        <i class="fas fa-phone-alt"></i>
+        <span>Login with Phone Number</span>
+      </button>
+
+      <div class="relative flex py-2 items-center mb-6">
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="flex-shrink-0 mx-4 text-gray-400 text-xs uppercase font-bold tracking-wider">Or</span>
+        <div class="flex-grow border-t border-gray-300"></div>
+      </div>
+
+      <!-- Option 3: Guest Login -->
+      <button onclick="window.signInAsGuest()" class="w-full bg-white border border-gray-300 text-gray-500 font-semibold py-3 rounded-xl hover:bg-gray-50 transition flex items-center justify-center space-x-2 cursor-pointer">
+        <i class="fas fa-user-secret"></i>
+        <span>Continue as Guest</span>
+      </button>
       
-      <p class="text-[10px] text-gray-400 mt-6">By signing in, you agree to our <a href="terms.html" class="underline hover:text-wassersGold">Terms</a> and <a href="privacy.html" class="underline hover:text-wassersGold">Privacy Policy</a>.</p>
+      <p class="text-[10px] text-gray-400 mt-6">By signing in, you agree to our <a href="terms.html" class="underline hover:text-wassersGold">Terms</a>.</p>
     </div>
   </main>
 
   <!-- VIEW 2: CUSTOMER DASHBOARD (Hidden until logged in) -->
   <main id="dashboard-view" class="max-w-4xl mx-auto mt-8 px-4 hidden-view">
     
-    <!-- Welcome Header -->
     <div class="bg-wassersNavy rounded-2xl shadow-lg p-6 md:p-8 flex flex-col md:flex-row items-center md:justify-between mb-8 relative overflow-hidden border-b-4 border-wassersGold">
       <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/diagonal-stripes.png')]"></div>
       <div class="relative z-10 flex items-center space-x-4 mb-4 md:mb-0">
-        <img id="user-photo" src="https://via.placeholder.com/150" alt="Profile" class="w-16 h-16 rounded-full border-2 border-wassersGold shadow-md">
+        <img id="user-photo" src="https://via.placeholder.com/150" alt="Profile" class="w-16 h-16 rounded-full border-2 border-wassersGold shadow-md bg-white">
         <div>
           <h2 class="text-2xl font-black text-white" id="user-name">Loading...</h2>
           <p class="text-sm font-semibold text-wassersGold" id="user-email">loading@gmail.com</p>
         </div>
       </div>
-      <button onclick="signOutUser()" class="relative z-10 bg-white/10 hover:bg-white/20 text-white border border-white/30 text-xs font-bold px-5 py-2 rounded-full transition">Sign Out</button>
+      <button onclick="window.signOutUser()" class="relative z-10 bg-white/10 hover:bg-white/20 text-white border border-white/30 text-xs font-bold px-5 py-2 rounded-full transition cursor-pointer">Sign Out</button>
     </div>
 
-    <!-- Dashboard Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-      
-      <!-- Rewards Balance Card -->
       <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 text-center flex flex-col justify-center">
         <i class="fas fa-star text-3xl text-wassersGold mb-3"></i>
-        <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Pure Rewards Balance</p>
+        <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Pure Rewards</p>
         <h3 class="text-4xl font-black text-wassersNavy mb-3">1,250 <span class="text-sm text-gray-400 font-medium">pts</span></h3>
         <a href="rewards.html" class="text-xs font-bold text-wassersGold hover:underline">How to redeem?</a>
       </div>
 
-      <!-- Order History Card -->
       <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 md:col-span-2">
         <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
           <h3 class="text-sm font-bold text-wassersNavy uppercase tracking-wider"><i class="fas fa-history mr-2 text-wassersGold"></i> Recent Orders</h3>
           <a href="shop.html" class="text-xs font-bold text-wassersGold hover:underline">Reorder</a>
         </div>
         
-        <!-- Live Firebase Orders Will Load Here -->
         <div id="order-history-list" class="space-y-3 overflow-y-auto max-h-48 pr-2">
           <div class="text-center py-6 text-gray-400 text-sm">
             <i class="fas fa-spinner fa-spin mr-2"></i> Loading your history...
           </div>
         </div>
       </div>
-      
     </div>
   </main>
 
   <!-- FIREBASE LOGIC -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, collection, query, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
     import { firebaseConfig } from "./config.js"; 
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const provider = new GoogleAuthProvider();
+    const googleProvider = new GoogleAuthProvider();
 
-    // DOM Elements
     const authView = document.getElementById('auth-view');
     const dashboardView = document.getElementById('dashboard-view');
     const userNameEl = document.getElementById('user-name');
@@ -143,16 +151,18 @@
     const userPhotoEl = document.getElementById('user-photo');
     const orderListEl = document.getElementById('order-history-list');
 
-    // Make functions globally available for HTML buttons
     window.signInWithGoogle = function() {
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          console.log("Logged in:", result.user);
-        })
-        .catch((error) => {
-          console.error("Login Error:", error);
-          alert("Error logging in. Please try again.");
-        });
+      signInWithPopup(auth, googleProvider).catch((error) => {
+        console.error("Login Error:", error);
+        alert("Login blocked: Please ensure 'app.wassersand.co' is added to Authorized Domains in Firebase Authentication Settings.");
+      });
+    }
+
+    window.signInAsGuest = function() {
+      signInAnonymously(auth).catch((error) => {
+        console.error("Guest Login Error:", error);
+        alert("Guest login failed. Ensure Anonymous sign-in is enabled in Firebase Console.");
+      });
     }
 
     window.signOutUser = function() {
@@ -161,29 +171,31 @@
       });
     }
 
-    // Monitor Login State
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is logged in -> Show Dashboard
         authView.classList.add('hidden-view');
         dashboardView.classList.remove('hidden-view');
         
-        userNameEl.textContent = user.displayName;
-        userEmailEl.textContent = user.email;
-        if(user.photoURL) userPhotoEl.src = user.photoURL;
+        if (user.isAnonymous) {
+          userNameEl.textContent = "Guest User";
+          userEmailEl.textContent = "Unregistered Account";
+          userPhotoEl.src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+        } else {
+          userNameEl.textContent = user.displayName;
+          userEmailEl.textContent = user.email;
+          if(user.photoURL) userPhotoEl.src = user.photoURL;
+        }
 
-        // Fetch user's orders from Firestore
-        fetchUserOrders(user.email);
+        fetchUserOrders(user.email || "guest");
       } else {
-        // User is logged out -> Show Login Screen
         authView.classList.remove('hidden-view');
         dashboardView.classList.add('hidden-view');
       }
     });
 
-    async function fetchUserOrders(email) {
+    async function fetchUserOrders(identifier) {
       try {
-        const q = query(collection(db, "orders"), orderBy("createdAt", "desc"), limit(5)); // Temporarily removing 'where' clause for testing
+        const q = query(collection(db, "orders"), orderBy("createdAt", "desc"), limit(5));
         const querySnapshot = await getDocs(q);
         
         if (querySnapshot.empty) {
@@ -194,34 +206,27 @@
         let html = '';
         querySnapshot.forEach((doc) => {
           const order = doc.data();
-          // Filter client-side temporarily (until Firebase indexes are built)
-          if(order.customerEmail === email || order.customerName === "Guest User") { 
-              const dateObj = order.createdAt ? order.createdAt.toDate() : new Date();
-              const dateStr = dateObj.toLocaleDateString();
-              
-              html += `
-                <div class="bg-gray-50 border border-gray-100 rounded-lg p-3 flex justify-between items-center">
-                  <div>
-                    <p class="text-xs font-bold text-wassersNavy">Order ID: <span class="text-gray-500 font-mono">${doc.id.substring(0,8)}...</span></p>
-                    <p class="text-[10px] text-gray-400">${dateStr} • Status: <strong class="text-wassersGold">${order.status}</strong></p>
-                  </div>
-                  <div class="text-right">
-                    <p class="text-sm font-black text-wassersNavy">₹${order.totalAmount}</p>
-                  </div>
-                </div>
-              `;
-          }
+          const dateObj = order.createdAt ? order.createdAt.toDate() : new Date();
+          const dateStr = dateObj.toLocaleDateString();
+          
+          html += `
+            <div class="bg-gray-50 border border-gray-100 rounded-lg p-3 flex justify-between items-center">
+              <div>
+                <p class="text-xs font-bold text-wassersNavy">Order ID: <span class="text-gray-500 font-mono">${doc.id.substring(0,8)}...</span></p>
+                <p class="text-[10px] text-gray-400">${dateStr} • Status: <strong class="text-wassersGold">${order.status}</strong></p>
+              </div>
+              <div class="text-right">
+                <p class="text-sm font-black text-wassersNavy">₹${order.totalAmount}</p>
+              </div>
+            </div>
+          `;
         });
         
-        if(html === '') {
-            orderListEl.innerHTML = `<div class="text-center py-6 text-gray-400 text-sm">No recent orders found for this email.</div>`;
-        } else {
-            orderListEl.innerHTML = html;
-        }
+        orderListEl.innerHTML = html;
 
       } catch (error) {
         console.error("Error fetching orders:", error);
-        orderListEl.innerHTML = `<div class="text-center py-6 text-red-400 text-sm">Unable to load history.</div>`;
+        orderListEl.innerHTML = `<div class="text-center py-6 text-red-400 text-sm">Unable to load history. Verify Firestore Rules allow read access.</div>`;
       }
     }
   </script>
