@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wassers & Co. | Pure Rewards</title>
+  <link rel="manifest" href="manifest.json">
+  
   <!-- WhatsApp & Social Media Preview Tags (Open Graph) -->
   <meta property="og:title" content="Wassers & Co. | Premium Hydration">
   <meta property="og:description" content="Order 20L water capsules and PET bottles. Live tracking and free delivery across Surat.">
@@ -15,11 +21,7 @@
   <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-192.png">
   <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-192.png">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Wassers & Co. | Pure Rewards</title>
-  <link rel="manifest" href="manifest.json">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -70,15 +72,14 @@
       <a href="track.html" class="hover:text-wassersGold transition">Track Delivery</a>
     </div>
     <div class="flex items-center space-x-6 text-wassersNavy">
-      <button class="hover:text-wassersGold font-bold text-sm hidden md:block">Sign In</button>
+      <!-- FIXED SIGN IN LINK -->
+      <a href="customer.html" class="hidden md:block hover:text-wassersGold font-semibold text-sm transition">Sign In</a>
     </div>
   </header>
 
   <!-- REWARDS HERO SECTION -->
   <section class="relative bg-gradient-to-br from-wassersNavy to-[#061020] text-center pt-20 pb-32 px-4 overflow-hidden">
-    <!-- Optional: Add a lifestyle background image with opacity here -->
     <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1547489432-cf93fa6c71ee?q=80&w=2000&auto=format&fit=crop');"></div>
-    
     <div class="relative z-10 max-w-3xl mx-auto">
       <h1 class="text-3xl md:text-5xl font-black text-white uppercase tracking-wider mb-4 drop-shadow-lg">
         Stay Hydrated.<br>Get Rewarded.
@@ -96,7 +97,6 @@
   <!-- OVERLAPPING FEATURE CARDS -->
   <section class="relative z-20 max-w-5xl mx-auto px-4 -mt-16 mb-16">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <!-- Card 1 -->
       <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 flex flex-col aspect-[4/5] hover:-translate-y-2 transition-transform duration-300">
         <div class="flex-1 bg-gray-100 p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=600&auto=format&fit=crop');"></div>
         <div class="p-3 bg-wassersNavy text-white">
@@ -104,7 +104,6 @@
           <p class="text-[10px] md:text-xs font-semibold">Pure Rewards</p>
         </div>
       </div>
-      <!-- Card 2 -->
       <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 flex flex-col aspect-[4/5] hover:-translate-y-2 transition-transform duration-300">
         <div class="flex-1 bg-gray-200 p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1550503023-eb3a3399ed61?q=80&w=600&auto=format&fit=crop');"></div>
         <div class="p-3 bg-wassersNavy text-white">
@@ -112,7 +111,6 @@
           <p class="text-[10px] md:text-xs font-semibold">With Every Order</p>
         </div>
       </div>
-      <!-- Card 3 -->
       <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 flex flex-col aspect-[4/5] hover:-translate-y-2 transition-transform duration-300">
         <div class="flex-1 bg-gray-100 p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1517502884422-41eaead166d4?q=80&w=600&auto=format&fit=crop');"></div>
         <div class="p-3 bg-wassersNavy text-white">
@@ -120,7 +118,6 @@
           <p class="text-[10px] md:text-xs font-semibold">Your Live Balance</p>
         </div>
       </div>
-      <!-- Card 4 -->
       <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 flex flex-col aspect-[4/5] hover:-translate-y-2 transition-transform duration-300">
         <div class="flex-1 bg-gray-200 p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600&auto=format&fit=crop');"></div>
         <div class="p-3 bg-wassersNavy text-white">
@@ -149,7 +146,6 @@
         </button>
       </div>
       <div class="flex-1 flex justify-center">
-        <!-- Phone Mockup Placeholder -->
         <div class="w-48 h-96 bg-white rounded-[2.5rem] border-[8px] border-gray-100 shadow-2xl flex items-center justify-center relative overflow-hidden">
           <div class="absolute top-0 w-24 h-4 bg-gray-100 rounded-b-xl"></div>
           <i class="fas fa-mobile-alt text-6xl text-gray-200"></i>
@@ -168,7 +164,6 @@
     </div>
 
     <div class="space-y-2">
-      <!-- FAQ 1 -->
       <details class="group border-b border-gray-200">
         <summary class="flex justify-between items-center font-bold cursor-pointer list-none py-4 text-wassersNavy">
           <span>1. What is Pure Rewards?</span>
@@ -178,7 +173,6 @@
           Pure Rewards is the official loyalty program for Wassers & Co. Earn points on every jar delivered to your home or office in Surat.
         </div>
       </details>
-      <!-- FAQ 2 -->
       <details class="group border-b border-gray-200">
         <summary class="flex justify-between items-center font-bold cursor-pointer list-none py-4 text-wassersNavy">
           <span>2. Do I need to pay to become a member?</span>
@@ -188,7 +182,6 @@
           No, joining is completely free! Just create an account on our app to start earning.
         </div>
       </details>
-      <!-- FAQ 3 -->
       <details class="group border-b border-gray-200">
         <summary class="flex justify-between items-center font-bold cursor-pointer list-none py-4 text-wassersNavy">
           <span>3. How do I earn points?</span>
@@ -198,7 +191,6 @@
           You earn points for every ₹1 spent on 20L capsules, 1L bottles, 500ml bottles, and 200ml mini-sips.
         </div>
       </details>
-      <!-- FAQ 4 -->
       <details class="group border-b border-gray-200">
         <summary class="flex justify-between items-center font-bold cursor-pointer list-none py-4 text-wassersNavy">
           <span>4. How do I redeem my points?</span>
@@ -222,90 +214,10 @@
     <div class="w-full h-64 md:h-96 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=2000&auto=format&fit=crop');"></div>
   </section>
 
-  <!-- MASAFI STYLE FOOTER -->
-  <footer>
-    <!-- Brand Story (Light Section) -->
-    <div class="bg-bgLight py-10 px-6 md:px-12 text-center border-t border-gray-200">
-      <h2 class="text-2xl font-black text-wassersNavy italic mb-4">Wassers & Co.</h2>
-      <p class="text-gray-500 text-xs md:text-sm max-w-4xl mx-auto leading-relaxed mb-4">
-        Since our launch, Wassers & Co. has been dedicated to providing premium hydration solutions across Surat. From our signature 20L water capsules to our convenient PET range, we ensure every drop meets the highest standards of purity. 
-      </p>
-      <p class="text-gray-500 text-xs md:text-sm max-w-4xl mx-auto leading-relaxed">
-        We are committed to sustainability, service, and unparalleled quality. Thank you for making us your trusted hydration partner.
-      </p>
-    </div>
-
-    <!-- Main Footer Links (Deep Navy Section) -->
-    <div class="bg-wassersNavy text-white py-12 px-6 md:px-12">
-      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
-        
-        <!-- Address -->
-        <div>
-          <h2 class="text-2xl font-black text-wassersGold mb-6 tracking-tight">Wassers & Co.</h2>
-          <h3 class="font-bold text-sm uppercase tracking-wider mb-3">Address</h3>
-          <p class="text-gray-300 text-xs leading-relaxed mb-4">
-            Begampura<br>
-            Surat, Gujarat, India<br>
-            Toll Free: 846-WASSERS<br>
-            (846-9277377)
-          </p>
-        </div>
-
-        <!-- Quick Links -->
-        <div>
-          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Quick Links</h3>
-          <ul class="space-y-2 text-gray-300 text-xs">
-            <li><a href="#" class="hover:text-wassersGold">Home</a></li>
-            <li><a href="#" class="hover:text-wassersGold">Products</a></li>
-            <li><a href="#" class="hover:text-wassersGold">Pure Rewards</a></li>
-            <li><a href="#" class="hover:text-wassersGold">About Us</a></li>
-            <li><a href="admin.html" class="hover:text-wassersGold">Admin Login</a></li>
-          </ul>
-        </div>
-
-        <!-- Terms & Policies -->
-        <div>
-          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Terms & Policies</h3>
-          <ul class="space-y-2 text-gray-300 text-xs">
-            <li><a href="#" class="hover:text-wassersGold">Terms & Conditions</a></li>
-            <li><a href="#" class="hover:text-wassersGold">Privacy Policy</a></li>
-            <li><a href="#" class="hover:text-wassersGold">Delivery & Return Policy</a></li>
-          </ul>
-        </div>
-
-        <!-- Social & App -->
-        <div>
-          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Follow Us</h3>
-          <div class="flex space-x-4 mb-8">
-            <a href="#" class="text-white hover:text-wassersGold text-lg"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="text-white hover:text-wassersGold text-lg"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="text-white hover:text-wassersGold text-lg"><i class="fab fa-whatsapp"></i></a>
-          </div>
-          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Get Wassers App</h3>
-          <div class="flex flex-col space-y-3">
-            <button class="bg-black border border-gray-700 rounded-md px-3 py-1.5 flex items-center w-32 hover:border-wassersGold transition">
-              <i class="fab fa-google-play text-xl mr-2"></i>
-              <div class="text-left">
-                <div class="text-[8px] uppercase">Get it on</div>
-                <div class="text-xs font-bold leading-tight">Google Play</div>
-              </div>
-            </button>
-          </div>
-        </div>
-
-      </div>
-      
-      <div class="mt-12 pt-6 border-t border-gray-700 text-center text-[10px] text-gray-400">
-        Copyright &copy; 2026 Wassers & Co. All rights reserved.
-      </div>
-    </div>
-  </footer>
-<!-- WASSERS & CO. MASTER FOOTER -->
+  <!-- WASSERS & CO. MASTER FOOTER -->
   <footer>
     <div class="bg-wassersNavy text-white py-12 px-6 md:px-12 mt-12 border-t-4 border-wassersGold">
       <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
-        
-        <!-- Address -->
         <div>
           <h2 class="text-2xl font-black text-wassersGold mb-6 tracking-tight">Wassers & Co.</h2>
           <h3 class="font-bold text-sm uppercase tracking-wider mb-3">Headquarters</h3>
@@ -319,8 +231,6 @@
             <i class="fas fa-envelope text-gray-400 mr-1 mt-2"></i> <a href="mailto:wassersandco@gmail.com" class="hover:text-wassersGold transition">wassersandco@gmail.com</a>
           </p>
         </div>
-
-        <!-- Quick Links -->
         <div>
           <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Quick Links</h3>
           <ul class="space-y-2 text-gray-300 text-xs">
@@ -330,8 +240,6 @@
             <li><a href="https://www.wassersand.co/" target="_blank" class="hover:text-wassersGold transition">Corporate Subscriptions <i class="fas fa-external-link-alt text-[9px] ml-1"></i></a></li>
           </ul>
         </div>
-
-        <!-- Terms & Policies -->
         <div>
           <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Terms & Policies</h3>
           <ul class="space-y-2 text-gray-300 text-xs">
@@ -340,8 +248,6 @@
             <li><a href="returns.html" class="hover:text-wassersGold transition">Delivery & Return Policy</a></li>
           </ul>
         </div>
-
-        <!-- Social & App -->
         <div>
           <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Follow Us</h3>
           <div class="flex space-x-4 mb-8">
@@ -362,9 +268,7 @@
             </button>
           </div>
         </div>
-
       </div>
-      
       <div class="mt-12 pt-6 border-t border-gray-700 text-center text-[10px] text-gray-400">
         Copyright &copy; 2026 Wassers & Co. All rights reserved.
       </div>
