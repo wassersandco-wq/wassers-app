@@ -18,7 +18,9 @@
             lightGray: '#F9FAFB',
             borderGray: '#E5E7EB'
           },
-          fontFamily: { sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'] }
+          fontFamily: {
+            sans: ['Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
         }
       }
     }
@@ -28,6 +30,7 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #f1f1f1; }
     ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 10px; }
+    
     .cart-drawer { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
     .cart-drawer.open { transform: translateX(0); }
     input[type="number"]::-webkit-inner-spin-button, 
@@ -44,12 +47,14 @@
         <h1 class="text-xl md:text-2xl font-black text-wassersNavy tracking-tight leading-none uppercase">Wassers & Co.</h1>
       </div>
     </div>
+    
     <div class="hidden md:flex space-x-8 text-sm font-bold text-wassersNavy">
       <a href="app.html" class="hover:text-wassersGold transition">Home</a>
       <a href="shop.html" class="text-wassersGold transition">Products</a>
       <a href="rewards.html" class="hover:text-wassersGold transition">Rewards</a>
       <a href="track.html" class="hover:text-wassersGold transition">Track Delivery</a>
     </div>
+
     <div class="flex items-center space-x-6 text-wassersNavy">
       <button class="hidden md:block hover:text-wassersGold font-semibold text-sm">Sign In</button>
       <button onclick="window.toggleCart()" class="relative focus:outline-none hover:text-wassersGold transition cursor-pointer">
@@ -62,12 +67,20 @@
   <!-- PROMOTIONAL HERO BANNER -->
   <div class="w-full bg-wassersNavy px-6 py-10 md:py-16 flex flex-col md:flex-row items-center justify-between relative overflow-hidden border-b-4 border-wassersGold">
     <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/diagonal-stripes.png')]"></div>
+    
     <div class="relative z-10 md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left md:pl-10">
-      <div class="bg-wassersGold text-wassersNavy font-black uppercase tracking-widest text-xs px-3 py-1 rounded-sm mb-4 transform -rotate-2 inline-block">Limited Time Offer</div>
-      <h2 class="text-white text-4xl md:text-6xl font-black uppercase tracking-tight mb-2">Wassers<br><span class="text-wassersGold">Hydration Deals</span></h2>
+      <div class="bg-wassersGold text-wassersNavy font-black uppercase tracking-widest text-xs px-3 py-1 rounded-sm mb-4 transform -rotate-2 inline-block">
+        Limited Time Offer
+      </div>
+      <h2 class="text-white text-4xl md:text-6xl font-black uppercase tracking-tight mb-2">
+        Wassers<br><span class="text-wassersGold">Hydration Deals</span>
+      </h2>
       <p class="text-blue-100 text-sm md:text-lg font-medium mb-6">Stock up on premium 20L capsules and PET cases. Subscribe and get your first delivery free!</p>
-      <button class="bg-white text-wassersNavy hover:bg-wassersGold hover:text-white text-sm font-bold uppercase tracking-wider px-8 py-3 rounded-full shadow-lg transition duration-300">Shop Exclusive Offers</button>
+      <button class="bg-white text-wassersNavy hover:bg-wassersGold hover:text-white text-sm font-bold uppercase tracking-wider px-8 py-3 rounded-full shadow-lg transition duration-300">
+        Shop Exclusive Offers
+      </button>
     </div>
+    
     <div class="relative z-10 md:w-1/2 mt-8 md:mt-0 flex justify-center">
       <div class="relative w-72 h-64 md:w-96 md:h-80">
         <img src="icons/wassers-20L.png" class="absolute top-0 right-10 w-40 md:w-56 drop-shadow-2xl z-20 hover:scale-105 transition" onerror="this.style.display='none'">
@@ -80,78 +93,46 @@
   <!-- SORT & FILTER BAR -->
   <div class="bg-lightGray border-b border-gray-200 sticky top-[72px] z-30 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 md:px-10 py-3 flex justify-between items-center">
-      <div class="text-xs font-bold text-gray-400 uppercase tracking-widest hidden md:block"><i class="fas fa-chevron-left mr-2"></i> All Products</div>
+      <div class="text-xs font-bold text-gray-400 uppercase tracking-widest hidden md:block">
+        <i class="fas fa-chevron-left mr-2"></i> All Products
+      </div>
+      
       <div class="flex space-x-3 w-full md:w-auto">
-        <button class="flex-1 md:flex-none bg-white border border-gray-300 text-wassersNavy text-xs font-bold px-6 py-2.5 rounded-md shadow-sm hover:border-wassersGold flex items-center justify-center transition"><i class="fas fa-sort-amount-down text-gray-400 mr-2"></i> SORT</button>
-        <button class="flex-1 md:flex-none bg-white border border-gray-300 text-wassersNavy text-xs font-bold px-6 py-2.5 rounded-md shadow-sm hover:border-wassersGold flex items-center justify-center transition"><i class="fas fa-filter text-gray-400 mr-2"></i> FILTER</button>
+        <button class="flex-1 md:flex-none bg-white border border-gray-300 text-wassersNavy text-xs font-bold px-6 py-2.5 rounded-md shadow-sm hover:border-wassersGold flex items-center justify-center transition">
+          <i class="fas fa-sort-amount-down text-gray-400 mr-2"></i> SORT
+        </button>
+        <button class="flex-1 md:flex-none bg-white border border-gray-300 text-wassersNavy text-xs font-bold px-6 py-2.5 rounded-md shadow-sm hover:border-wassersGold flex items-center justify-center transition">
+          <i class="fas fa-filter text-gray-400 mr-2"></i> FILTER
+        </button>
       </div>
     </div>
   </div>
 
   <!-- MAIN PRODUCT GRID -->
   <main class="max-w-7xl mx-auto px-4 md:px-10 py-8">
-    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8"></div>
-  </main>
-
-  <!-- WASSERS & CO. MASTER FOOTER -->
-  <footer>
-    <div class="bg-wassersNavy text-white py-12 px-6 md:px-12 mt-12 border-t-4 border-wassersGold">
-      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
-        <div>
-          <h2 class="text-2xl font-black text-wassersGold mb-6 tracking-tight">Wassers & Co.</h2>
-          <h3 class="font-bold text-sm uppercase tracking-wider mb-3">Headquarters</h3>
-          <p class="text-gray-300 text-xs leading-relaxed mb-4">4/3928, Ground Floor, Opp. Royal Palace<br>Bhula Modi Lane, Begampura<br>Surat - 395003, Gujarat, INDIA</p>
-          <p class="text-gray-300 text-xs leading-relaxed">
-            <i class="fab fa-whatsapp text-green-400 mr-1"></i> <a href="https://wa.me/918469277377" target="_blank" class="hover:text-wassersGold transition">+91 846-9277377 (WASSERS)</a><br>
-            <i class="fas fa-envelope text-gray-400 mr-1 mt-2"></i> <a href="mailto:wassersandco@gmail.com" class="hover:text-wassersGold transition">wassersandco@gmail.com</a>
-          </p>
-        </div>
-        <div>
-          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Quick Links</h3>
-          <ul class="space-y-2 text-gray-300 text-xs">
-            <li><a href="index.html" class="hover:text-wassersGold transition">Home</a></li>
-            <li><a href="shop.html" class="hover:text-wassersGold transition">Order Online</a></li>
-            <li><a href="rewards.html" class="hover:text-wassersGold transition">Pure Rewards</a></li>
-            <li><a href="https://www.wassersand.co/" target="_blank" class="hover:text-wassersGold transition">Corporate Subscriptions <i class="fas fa-external-link-alt text-[9px] ml-1"></i></a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Terms & Policies</h3>
-          <ul class="space-y-2 text-gray-300 text-xs">
-            <li><a href="terms.html" class="hover:text-wassersGold transition">Terms & Conditions</a></li>
-            <li><a href="privacy.html" class="hover:text-wassersGold transition">Privacy Policy</a></li>
-            <li><a href="returns.html" class="hover:text-wassersGold transition">Delivery & Return Policy</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-bold text-sm uppercase tracking-wider mb-4">Follow Us</h3>
-          <div class="flex space-x-4 mb-8">
-            <a href="https://instagram.com/wassersandco" target="_blank" class="text-white hover:text-wassersGold text-lg transition"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.facebook.com/Wassersco" target="_blank" class="text-white hover:text-wassersGold text-lg transition"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://x.com/wasserandco" target="_blank" class="text-white hover:text-wassersGold text-lg transition"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/in/wassersandco" target="_blank" class="text-white hover:text-wassersGold text-lg transition"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://www.youtube.com/@wassersandco" target="_blank" class="text-white hover:text-wassersGold text-lg transition"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="mt-12 pt-6 border-t border-gray-700 text-center text-[10px] text-gray-400">Copyright &copy; 2026 Wassers & Co. All rights reserved.</div>
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+      <!-- Products inject here via JS -->
     </div>
-  </footer>
+  </main>
 
   <!-- SLIDE-IN CART DRAWER -->
   <div id="cart-overlay" onclick="window.toggleCart()" class="fixed inset-0 bg-wassersNavy/40 backdrop-blur-sm z-50 hidden transition-opacity"></div>
   <aside id="cart-drawer" class="cart-drawer fixed right-0 top-0 h-full w-[90%] md:w-[400px] bg-white shadow-2xl z-50 flex flex-col border-l border-gray-200">
     <div class="px-6 py-5 border-b border-gray-200 flex justify-between items-center bg-white">
       <h3 class="text-xl font-black text-wassersNavy uppercase tracking-tight">Your Cart</h3>
-      <button onclick="window.toggleCart()" class="text-gray-400 hover:text-wassersNavy text-2xl focus:outline-none transition"><i class="fas fa-times"></i></button>
+      <button onclick="window.toggleCart()" class="text-gray-400 hover:text-wassersNavy text-2xl focus:outline-none transition">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
-    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 bg-lightGray"></div>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 bg-lightGray">
+      <!-- Items inject here -->
+    </div>
     <div class="p-6 border-t border-gray-200 bg-white shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
       <div class="flex justify-between items-center mb-6">
         <span class="font-bold text-gray-600 uppercase text-sm">Subtotal</span>
         <span id="cart-total" class="text-2xl font-black text-wassersNavy">₹0.00</span>
       </div>
-      <!-- ID added to button for loading state -->
+      <!-- ID ADDED HERE FOR THE SPINNER LOGIC -->
       <button id="checkout-btn" onclick="window.startCheckout()" class="w-full bg-wassersNavy hover:bg-wassersGold text-white font-bold py-4 rounded-full shadow-lg transition flex items-center justify-center space-x-2 text-sm uppercase tracking-wider">
         <i class="fas fa-lock mr-2"></i> Checkout Securely
       </button>
@@ -159,15 +140,18 @@
   </aside>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toast" class="fixed bottom-24 md:top-24 md:bottom-auto left-1/2 transform -translate-x-1/2 bg-wassersNavy text-white px-6 py-3 rounded-full shadow-2xl text-sm font-bold border border-wassersGold z-50 hidden opacity-0 transition-opacity duration-300 pointer-events-none">Item added to cart</div>
+  <div id="toast" class="fixed bottom-24 md:top-24 md:bottom-auto left-1/2 transform -translate-x-1/2 bg-wassersNavy text-white px-6 py-3 rounded-full shadow-2xl text-sm font-bold border border-wassersGold z-50 hidden opacity-0 transition-opacity duration-300 pointer-events-none">
+    Item added to cart
+  </div>
 
-  <!-- FIREBASE BACKEND INTEGRATION (TYPE="MODULE") -->
+  <!-- THE ACTUAL FIREBASE CONNECTION SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    
+    // Make sure your config.js is exactly in the same folder
     import { firebaseConfig } from "./config.js"; 
 
-    // Initialize Firebase Database
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
@@ -182,7 +166,6 @@
     products.forEach(p => cardQuantities[p.id] = 1);
     let cart = JSON.parse(localStorage.getItem("wassers_cart")) || [];
 
-    // Make functions globally available to HTML buttons
     window.renderProductGrid = function() {
       const grid = document.getElementById("product-grid");
       grid.innerHTML = products.map(product => {
@@ -193,6 +176,7 @@
               <div class="absolute top-0 left-0 bg-wassersGold text-white text-[9px] font-black uppercase px-2 py-1 rounded-sm">Sale</div>
               <img src="${product.image}" alt="${product.title}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-500" onerror="this.outerHTML='<i class=\\'fas fa-image text-5xl text-gray-200\\'></i>'">
             </div>
+            
             <div class="mb-4 flex-1 flex flex-col">
               <h3 class="text-sm md:text-base font-bold text-wassersNavy leading-tight mb-1">${product.title}</h3>
               <p class="text-xs text-gray-500 mb-2">${product.desc}</p>
@@ -201,13 +185,20 @@
                 <span class="text-xs font-bold text-gray-400 line-through mb-1">₹${product.oldPrice.toFixed(2)}</span>
               </div>
             </div>
+            
             <div class="flex flex-col space-y-3 mt-auto">
               <div class="flex items-center justify-between border border-gray-300 rounded-md p-1 bg-white">
-                <button onclick="window.updateCardQty('${product.id}', -1)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded transition"><i class="fas fa-minus text-xs"></i></button>
+                <button onclick="window.updateCardQty('${product.id}', -1)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded focus:outline-none transition">
+                  <i class="fas fa-minus text-xs"></i>
+                </button>
                 <span id="qty-disp-${product.id}" class="text-sm font-bold text-wassersNavy">${currentQty}</span>
-                <button onclick="window.updateCardQty('${product.id}', 1)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded transition"><i class="fas fa-plus text-xs"></i></button>
+                <button onclick="window.updateCardQty('${product.id}', 1)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded focus:outline-none transition">
+                  <i class="fas fa-plus text-xs"></i>
+                </button>
               </div>
-              <button onclick="window.addToCart('${product.id}')" class="w-full bg-wassersNavy text-white text-xs md:text-sm font-bold py-3 rounded-full shadow hover:bg-wassersGold hover:shadow-md transition uppercase tracking-wider">Add to Cart</button>
+              <button onclick="window.addToCart('${product.id}')" class="w-full bg-wassersNavy text-white text-xs md:text-sm font-bold py-3 rounded-full shadow hover:bg-wassersGold hover:shadow-md transition flex items-center justify-center uppercase tracking-wider">
+                Add to Cart
+              </button>
             </div>
           </div>
         `;
@@ -223,7 +214,12 @@
       countEl.textContent = totalItems;
       
       if (cart.length === 0) {
-        container.innerHTML = `<div class="flex flex-col items-center justify-center h-full text-gray-400 mt-20"><i class="fas fa-shopping-cart text-6xl mb-6 opacity-30 text-wassersNavy"></i><p class="text-base font-bold text-wassersNavy">Your cart is empty.</p></div>`;
+        container.innerHTML = `
+          <div class="flex flex-col items-center justify-center h-full text-gray-400 mt-20">
+            <i class="fas fa-shopping-cart text-6xl mb-6 opacity-30 text-wassersNavy"></i>
+            <p class="text-base font-bold text-wassersNavy">Your cart is empty.</p>
+          </div>
+        `;
         totalEl.textContent = "₹0.00";
         return;
       }
@@ -234,19 +230,22 @@
         subtotal += lineTotal;
         return `
           <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm flex items-center gap-4">
-            <div class="w-16 h-16 border border-gray-100 rounded-md flex items-center justify-center p-2 shrink-0"><img src="${item.image}" class="max-h-full object-contain"></div>
+            <div class="w-16 h-16 bg-white border border-gray-100 rounded-md flex items-center justify-center p-2 shrink-0">
+              <img src="${item.image}" class="max-h-full object-contain" onerror="this.outerHTML='<i class=\\'fas fa-image text-gray-200\\'></i>'">
+            </div>
             <div class="flex-1 min-w-0">
               <h4 class="text-sm font-bold text-wassersNavy truncate">${item.title}</h4>
               <p class="text-sm font-black text-wassersGold">₹${lineTotal.toFixed(2)}</p>
             </div>
             <div class="flex flex-col items-center border border-gray-300 rounded-md bg-white">
-              <button onclick="window.changeCartItemQty(${idx}, 1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-t"><i class="fas fa-plus text-[10px]"></i></button>
+              <button onclick="window.changeCartItemQty(${idx}, 1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded-t"><i class="fas fa-plus text-[10px]"></i></button>
               <span class="text-xs font-bold w-full text-center py-1 text-wassersNavy border-y border-gray-200">${item.qty}</span>
-              <button onclick="window.changeCartItemQty(${idx}, -1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-b"><i class="fas fa-minus text-[10px]"></i></button>
+              <button onclick="window.changeCartItemQty(${idx}, -1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-wassersNavy hover:bg-gray-100 rounded-b"><i class="fas fa-minus text-[10px]"></i></button>
             </div>
           </div>
         `;
       }).join('');
+      
       totalEl.textContent = `₹${subtotal.toFixed(2)}`;
     }
 
@@ -296,48 +295,54 @@
       setTimeout(() => toast.classList.remove('opacity-0'), 10);
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => {
-        toast.classList.add('opacity-0'); setTimeout(() => toast.classList.add('hidden'), 300);
+        toast.classList.add('opacity-0');
+        setTimeout(() => toast.classList.add('hidden'), 300);
       }, 2500);
     }
 
-    // THE NEW FIREBASE CHECKOUT FUNCTION
+    // --- THE NEW FIREBASE CHECKOUT CONNECTION ---
     window.startCheckout = async function() {
       if(cart.length === 0) return alert("Your cart is empty.");
       
       const btn = document.getElementById("checkout-btn");
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Securing Order...';
-      btn.disabled = true;
+      if(btn) {
+          btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Securing Order...';
+          btn.disabled = true;
+      }
 
       try {
         const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
         
-        // 1. Package the order data
         const orderData = {
           items: cart,
           totalAmount: totalAmount,
           status: "Pending Payment",
-          customerName: "Guest User", // We will link this to the Login system later
+          customerName: "Guest User", 
           createdAt: serverTimestamp(),
-          source: "Web Storefront"
+          source: "Wassers App"
         };
 
-        // 2. Write order directly to Firebase 'orders' collection
+        // This line writes the order to your Firestore 'orders' collection
         const docRef = await addDoc(collection(db, "orders"), orderData);
         
         alert("Order successfully logged in database!\nOrder ID: " + docRef.id + "\n\n(Next, we will connect this ID to Razorpay).");
         
-        // (Optional: Clear cart here once fully connected to payments)
+        // Clear the cart on success
+        cart = [];
+        window.saveCart();
+        
       } catch (error) {
         console.error("Firebase Order Error: ", error);
-        alert("Unable to process order right now. Please check your internet connection.");
+        alert("Unable to process order right now. Please check your config.js and internet connection.");
       } finally {
-        btn.innerHTML = '<i class="fas fa-lock mr-2"></i> Checkout Securely';
-        btn.disabled = false;
+        if(btn) {
+            btn.innerHTML = '<i class="fas fa-lock mr-2"></i> Checkout Securely';
+            btn.disabled = false;
+        }
       }
     }
 
-    // Run on load
-    window.renderProductGrid();
-    window.renderCartDrawer();
+    window.onload = () => { window.renderProductGrid(); window.renderCartDrawer(); };
   </script>
 </body>
+</html>
